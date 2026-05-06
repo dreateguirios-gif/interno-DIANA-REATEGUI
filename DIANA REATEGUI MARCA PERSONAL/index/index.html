@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master Plan — Diana Reátegui</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --negro: #0A0A0A;
+    --blanco: #F8F4EE;
+    --bronce: #B87A4E;
+    --bronce-claro: #D4956A;
+    --rosa: #C9A09A;
+    --gris: #141412;
+    --gris-medio: #1C1C1A;
+    --gris-borde: #2A2A28;
+    --muted: #6B6B62;
+    --muted-claro: #A0A090;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--negro); color: var(--blanco); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.96);
+    border-bottom: 1px solid var(--gris-borde);
+    padding: 0 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+    backdrop-filter: blur(8px);
+  }
+  .nav-brand { font-family: 'Bebas Neue'; font-size: 20px; letter-spacing: 3px; color: var(--bronce); text-decoration: none; }
+  .nav-links { display: flex; gap: 0; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    padding: 0 18px; height: 56px; display: flex; align-items: center;
+    border-left: 1px solid var(--gris-borde);
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--bronce); background: rgba(184,122,78,0.06); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 100px 60px 80px; position: relative; border-bottom: 1px solid var(--gris-borde);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -150px; right: -150px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(184,122,78,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: 'MARGEN'; position: absolute; bottom: -40px; right: -10px;
+    font-family: 'Bebas Neue'; font-size: 240px; color: rgba(184,122,78,0.04);
+    letter-spacing: -10px; pointer-events: none; line-height: 1;
+  }
+  .badge {
+    display: inline-block; font-family: 'Space Mono', monospace;
+    font-size: 9px; letter-spacing: 3px; color: var(--bronce);
+    border: 1px solid var(--bronce); padding: 6px 14px;
+    margin-bottom: 40px; text-transform: uppercase;
+  }
+  .hero-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; margin-bottom: 20px; }
+  .hero-title { font-family: 'Bebas Neue'; font-size: clamp(64px, 9vw, 130px); line-height: 0.92; letter-spacing: -2px; margin-bottom: 14px; }
+  .hero-title em { color: var(--bronce); font-style: normal; }
+  .hero-subtitle { font-family: 'Bebas Neue'; font-size: clamp(20px, 3vw, 38px); color: var(--muted); margin-bottom: 48px; max-width: 800px; line-height: 1.2; }
+  .hero-lead { max-width: 680px; font-size: 16px; color: var(--muted-claro); line-height: 1.8; border-left: 3px solid var(--bronce); padding-left: 22px; margin-bottom: 60px; }
+  .hero-lead strong { color: var(--blanco); font-weight: 500; }
+
+  .stats-row { display: flex; gap: 56px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--gris-borde); }
+  .stat { display: flex; flex-direction: column; }
+  .stat-num { font-family: 'Bebas Neue'; font-size: 48px; color: var(--bronce); line-height: 1; }
+  .stat-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+
+  /* SECCIONES */
+  section { padding: 90px 60px; border-bottom: 1px solid var(--gris-borde); }
+  .section-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); text-transform: uppercase; margin-bottom: 14px; }
+  .section-title { font-family: 'Bebas Neue'; font-size: clamp(36px, 5vw, 70px); line-height: 0.95; margin-bottom: 48px; letter-spacing: -1px; }
+
+  /* ESCALERA */
+  .escalera { display: flex; flex-direction: column; gap: 0; margin-bottom: 60px; }
+  .nivel {
+    display: grid; grid-template-columns: 100px 1fr auto;
+    border: 1px solid var(--gris-borde); border-bottom: none;
+    transition: background 0.2s;
+  }
+  .nivel:last-child { border-bottom: 1px solid var(--gris-borde); }
+  .nivel:hover { background: rgba(184,122,78,0.04); }
+  .nivel-num {
+    font-family: 'Bebas Neue'; font-size: 52px; color: var(--bronce); opacity: 0.25;
+    display: flex; align-items: center; justify-content: center;
+    border-right: 1px solid var(--gris-borde); line-height: 1;
+  }
+  .nivel-body { padding: 28px 32px; }
+  .nivel-nombre { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--bronce); text-transform: uppercase; margin-bottom: 6px; }
+  .nivel-desc { font-size: 13px; color: var(--muted-claro); line-height: 1.6; margin-bottom: 8px; }
+  .nivel-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
+  .nivel-precio {
+    padding: 28px 36px; display: flex; flex-direction: column;
+    align-items: flex-end; justify-content: center;
+    border-left: 1px solid var(--gris-borde); min-width: 160px;
+  }
+  .precio-num { font-family: 'Bebas Neue'; font-size: 36px; color: var(--blanco); line-height: 1; }
+  .precio-sub { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+  .nivel-0 .nivel-num { opacity: 0.12; }
+  .nivel-premium .nivel-precio .precio-num { color: var(--bronce); }
+
+  /* MODELO DE NEGOCIO */
+  .modelo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gris-borde); margin-bottom: 48px; }
+  .modelo-card { background: var(--negro); padding: 36px 28px; }
+  .modelo-titulo { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--bronce); text-transform: uppercase; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--gris-borde); }
+  .modelo-linea { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid #111; }
+  .modelo-linea:last-child { border-bottom: none; }
+  .modelo-producto { font-size: 12px; color: var(--muted-claro); }
+  .modelo-ingreso { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--blanco); }
+  .modelo-total { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 0 0; border-top: 1px solid var(--gris-borde); margin-top: 8px; }
+  .modelo-total-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+  .modelo-total-num { font-family: 'Bebas Neue'; font-size: 32px; color: var(--bronce); }
+
+  /* HITOS */
+  .hitos { display: flex; flex-direction: column; gap: 0; }
+  .hito { display: grid; grid-template-columns: 80px 1fr; border: 1px solid var(--gris-borde); border-bottom: none; }
+  .hito:last-child { border-bottom: 1px solid var(--gris-borde); }
+  .hito-num { font-family: 'Bebas Neue'; font-size: 42px; color: var(--bronce); opacity: 0.4; display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--gris-borde); }
+  .hito-body { padding: 24px 28px; }
+  .hito-titulo { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .hito-trigger { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--bronce); text-transform: uppercase; margin-bottom: 10px; }
+  .hito-acciones { list-style: none; }
+  .hito-acciones li { font-size: 12px; color: var(--muted-claro); padding: 5px 0; display: flex; gap: 8px; }
+  .hito-acciones li::before { content: '→'; color: var(--bronce); flex-shrink: 0; }
+
+  /* HIGHLIGHT */
+  .highlight { background: rgba(184,122,78,0.07); border-left: 3px solid var(--bronce); padding: 18px 22px; font-size: 14px; color: var(--muted-claro); line-height: 1.75; margin: 30px 0; }
+  .highlight strong { color: var(--blanco); }
+
+  /* VISION */
+  .vision-box { background: var(--gris); border: 1px solid var(--gris-borde); padding: 56px; margin-bottom: 48px; position: relative; overflow: hidden; }
+  .vision-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top left, rgba(184,122,78,0.07) 0%, transparent 60%); pointer-events: none; }
+  .vision-quote { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 3vw, 34px); line-height: 1.5; color: var(--blanco); font-weight: 600; position: relative; margin-bottom: 24px; }
+  .vision-attr { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); text-transform: uppercase; position: relative; }
+
+  /* DEFINICION */
+  .definicion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gris-borde); }
+  .def-col { background: var(--negro); padding: 40px 36px; }
+  .def-header { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); text-transform: uppercase; margin-bottom: 24px; padding-bottom: 14px; border-bottom: 1px solid var(--gris-borde); }
+  .def-list { list-style: none; }
+  .def-list li { font-size: 13.5px; color: var(--muted-claro); padding: 10px 0; border-bottom: 1px solid #111; display: flex; gap: 12px; align-items: flex-start; }
+  .def-list li:last-child { border-bottom: none; }
+  .def-list li::before { content: '→'; color: var(--bronce); flex-shrink: 0; margin-top: 1px; }
+
+  /* LINKS MODULOS */
+  .modulos-nav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gris-borde); }
+  .modulo-link {
+    background: var(--gris); padding: 36px 28px; text-decoration: none;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: background 0.2s;
+  }
+  .modulo-link:hover { background: rgba(184,122,78,0.08); }
+  .modulo-link-tag { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--bronce); text-transform: uppercase; }
+  .modulo-link-titulo { font-family: 'Bebas Neue'; font-size: 28px; color: var(--blanco); line-height: 1; }
+  .modulo-link-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .modulo-link-cta { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 1px; color: var(--bronce); text-transform: uppercase; margin-top: auto; }
+
+  /* FOOTER */
+  .footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-brand { font-family: 'Bebas Neue'; font-size: 24px; letter-spacing: 3px; color: var(--bronce); }
+  .footer-note { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+
+  @media(max-width: 960px) {
+    .nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero, section { padding: 60px 24px; }
+    .footer { padding: 40px 24px; flex-direction: column; gap: 16px; text-align: center; }
+    .modelo-grid, .definicion-grid, .modulos-nav { grid-template-columns: 1fr; }
+    .nivel { grid-template-columns: 60px 1fr; }
+    .nivel-precio { display: none; }
+    .stats-row { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="../INICIO.html" class="nav-brand">DIANA REÁTEGUI</a>
+  <div class="nav-links">
+    <a href="../INICIO.html">← Inicio</a>
+    <a href="index.html" class="active">Master Plan</a>
+    <a href="oferta.html">Oferta</a>
+    <a href="ventas.html">Ventas</a>
+    <a href="plan-accion.html">Plan de Acción</a>
+    <a href="sops.html">SOPs</a>
+    <a href="equipo.html">Equipo</a>
+    <a href="../PROGRAMA%20HIGH%20TICKET/Brief_Asistente_Comercial_Diana_Reategui.html">Asistente Comercial</a>
+    <a href="../PROGRAMA%20HIGH%20TICKET/Plan-Negocio-Diana-Reategui-V2.html">Plan de Negocio V2</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">Sistema MARGEN™ · Arquitectura de Negocio · 2026</div>
+  <p class="hero-tag">Documento maestro — uso interno</p>
+  <h1 class="hero-title">DIANA<br><em>REÁTEGUI</em></h1>
+  <p class="hero-subtitle">Marca Personal · Negocio Digital de Alto Valor · Escalera de Productos</p>
+  <p class="hero-lead">
+    <strong>Este es el sistema operativo completo del negocio.</strong> Marca personal estratégica construida sobre expertise real en sourcing e importación desde China. Modelo híbrido: servicios de alto ticket + productos educativos + backend operativo. Diseñado para escalar de $16K a +$50K mensuales con equipo mínimo.
+  </p>
+  <div class="stats-row">
+    <div class="stat"><span class="stat-num">8+</span><span class="stat-label">Años operando en China</span></div>
+    <div class="stat"><span class="stat-num">5</span><span class="stat-label">Meses programa MARGEN™</span></div>
+    <div class="stat"><span class="stat-num">60%</span><span class="stat-label">Reducción de costo promedio</span></div>
+    <div class="stat"><span class="stat-num">3–5x</span><span class="stat-label">Margen vs compra local</span></div>
+    <div class="stat"><span class="stat-num">$50K</span><span class="stat-label">Meta mensual hito 3</span></div>
+  </div>
+</section>
+
+<!-- VISIÓN -->
+<section>
+  <p class="section-tag">01 — Visión y Propósito</p>
+  <h2 class="section-title">El negocio<br>en una frase.</h2>
+
+  <div class="vision-box">
+    <p class="vision-quote">"Transformo empresarios de productos físicos que ya venden: multiplico su margen importando directo desde China, construyo su propia marca y el sistema para que su negocio funcione sin que ellos estén presentes."</p>
+    <p class="vision-attr">— Propuesta de Valor · Diana Reátegui</p>
+  </div>
+
+  <div class="definicion-grid">
+    <div class="def-col">
+      <p class="def-header">Quién es Diana</p>
+      <ul class="def-list">
+        <li>8+ años como Sourcing Specialist operando en China — no teoría, operación real en campo</li>
+        <li>Agente de Carga Internacional activa — logística completa end-to-end</li>
+        <li>Creadora del Método M.A.R.G.E.N.™ — sistema de escala empresarial</li>
+        <li>Experta en rentabilidad, estructura y comercio exterior</li>
+        <li>No es coach. Es operadora con resultados verificables</li>
+      </ul>
+    </div>
+    <div class="def-col">
+      <p class="def-header">A quién ayuda</p>
+      <ul class="def-list">
+        <li>Empresarios de productos físicos que ya venden ($8K–$20K/mes)</li>
+        <li>Con negocio activo pero desordenado, sin sistema y sin estructura</li>
+        <li>Que dependen de ellos mismos para que el negocio funcione</li>
+        <li>Con márgenes ajustados por comprar local o sin negociación</li>
+        <li>Que quieren marca propia, importación directa y escalabilidad</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ESCALERA DE VALOR -->
+<section>
+  <p class="section-tag">02 — Escalera de Valor</p>
+  <h2 class="section-title">5 niveles.<br>1 ecosistema.</h2>
+
+  <div class="escalera">
+    <div class="nivel nivel-0">
+      <div class="nivel-num">0</div>
+      <div class="nivel-body">
+        <p class="nivel-nombre">ATRACCIÓN — Contenido + Newsletter</p>
+        <p class="nivel-desc">Contenido en Instagram, LinkedIn y newsletter semanal "Margen Real". Genera autoridad, audiencia calificada y captación de email. Activo propio que no depende del algoritmo.</p>
+        <p class="nivel-tag">Pilar: Diagnóstico (40%) · Autoridad (25%) · Prueba (15%) · Educación (10%) · Conversión (10%)</p>
+      </div>
+      <div class="nivel-precio">
+        <span class="precio-num">$0</span>
+        <span class="precio-sub">Gratuito</span>
+      </div>
+    </div>
+    <div class="nivel">
+      <div class="nivel-num">1</div>
+      <div class="nivel-body">
+        <p class="nivel-nombre">LIBRE™ — Comunidad Privada</p>
+        <p class="nivel-desc">Grupo privado de WhatsApp para empresarios en escala. 1 audio de Diana por semana, 1 recurso práctico, 1 pregunta de diagnóstico. Mecanismo de conversión en semana 4: invitación a DIRIGE™ o llamada directa a MARGEN™.</p>
+        <p class="nivel-tag">Objetivo: confianza · educación · detección de leads · flujo hacia DIRIGE™ o MARGEN™</p>
+      </div>
+      <div class="nivel-precio">
+        <span class="precio-num">$0</span>
+        <span class="precio-sub">Acceso libre</span>
+      </div>
+    </div>
+    <div class="nivel">
+      <div class="nivel-num">2</div>
+      <div class="nivel-body">
+        <p class="nivel-nombre">DIRIGE™ — Diagnóstico y Activación</p>
+        <p class="nivel-desc">Programa de 7 días autoguiado + 1 sesión con mentor. 6 módulos grabados, plantillas, diagnóstico del negocio. Resultado: el cliente entiende su problema real. Día 5: evaluación de fit para MARGEN™. Día 7: oferta con descuento de $200, válida 72 horas.</p>
+        <p class="nivel-tag">Filtro de calidad · Generador de demanda para MARGEN™</p>
+      </div>
+      <div class="nivel-precio">
+        <span class="precio-num">$299</span>
+        <span class="precio-sub">Pago único</span>
+      </div>
+    </div>
+    <div class="nivel nivel-premium">
+      <div class="nivel-num">3</div>
+      <div class="nivel-body">
+        <p class="nivel-nombre">MARGEN™ — Core del Negocio (Motor de Ingresos)</p>
+        <p class="nivel-desc">Programa de 5 meses. Mentoría + implementación guiada. Método M.A.R.G.E.N.™: Mapeo → Arquitectura → Rentabilidad → Generación → Escala → Negocio Libre. Incluye sourcing directo en China, logística end-to-end y construcción de marca propia. 2 sesiones grupales/mes + 1 individual/mes. Máximo 6–8 clientes simultáneos (fase actual).</p>
+        <p class="nivel-tag">Motor del negocio · Producto principal · Meta: 6–8 clientes activos</p>
+      </div>
+      <div class="nivel-precio">
+        <span class="precio-num">$2,500</span>
+        <span class="precio-sub">Subir a $3,500 en Hito 1</span>
+      </div>
+    </div>
+    <div class="nivel">
+      <div class="nivel-num">4</div>
+      <div class="nivel-body">
+        <p class="nivel-nombre">MARGEN SUPPLY™ — Recurrencia Operativa</p>
+        <p class="nivel-desc">Backend operativo mensual. Requisito: haber completado MARGEN™. Incluye: canal privado con equipo, sourcing y validación de proveedores, gestión de pedidos, logística y seguimiento, 1 sesión grupal mensual. Fee por operación: 4% del valor del pedido (mínimo $50).</p>
+        <p class="nivel-tag">Ingreso recurrente · Retención · Escalable con volumen de operaciones</p>
+      </div>
+      <div class="nivel-precio">
+        <span class="precio-num">$500</span>
+        <span class="precio-sub">/ mes + fee op.</span>
+      </div>
+    </div>
+    <div class="nivel nivel-premium">
+      <div class="nivel-num">5</div>
+      <div class="nivel-body">
+        <p class="nivel-nombre">ORIGEN™ — Premium · China en Campo</p>
+        <p class="nivel-desc">Experiencia inmersiva de 10 días en China. Máximo 10 participantes. Visitas a fábricas verificadas, reuniones de negociación en campo, red de contactos directos, control de calidad en origen. Lanzamiento: Septiembre 2026. Ejecución: Diciembre 2026. Early bird: $7,000 (primeros 5 cupos).</p>
+        <p class="nivel-tag">Lanzamiento Sept 2026 · Ejecución Dic 2026 · Early bird $7K · Regular $8K</p>
+      </div>
+      <div class="nivel-precio">
+        <span class="precio-num">$8,000</span>
+        <span class="precio-sub">Subir a $12K año 2</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELO DE NEGOCIO -->
+<section>
+  <p class="section-tag">03 — Modelo de Negocio</p>
+  <h2 class="section-title">Cómo se<br>genera el dinero.</h2>
+
+  <div class="modelo-grid">
+    <div class="modelo-card">
+      <p class="modelo-titulo">Escenario Mes 1–2 · Arranque</p>
+      <div class="modelo-linea"><span class="modelo-producto">MARGEN™ × 2</span><span class="modelo-ingreso">$5,000</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">DIRIGE™ × 8</span><span class="modelo-ingreso">$2,392</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">SUPPLY × 0</span><span class="modelo-ingreso">$0</span></div>
+      <div class="modelo-total"><span class="modelo-total-label">Total mensual</span><span class="modelo-total-num">$7,392</span></div>
+    </div>
+    <div class="modelo-card">
+      <p class="modelo-titulo">Escenario Mes 3–4 · Tracción</p>
+      <div class="modelo-linea"><span class="modelo-producto">MARGEN™ × 4</span><span class="modelo-ingreso">$10,000</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">DIRIGE™ × 12</span><span class="modelo-ingreso">$3,588</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">SUPPLY × 2</span><span class="modelo-ingreso">$1,000</span></div>
+      <div class="modelo-total"><span class="modelo-total-label">Total mensual</span><span class="modelo-total-num">$14,588</span></div>
+    </div>
+    <div class="modelo-card">
+      <p class="modelo-titulo">Escenario Mes 5–6 · Escala Temprana</p>
+      <div class="modelo-linea"><span class="modelo-producto">MARGEN™ × 6</span><span class="modelo-ingreso">$15,000</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">DIRIGE™ × 15</span><span class="modelo-ingreso">$4,485</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">SUPPLY × 4</span><span class="modelo-ingreso">$2,000</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">ORIGEN™ (amort.)</span><span class="modelo-ingreso">$4,000</span></div>
+      <div class="modelo-total"><span class="modelo-total-label">Total mensual</span><span class="modelo-total-num">$25,485</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>Regla de reinversión:</strong> Primer cliente de MARGEN™ cerrado → reinvertir 30% en ads. El ciclo se autofinancia: $2,500 → $750 van a adquisición → más leads calificados.
+  </div>
+
+  <div class="modelo-grid">
+    <div class="modelo-card">
+      <p class="modelo-titulo">Hito 1 · $30K / mes</p>
+      <div class="modelo-linea"><span class="modelo-producto">MARGEN™ × 8 ($3,500)</span><span class="modelo-ingreso">$28,000</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">DIRIGE™ × 20</span><span class="modelo-ingreso">$5,980</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">SUPPLY × 6</span><span class="modelo-ingreso">$3,000</span></div>
+      <div class="modelo-total"><span class="modelo-total-label">Total mensual</span><span class="modelo-total-num">$36,980</span></div>
+    </div>
+    <div class="modelo-card">
+      <p class="modelo-titulo">Hito 2 · $50K / mes</p>
+      <div class="modelo-linea"><span class="modelo-producto">MARGEN™ × 10 ($3,500)</span><span class="modelo-ingreso">$35,000</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">DIRIGE™ × 25</span><span class="modelo-ingreso">$7,475</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">SUPPLY × 10</span><span class="modelo-ingreso">$5,000</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">ORIGEN™ (amort.)</span><span class="modelo-ingreso">$6,000</span></div>
+      <div class="modelo-total"><span class="modelo-total-label">Total mensual</span><span class="modelo-total-num">$53,475</span></div>
+    </div>
+    <div class="modelo-card" style="background: rgba(184,122,78,0.06); border: 1px solid rgba(184,122,78,0.2);">
+      <p class="modelo-titulo" style="color: var(--bronce);">Presupuesto Operativo Actual</p>
+      <div class="modelo-linea"><span class="modelo-producto">Equipo (Samanta + Patrick)</span><span class="modelo-ingreso">~$1,700</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">Herramientas digitales</span><span class="modelo-ingreso">~$150</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">Publicidad / Ads</span><span class="modelo-ingreso">~$600</span></div>
+      <div class="modelo-linea"><span class="modelo-producto">Buffer / imprevistos</span><span class="modelo-ingreso">~$550</span></div>
+      <div class="modelo-total"><span class="modelo-total-label">Total mensual</span><span class="modelo-total-num">$3,000</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- HITOS DE ESCALA -->
+<section>
+  <p class="section-tag">04 — Hitos de Escala</p>
+  <h2 class="section-title">El camino<br>a $50K / mes.</h2>
+
+  <div class="hitos">
+    <div class="hito">
+      <div class="hito-num">1</div>
+      <div class="hito-body">
+        <p class="hito-trigger">Trigger: $20K / mes estable × 2 meses consecutivos + 6 MARGEN™ activos</p>
+        <p class="hito-titulo">Hito 1 — Escala Comercial</p>
+        <ul class="hito-acciones">
+          <li>Contratar primer Closer (comisión 10–15% por cierre)</li>
+          <li>Contratar primer Mentor para entrega de MARGEN™ (Diana supervisa)</li>
+          <li>Subir precio de MARGEN™ a $3,500</li>
+          <li>Diana sale de llamadas de cierre — enfocada en contenido y estrategia</li>
+          <li>Aumentar presupuesto de ads a $50–$100/día</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hito">
+      <div class="hito-num">2</div>
+      <div class="hito-body">
+        <p class="hito-trigger">Trigger: $35K / mes estable × 3 meses consecutivos</p>
+        <p class="hito-titulo">Hito 2 — Escala Operativa</p>
+        <ul class="hito-acciones">
+          <li>Segunda edición de ORIGEN™ al año (Marzo + Septiembre)</li>
+          <li>Subir precio ORIGEN™ a $12,000</li>
+          <li>Automatizar nurture de LIBRE™ (ManyChat)</li>
+          <li>DIRIGE™ como producto evergreen con ads directos</li>
+          <li>Samanta contrata asistente de soporte</li>
+          <li>Patrick contrata asistente de edición</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hito">
+      <div class="hito-num">3</div>
+      <div class="hito-body">
+        <p class="hito-trigger">Trigger: $50K / mes estable · Negocio autónomo</p>
+        <p class="hito-titulo">Hito 3 — Negocio Libre</p>
+        <ul class="hito-acciones">
+          <li>Diana solo hace contenido estratégico y relaciones clave</li>
+          <li>Mentor entrega MARGEN™ completamente</li>
+          <li>Estructura legal formal (empresa)</li>
+          <li>Evento presencial propio (más allá de ORIGEN™)</li>
+          <li>Expansión a nuevos mercados LATAM</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NAVEGACIÓN A MÓDULOS -->
+<section>
+  <p class="section-tag">05 — Documentos del Sistema</p>
+  <h2 class="section-title">El sistema<br>operativo completo.</h2>
+
+  <div class="modulos-nav">
+    <a href="oferta.html" class="modulo-link">
+      <span class="modulo-link-tag">Documento 01</span>
+      <span class="modulo-link-titulo">OFERTA</span>
+      <span class="modulo-link-desc">Oferta high ticket MARGEN™. Avatar, problema, promesa, método M.A.R.G.E.N.™, estructura de 5 meses, pricing y garantía.</span>
+      <span class="modulo-link-cta">Ver documento →</span>
+    </a>
+    <a href="ventas.html" class="modulo-link">
+      <span class="modulo-link-tag">Documento 02</span>
+      <span class="modulo-link-titulo">VENTAS</span>
+      <span class="modulo-link-desc">Sistema completo de ventas. Embudo, canales, flujo lead→cliente, guión de cierre, manejo de objeciones y métricas.</span>
+      <span class="modulo-link-cta">Ver documento →</span>
+    </a>
+    <a href="plan-accion.html" class="modulo-link">
+      <span class="modulo-link-tag">Documento 03</span>
+      <span class="modulo-link-titulo">PLAN DE ACCIÓN</span>
+      <span class="modulo-link-desc">Semanas 1–4 con checklists ejecutables. Meses 2–6. Infraestructura crítica. Triggers de escala.</span>
+      <span class="modulo-link-cta">Ver documento →</span>
+    </a>
+    <a href="sops.html" class="modulo-link">
+      <span class="modulo-link-tag">Documento 04</span>
+      <span class="modulo-link-titulo">SOPs</span>
+      <span class="modulo-link-desc">6 procedimientos operativos estándar. Filtro de leads, producción de contenido, onboarding, llamada de cierre, post-venta y referidos.</span>
+      <span class="modulo-link-cta">Ver documento →</span>
+    </a>
+    <a href="equipo.html" class="modulo-link">
+      <span class="modulo-link-tag">Documento 05</span>
+      <span class="modulo-link-titulo">EQUIPO</span>
+      <span class="modulo-link-desc">Roles completos de Diana, Samanta y Patrick. Tareas diarias, KPIs, entregables, reglas del equipo y dashboard semanal.</span>
+      <span class="modulo-link-cta">Ver documento →</span>
+    </a>
+    <a href="oferta.html#diferencial" class="modulo-link">
+      <span class="modulo-link-tag">Referencia rápida</span>
+      <span class="modulo-link-titulo">DIFERENCIAL</span>
+      <span class="modulo-link-desc">8+ años en China como sourcing y agente de carga. Garantía de Continuidad™. 10 negocios/mes. Método M.A.R.G.E.N.™</span>
+      <span class="modulo-link-cta">Ver en oferta →</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span class="footer-brand">DIANA REÁTEGUI</span>
+  <span style="font-family:'Bebas Neue'; font-size:16px; letter-spacing:2px; color:var(--muted);">Sistema MARGEN™ · Arquitectura Completa · 2026</span>
+  <span class="footer-note">Documento Interno · Uso Operativo</span>
+</div>
+
+</body>
+</html>

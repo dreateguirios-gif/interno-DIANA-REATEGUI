@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oferta MARGEN™ — Diana Reátegui</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --negro: #0A0A0A; --blanco: #F8F4EE; --bronce: #B87A4E; --bronce-claro: #D4956A;
+    --rosa: #C9A09A; --gris: #141412; --gris-medio: #1C1C1A; --gris-borde: #2A2A28;
+    --muted: #6B6B62; --muted-claro: #A0A090; --verde: #5A9A6A; --rojo: #A0392A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--negro); color: var(--blanco); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.96); border-bottom: 1px solid var(--gris-borde); padding: 0 60px; display: flex; align-items: center; justify-content: space-between; height: 56px; backdrop-filter: blur(8px); }
+  .nav-brand { font-family: 'Bebas Neue'; font-size: 20px; letter-spacing: 3px; color: var(--bronce); text-decoration: none; }
+  .nav-links { display: flex; gap: 0; }
+  .nav-links a { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 0 18px; height: 56px; display: flex; align-items: center; border-left: 1px solid var(--gris-borde); transition: color 0.2s, background 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--bronce); background: rgba(184,122,78,0.06); }
+
+  .hero { padding: 100px 60px 80px; border-bottom: 1px solid var(--gris-borde); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(184,122,78,0.08) 0%, transparent 70%); pointer-events: none; }
+  .badge { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); border: 1px solid var(--bronce); padding: 6px 14px; margin-bottom: 40px; text-transform: uppercase; }
+  .hero-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; margin-bottom: 20px; }
+  .hero-title { font-family: 'Bebas Neue'; font-size: clamp(64px, 9vw, 120px); line-height: 0.92; letter-spacing: -2px; margin-bottom: 14px; }
+  .hero-title em { color: var(--bronce); font-style: normal; }
+  .hero-sub { font-family: 'Bebas Neue'; font-size: clamp(20px, 2.8vw, 36px); color: var(--muted); margin-bottom: 40px; max-width: 760px; line-height: 1.2; }
+  .hero-promise { max-width: 680px; font-size: 16px; color: var(--muted-claro); line-height: 1.8; border-left: 3px solid var(--bronce); padding-left: 22px; }
+  .hero-promise strong { color: var(--blanco); font-weight: 500; }
+
+  section { padding: 80px 60px; border-bottom: 1px solid var(--gris-borde); }
+  .section-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); text-transform: uppercase; margin-bottom: 14px; }
+  .section-title { font-family: 'Bebas Neue'; font-size: clamp(36px, 5vw, 68px); line-height: 0.95; margin-bottom: 44px; letter-spacing: -1px; }
+
+  .highlight { background: rgba(184,122,78,0.07); border-left: 3px solid var(--bronce); padding: 18px 22px; font-size: 14px; color: var(--muted-claro); line-height: 1.75; margin: 28px 0; }
+  .highlight strong { color: var(--blanco); }
+
+  /* DOLOR GRID */
+  .dolor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gris-borde); margin-bottom: 36px; }
+  .dolor-col { background: var(--negro); padding: 36px; }
+  .dolor-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  .dolor-label.rojo { color: var(--rojo); }
+  .dolor-label.verde { color: var(--verde); }
+  .dolor-list { list-style: none; }
+  .dolor-list li { font-size: 13.5px; color: var(--muted-claro); padding: 10px 0; border-bottom: 1px solid #111; display: flex; gap: 12px; align-items: flex-start; }
+  .dolor-list li:last-child { border-bottom: none; }
+  .dolor-list li::before { content: '—'; color: var(--rojo); flex-shrink: 0; margin-top: 1px; }
+  .dolor-list.verde li::before { content: '→'; color: var(--verde); }
+  .dolor-list.verde li { color: var(--blanco); }
+
+  /* FIT GRID */
+  .fit-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; background: var(--gris-borde); margin-bottom: 40px; }
+  .fit-col { background: var(--negro); padding: 32px 26px; }
+  .fit-col-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--gris-borde); }
+  .fit-list { list-style: none; }
+  .fit-list li { font-size: 13px; color: var(--muted-claro); padding: 9px 0; border-bottom: 1px solid #111; display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+  .fit-list li:last-child { border-bottom: none; }
+
+  /* MÉTODO */
+  .metodo-steps { display: flex; flex-direction: column; margin-bottom: 48px; }
+  .step { display: grid; grid-template-columns: 64px 1fr; border-left: 1px solid var(--gris-borde); }
+  .step:hover .step-body { background: rgba(184,122,78,0.03); }
+  .step-letter { font-family: 'Bebas Neue'; font-size: 52px; color: var(--bronce); opacity: 0.3; padding: 24px 0; text-align: center; line-height: 1; border-right: 1px solid var(--gris-borde); }
+  .step-body { padding: 24px 30px; border-bottom: 1px solid #1A1A18; transition: background 0.2s; }
+  .step:last-child .step-body { border-bottom: none; }
+  .step-title { font-size: 14px; font-weight: 700; color: var(--blanco); margin-bottom: 6px; }
+  .step-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+  .step-result { display: inline-block; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 1px; color: var(--bronce); border: 1px solid rgba(184,122,78,0.3); padding: 3px 8px; text-transform: uppercase; }
+
+  /* FASES */
+  .fases-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; border: 1px solid var(--gris-borde); margin-bottom: 48px; }
+  .fase { padding: 32px 20px; border-right: 1px solid var(--gris-borde); position: relative; overflow: hidden; }
+  .fase:last-child { border-right: none; }
+  .fase::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--bronce); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .fase:hover::after { transform: scaleX(1); }
+  .fase-num { font-family: 'Bebas Neue'; font-size: 56px; color: rgba(184,122,78,0.1); line-height: 1; margin-bottom: 12px; }
+  .fase-mes { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--bronce); text-transform: uppercase; margin-bottom: 8px; }
+  .fase-titulo { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .fase-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .fase-resultado { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--bronce); letter-spacing: 1px; text-transform: uppercase; margin-top: 12px; display: block; }
+
+  /* INCLUYE / NO INCLUYE */
+  .incluye-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gris-borde); margin-bottom: 40px; }
+  .incluye-col { background: var(--negro); padding: 36px; }
+  .incluye-header { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--gris-borde); }
+  .incluye-header.si { color: var(--verde); }
+  .incluye-header.no { color: var(--muted); }
+  .incluye-list { list-style: none; }
+  .incluye-list li { font-size: 13px; color: var(--muted-claro); padding: 10px 0; border-bottom: 1px solid #111; display: flex; gap: 12px; align-items: flex-start; }
+  .incluye-list li:last-child { border-bottom: none; }
+  .incluye-list.si li::before { content: '→'; color: var(--verde); flex-shrink: 0; }
+  .incluye-list.no li::before { content: '—'; color: var(--muted); flex-shrink: 0; }
+  .incluye-list.no li { color: var(--muted); }
+
+  /* DIFERENCIAL */
+  .dif-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gris-borde); margin-bottom: 40px; }
+  .dif-col { background: var(--negro); padding: 40px 36px; }
+  .dif-header { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px; padding-bottom: 14px; border-bottom: 1px solid var(--gris-borde); }
+  .dif-header.ellos { color: var(--muted); }
+  .dif-header.yo { color: var(--bronce); }
+  .dif-list { list-style: none; }
+  .dif-list li { font-size: 13.5px; padding: 11px 0; border-bottom: 1px solid #111; display: flex; gap: 12px; align-items: flex-start; }
+  .dif-list.ellos li { color: #505050; }
+  .dif-list.yo li { color: var(--blanco); }
+  .dif-list.ellos li::before { content: '✕'; color: #333; font-size: 9px; flex-shrink: 0; margin-top: 3px; }
+  .dif-list.yo li::before { content: '→'; color: var(--bronce); flex-shrink: 0; margin-top: 2px; }
+
+  /* PRICING */
+  .pricing-box { background: rgba(184,122,78,0.06); border: 1px solid rgba(184,122,78,0.25); padding: 56px; margin-bottom: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .pricing-titulo { font-family: 'Bebas Neue'; font-size: 64px; color: var(--blanco); line-height: 0.9; letter-spacing: -2px; margin-bottom: 8px; }
+  .pricing-titulo span { color: var(--bronce); }
+  .pricing-sub { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 30px; }
+  .pricing-detalles { display: flex; flex-direction: column; gap: 12px; }
+  .pricing-linea { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; color: var(--muted-claro); }
+  .pricing-linea::before { content: '→'; color: var(--bronce); flex-shrink: 0; }
+  .pricing-escalada { padding: 24px; border: 1px solid var(--gris-borde); background: var(--negro); }
+  .pricing-escalada-titulo { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--bronce); text-transform: uppercase; margin-bottom: 16px; }
+  .pricing-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #111; font-size: 13px; }
+  .pricing-row:last-child { border-bottom: none; }
+  .pricing-row span:last-child { font-family: 'Space Mono', monospace; color: var(--bronce); }
+
+  /* GARANTIA */
+  .garantia-box { border: 1px solid var(--gris-borde); padding: 48px 52px; display: grid; grid-template-columns: 80px 1fr; gap: 36px; align-items: start; background: rgba(255,255,255,0.01); margin-bottom: 40px; }
+  .garantia-icon { font-family: 'Bebas Neue'; font-size: 72px; color: var(--bronce); opacity: 0.4; line-height: 1; }
+  .garantia-titulo { font-family: 'Bebas Neue'; font-size: 36px; letter-spacing: -0.5px; margin-bottom: 12px; }
+  .garantia-texto { font-size: 14.5px; color: var(--muted-claro); line-height: 1.8; }
+  .garantia-texto strong { color: var(--blanco); font-weight: 500; }
+  .garantia-nota { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--gris-borde); line-height: 1.8; }
+
+  /* DIANA BIO */
+  .diana-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+  .diana-titulo { font-family: 'Bebas Neue'; font-size: clamp(42px, 5vw, 68px); line-height: 0.9; letter-spacing: -1px; margin-bottom: 8px; }
+  .diana-cargo { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); text-transform: uppercase; margin-bottom: 24px; line-height: 1.8; }
+  .diana-bio { font-size: 14.5px; color: var(--muted-claro); line-height: 1.85; margin-bottom: 32px; }
+  .diana-bio strong { color: var(--blanco); font-weight: 500; }
+  .credentials { display: flex; flex-direction: column; gap: 10px; }
+  .credential { display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; border: 1px solid var(--gris-borde); }
+  .credential-icon { color: var(--bronce); flex-shrink: 0; }
+  .credential p { font-size: 13px; color: var(--muted-claro); line-height: 1.5; }
+  .credential p strong { color: var(--blanco); font-weight: 500; }
+  .stat-box { background: var(--gris); border: 1px solid var(--gris-borde); padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num { font-family: 'Bebas Neue'; font-size: 56px; color: var(--bronce); line-height: 1; }
+  .stat-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 4px; line-height: 1.6; }
+
+  .footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-brand { font-family: 'Bebas Neue'; font-size: 24px; letter-spacing: 3px; color: var(--bronce); }
+  .footer-note { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+
+  @media(max-width:960px) {
+    .nav { padding: 0 24px; } .nav-links { display: none; }
+    .hero, section { padding: 60px 24px; }
+    .dolor-grid, .fit-grid, .incluye-grid, .dif-grid, .pricing-box, .diana-grid { grid-template-columns: 1fr; }
+    .fit-grid { grid-template-columns: 1fr; }
+    .fases-grid { grid-template-columns: 1fr 1fr; }
+    .stat-box { grid-template-columns: 1fr 1fr; }
+    .footer { padding: 40px 24px; flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">DIANA REÁTEGUI</a>
+  <div class="nav-links">
+    <a href="../INICIO.html">← Inicio</a>
+    <a href="index.html">Master Plan</a>
+    <a href="oferta.html" class="active">Oferta</a>
+    <a href="ventas.html">Ventas</a>
+    <a href="plan-accion.html">Plan de Acción</a>
+    <a href="sops.html">SOPs</a>
+    <a href="equipo.html">Equipo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">Oferta High Ticket · MARGEN™ · Uso Interno</div>
+  <p class="hero-tag">La oferta principal del negocio</p>
+  <h1 class="hero-title">MAR<em>GEN</em>™</h1>
+  <p class="hero-sub">Sistema de escala para empresarios de productos físicos — 5 meses, método real, resultados medibles</p>
+  <p class="hero-promise">
+    <strong>Ya facturas. El negocio funciona. El problema es que depende de ti, tu margen es ajustado y no tienes sistema.</strong> En 5 meses construimos juntos la estructura que necesita tu negocio para escalar sin que estés presente: margen real desde China, tu propia marca y una operación que no colapsa cuando te vas de viaje.
+  </p>
+</section>
+
+<!-- AVATAR + DOLOR -->
+<section>
+  <p class="section-tag">01 — Avatar y Diagnóstico</p>
+  <h2 class="section-title">¿Para quién<br>es esto?</h2>
+
+  <div class="dolor-grid">
+    <div class="dolor-col">
+      <p class="dolor-label rojo">// Dónde está hoy el cliente ideal</p>
+      <ul class="dolor-list">
+        <li>Factura entre $8K y $20K USD/mes pero no sabe exactamente cuánto le queda</li>
+        <li>Todo el negocio depende de él — si se va, se para</li>
+        <li>Compra local porque importar "parece complicado" o tuvo una mala experiencia</li>
+        <li>Revende productos de otros — sin marca, sin diferenciación, sin activo propio</li>
+        <li>Intentó escalar antes: contrató gente, invirtió, y solo generó más caos</li>
+        <li>Margen tan ajustado que no puede reinvertir para crecer</li>
+        <li>Siente el potencial pero sin sistema, todo es apagar incendios</li>
+      </ul>
+    </div>
+    <div class="dolor-col">
+      <p class="dolor-label verde">// Dónde llega en 5 meses</p>
+      <ul class="dolor-list verde">
+        <li>Sabe exactamente su costo, su margen y su próxima palanca de crecimiento</li>
+        <li>Tiene sistema y equipo mínimo — el negocio funciona sin él</li>
+        <li>Importa directo de fábrica verificada con margen 3x–5x vs. compra local</li>
+        <li>Marca propia construida — su logo, su empaque, su precio. Un activo real</li>
+        <li>Estructura documentada: procesos, delegación y operación predecible</li>
+        <li>Ingresos constantes y crecientes sin esfuerzo proporcional al tiempo</li>
+        <li>Pasa de operador a dueño. De autoempleado a empresario con sistema</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>El mismo producto que compras hoy a $100 local puede llegar con tu marca propia desde fábrica a $22–$35.</strong> Ese diferencial es la diferencia entre un negocio con techo y uno que escala.
+  </div>
+
+  <div class="fit-grid">
+    <div class="fit-col">
+      <p class="fit-col-label" style="color:var(--bronce);">→ MARGEN™ es para ti si</p>
+      <ul class="fit-list">
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Tienes tienda física, e-commerce o ventas B2B activas</li>
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Facturas entre $5K y $20K USD al mes como mínimo</li>
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Vendes productos físicos o quieres comenzar importación</li>
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Quieres crear y escalar tu propia marca propia</li>
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Estás dispuesto a ejecutar, no solo a aprender</li>
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Tienes capital mínimo para operar e importar</li>
+      </ul>
+    </div>
+    <div class="fit-col">
+      <p class="fit-col-label" style="color:var(--muted);">✕ NO es para ti si</p>
+      <ul class="fit-list">
+        <li><span style="color:#444">—</span> Estás empezando desde cero sin ventas actuales</li>
+        <li><span style="color:#444">—</span> Buscas un curso de videos para ver solo a tu ritmo</li>
+        <li><span style="color:#444">—</span> No tienes capital para invertir en importación</li>
+        <li><span style="color:#444">—</span> Quieres resultados sin comprometerte al proceso</li>
+        <li><span style="color:#444">—</span> Esperas que Diana haga el trabajo por ti</li>
+        <li><span style="color:#444">—</span> No puedes comprometerte 5 meses de implementación</li>
+      </ul>
+    </div>
+    <div class="fit-col">
+      <p class="fit-col-label" style="color:var(--muted);">/ Lo que obtienes</p>
+      <ul class="fit-list">
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Sistema completo de negocio estructurado en 5 meses</li>
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Acceso a red de fábricas verificadas en China (8 años)</li>
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Logística end-to-end como agente de carga</li>
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Tu marca propia importada con margen real</li>
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Acompañamiento hasta que el negocio funcione</li>
+        <li style="color:var(--blanco)"><span style="color:var(--bronce)">→</span> Garantía de Continuidad™ si ejecutas el sistema</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTODO -->
+<section>
+  <p class="section-tag">02 — El Método</p>
+  <h2 class="section-title">Método<br><span style="color:var(--bronce)">M.A.R.G.E.N.™</span></h2>
+  <p style="font-size:14.5px;color:var(--muted-claro);max-width:600px;margin-bottom:48px;line-height:1.8;">
+    6 fases. 5 meses. Cada fase produce un resultado concreto y medible. No son módulos teóricos — son etapas de ejecución acompañada. Lo que se hace aquí se practica en campo todos los días.
+  </p>
+
+  <div class="metodo-steps">
+    <div class="step">
+      <div class="step-letter">M</div>
+      <div class="step-body">
+        <p class="step-title">MAPEO — Radiografía financiera real del negocio</p>
+        <p class="step-desc">Diagnóstico financiero profundo: qué vendes, cuánto cuesta realmente, cuánto ganas por unidad, qué líneas tienen potencial de marca propia desde China. Solo números — sin adornos. Identificación de pérdidas ocultas y el mayor cuello de botella.</p>
+        <span class="step-result">→ Claridad total en las primeras 2 semanas</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-letter">A</div>
+      <div class="step-body">
+        <p class="step-title">ARQUITECTURA — Rediseño del modelo de ingresos</p>
+        <p class="step-desc">Reestructuramos cómo genera dinero el negocio. Eliminamos lo que no escala. Definimos las líneas de producto con mayor potencial de margen y marca propia. Construimos un modelo que no depende del dueño para operar día a día.</p>
+        <span class="step-result">→ Modelo rediseñado y validado para escalar</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-letter">R</div>
+      <div class="step-body">
+        <p class="step-title">RENTABILIDAD — Tu fuente de margen desde China</p>
+        <p class="step-desc">El corazón del sistema. Con 8+ años como sourcing directa en China y operación activa como agente de carga internacional, Diana conecta al cliente con fábricas verificadas. Se negocian condiciones, se calcula el costo landed completo y se estructura el primer pedido o la primera marca propia. El cliente ejecuta — Diana acompaña.</p>
+        <span class="step-result">→ Primer pedido con margen 3x–5x confirmado</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-letter">G</div>
+      <div class="step-body">
+        <p class="step-title">GENERACIÓN — Sistema de ventas predecible</p>
+        <p class="step-desc">Un buen producto sin sistema de ventas no escala. Se optimizan y activan los canales existentes del cliente. Ventas inmediatas para generar flujo de caja mientras se construye la estructura de largo plazo. Validación comercial antes de escalar el inventario.</p>
+        <span class="step-result">→ Ventas constantes y predecibles activas</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-letter">E</div>
+      <div class="step-body">
+        <p class="step-title">ESCALA — Volumen, distribución y recompra</p>
+        <p class="step-desc">Con sistema funcionando y margen real, se escala. Más volumen de importación baja el costo unitario. Nuevos canales de distribución. Recompra automatizada. Control de flujo de caja para crecer sin quebrarse. La misma energía produce más resultado.</p>
+        <span class="step-result">→ Ingresos que crecen sin esfuerzo proporcional</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-letter">N</div>
+      <div class="step-body">
+        <p class="step-title">NEGOCIO LIBRE — Equipo, delegación, salida operativa</p>
+        <p class="step-desc">El objetivo final del programa. Se construye la estructura mínima de equipo, se documentan procesos y el dueño sale de la operación diaria. Deja de ser el cuello de botella de su propio crecimiento. Pasa de operador a dueño de negocio con libertad real.</p>
+        <span class="step-result">→ Libertad operativa real — el negocio funciona sin ti</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESTRUCTURA DEL PROGRAMA -->
+<section>
+  <p class="section-tag">03 — Estructura del Programa</p>
+  <h2 class="section-title">6 fases.<br>5 meses.<br>1 transformación.</h2>
+
+  <div class="fases-grid">
+    <div class="fase">
+      <div class="fase-num">01</div>
+      <p class="fase-mes">Mes 1</p>
+      <p class="fase-titulo">Mapeo y Diagnóstico</p>
+      <p class="fase-desc">Auditoría completa del negocio. Mapa de costos y margen real. Diagnóstico de proveedores actuales. Plan de reestructuración personalizado.</p>
+      <span class="fase-resultado">→ Deja de adivinar</span>
+    </div>
+    <div class="fase">
+      <div class="fase-num">02</div>
+      <p class="fase-mes">Mes 2</p>
+      <p class="fase-titulo">Arquitectura del Negocio</p>
+      <p class="fase-desc">Rediseño del modelo de ingresos. Estrategia de marca propia. Identificación de categoría en China. Proceso de búsqueda de proveedores guiado.</p>
+      <span class="fase-resultado">→ Modelo que escala</span>
+    </div>
+    <div class="fase">
+      <div class="fase-num">03</div>
+      <p class="fase-mes">Mes 3</p>
+      <p class="fase-titulo">Abastecimiento y Margen</p>
+      <p class="fase-desc">Contacto y calificación de proveedores. Negociación guiada (cliente ejecuta). Primer pedido o renegociación. Control de calidad y logística básica.</p>
+      <span class="fase-resultado">→ Tu margen real</span>
+    </div>
+    <div class="fase">
+      <div class="fase-num">04</div>
+      <p class="fase-mes">Mes 4</p>
+      <p class="fase-titulo">G — Generación Comercial</p>
+      <p class="fase-desc">Sistema de ventas predecible activado. Ajuste de precios con nuevo margen. Validación de mercado. Ventas inmediatas para generar flujo de caja mientras se construye la estructura de largo plazo.</p>
+      <span class="fase-resultado">→ Ingresos predecibles activos</span>
+    </div>
+    <div class="fase">
+      <div class="fase-num">05</div>
+      <p class="fase-mes">Mes 4–5</p>
+      <p class="fase-titulo">E — Escala y Volumen</p>
+      <p class="fase-desc">Más volumen de importación baja el costo unitario. Nuevos canales de distribución. Recompra automatizada. Control de flujo de caja para crecer sin quebrarse.</p>
+      <span class="fase-resultado">→ Ingresos que crecen sin esfuerzo proporcional</span>
+    </div>
+    <div class="fase">
+      <div class="fase-num">06</div>
+      <p class="fase-mes">Mes 5</p>
+      <p class="fase-titulo">N — Negocio Libre</p>
+      <p class="fase-desc">Delegación mínima viable. Documentación de procesos. El dueño sale de la operación diaria. Graduación + oferta MARGEN SUPPLY™. Plan de escala personalizado a 6–12 meses.</p>
+      <span class="fase-resultado">→ Libertad operativa real</span>
+    </div>
+  </div>
+
+  <div class="incluye-grid">
+    <div class="incluye-col">
+      <p class="incluye-header si">// MARGEN™ incluye</p>
+      <ul class="incluye-list si">
+        <li>Acompañamiento personalizado durante 5 meses completos</li>
+        <li>2 sesiones grupales por mes (todos los clientes activos)</li>
+        <li>1 sesión individual por mes (Diana revisa caso específico)</li>
+        <li>Canal privado de WhatsApp con acceso al equipo</li>
+        <li>Grabaciones de todas las sesiones grupales</li>
+        <li>Acceso a red de fábricas verificadas en China (8 años)</li>
+        <li>Acompañamiento en negociación con proveedores</li>
+        <li>Gestión logística como agente de carga internacional</li>
+        <li>Cálculo de costo landed sin sorpresas</li>
+        <li>Recursos, plantillas y herramientas del método</li>
+        <li>Garantía de Continuidad™ para quienes ejecutan</li>
+      </ul>
+    </div>
+    <div class="incluye-col">
+      <p class="incluye-header no">// MARGEN™ NO incluye</p>
+      <ul class="incluye-list no">
+        <li>Diana NO hace el trabajo por el cliente</li>
+        <li>Diana NO negocia con proveedores en nombre del cliente</li>
+        <li>No incluye capital para importación (el cliente aporta)</li>
+        <li>No es un curso de videos para ver a tu ritmo</li>
+        <li>No aplica para negocios sin facturación activa</li>
+        <li>No hay devolución después del mes 1 (política clara)</li>
+        <li>Pausa máxima: 1 mes por causa mayor (no extiende el programa)</li>
+        <li>No hay acceso ilimitado fuera de sesiones (máx. 1 mensaje urgente/semana)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAL -->
+<section id="diferencial">
+  <p class="section-tag">04 — Por qué MARGEN™ es diferente</p>
+  <h2 class="section-title">Lo que vende<br>el mercado vs.<br>lo que construyes aquí.</h2>
+
+  <div class="dif-grid">
+    <div class="dif-col">
+      <p class="dif-header ellos">// Lo que venden los demás</p>
+      <ul class="dif-list ellos">
+        <li>Cursos de importación sin contexto de negocio real</li>
+        <li>Marketing digital sin estructura empresarial previa</li>
+        <li>Fórmulas de 7 cifras sin casos verificables</li>
+        <li>Comunidades genéricas sin acompañamiento real</li>
+        <li>Para cualquiera — desde emprendedores sin experiencia</li>
+        <li>Teoría que termina cuando termina el módulo</li>
+        <li>Coach sin operación real propia en el campo</li>
+        <li>Importación enseñada por alguien que la aprendió en un curso</li>
+      </ul>
+    </div>
+    <div class="dif-col">
+      <p class="dif-header yo">// Lo que construyes en MARGEN™</p>
+      <ul class="dif-list yo">
+        <li>Sistema completo: modelo → margen → marca → escala → equipo</li>
+        <li>Tu marca propia desde fábrica verificada en China con logística real</li>
+        <li>Diagnóstico financiero real desde semana 1 — no teoría, números</li>
+        <li>Sourcing directo + agente de carga en un solo programa sin intermediarios</li>
+        <li>Acompañamiento hasta que el negocio funciona — sin fecha de expiración</li>
+        <li>Solo para empresarios que ya facturan — perfil calificado y comprometido</li>
+        <li>Diana es operadora activa en China — lo que enseña lo hace todos los días</li>
+        <li>Garantía de Continuidad™ — si ejecutas, seguimos hasta que funcione</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>La ventaja que ningún otro programa puede dar:</strong> No es una coach que aprendió a importar en un curso. Es operadora. 8+ años como sourcing directa en China, agente de carga internacional activa. Eso significa que cuando dice que tu producto puede llegar desde fábrica a X precio con tu marca — lo sabe porque lo hace todos los días.
+  </div>
+</section>
+
+<!-- PRICING -->
+<section>
+  <p class="section-tag">05 — Inversión y Condiciones</p>
+  <h2 class="section-title">El precio<br>y lo que incluye.</h2>
+
+  <div class="pricing-box">
+    <div>
+      <p class="pricing-titulo">$2,500 <span>USD</span></p>
+      <p class="pricing-sub">Programa completo · 5 meses · Todo incluido</p>
+      <div class="pricing-detalles">
+        <div class="pricing-linea">Precio actual: $2,500 USD — pago único o 2 cuotas ($1,350 c/u)</div>
+        <div class="pricing-linea">Descuento exclusivo para ex-clientes de DIRIGE™: $200 off (válido 72h)</div>
+        <div class="pricing-linea">Precio para clientes de sourcing actuales: a coordinar directamente</div>
+        <div class="pricing-linea">Sin cargos ocultos — precio all-in excepto capital de importación</div>
+        <div class="pricing-linea">Cupos máximos: 6–8 clientes simultáneos en fase actual</div>
+        <div class="pricing-linea">Acceso: solo por evaluación previa aprobada</div>
+      </div>
+    </div>
+    <div>
+      <div class="pricing-escalada">
+        <p class="pricing-escalada-titulo">Escalada de precios por hito</p>
+        <div class="pricing-row"><span style="color:var(--muted-claro)">Precio actual (Fase arranque)</span><span>$2,500</span></div>
+        <div class="pricing-row"><span style="color:var(--muted-claro)">Hito 1 · $20K/mes estable</span><span>$3,500</span></div>
+        <div class="pricing-row"><span style="color:var(--muted-claro)">Hito 2 · Closer + Mentor</span><span>$4,500</span></div>
+        <div class="pricing-row"><span style="color:var(--muted-claro)">DIRIGE™ siempre</span><span>$299</span></div>
+        <div class="pricing-row"><span style="color:var(--muted-claro)">MARGEN SUPPLY™ / mes</span><span>$500 + 4%</span></div>
+        <div class="pricing-row"><span style="color:var(--muted-claro)">ORIGEN™ Early Bird</span><span>$7,000</span></div>
+        <div class="pricing-row"><span style="color:var(--muted-claro)">ORIGEN™ Precio Regular</span><span>$8,000</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTÍA -->
+<section>
+  <p class="section-tag">06 — Garantía</p>
+  <h2 class="section-title">La garantía que<br>ningún curso da.</h2>
+
+  <div class="garantia-box">
+    <div class="garantia-icon">G</div>
+    <div>
+      <p class="garantia-titulo">Garantía de Continuidad™</p>
+      <p class="garantia-texto">
+        <strong>Si ejecutas el sistema completo y no logras avances reales en la estructura y rentabilidad de tu negocio, seguimos trabajando juntos hasta que funcione.</strong>
+        <br><br>
+        No hay abandono en el mes 3. No termina cuando termina el programa. La reputación de MARGEN™ está construida sobre resultados reales — no sobre ventas de programas. Si estás dentro y ejecutas los compromisos acordados, el acompañamiento continúa hasta que el negocio esté funcionando como prometido.
+      </p>
+      <p class="garantia-nota">* Aplica a participantes que ejecuten el sistema completo y cumplan los compromisos acordados en cada fase · La garantía cubre continuidad de acompañamiento, no devolución de inversión · No aplica en caso de incumplimiento del cliente de las tareas y compromisos por fase</p>
+    </div>
+  </div>
+</section>
+
+<!-- DIANA -->
+<section>
+  <p class="section-tag">07 — Quién entrega MARGEN™</p>
+  <h2 class="section-title" style="margin-bottom:52px;">La experta<br>que lo construyó.</h2>
+
+  <div class="diana-grid">
+    <div>
+      <p class="diana-titulo">DIANA<br>REÁTEGUI</p>
+      <p class="diana-cargo">Experta en Negocios con China · Sourcing Specialist<br>Agente de Carga Internacional · Creadora de MARGEN™</p>
+      <p class="diana-bio">
+        Durante los últimos <strong>8+ años, Diana ha operado directamente en China</strong> como agente de sourcing y agente de carga internacional. No desde un escritorio — en campo, con fábricas reales, negociaciones reales y cargamentos reales para clientes reales.
+        <br><br>
+        Ha ayudado a empresarios de productos físicos a <strong>construir marcas propias importadas desde China, reducir costos de abastecimiento en 60% promedio y estructurar operaciones que escalan sin depender del dueño</strong>. MARGEN™ es la destilación de ese conocimiento operativo en un sistema de 5 meses.
+        <br><br>
+        Cuando Diana dice que tu producto puede llegar desde fábrica a un costo 60% menor con tu propia marca, no lo supone — lo sabe porque lo hace todos los días.
+      </p>
+      <div class="credentials">
+        <div class="credential">
+          <span class="credential-icon">→</span>
+          <p><strong>8+ años como Sourcing Specialist en China</strong> — red de fábricas verificadas en múltiples categorías de producto</p>
+        </div>
+        <div class="credential">
+          <span class="credential-icon">→</span>
+          <p><strong>Agente de Carga Internacional activa</strong> — gestión completa de logística, aduana, flete y entrega</p>
+        </div>
+        <div class="credential">
+          <span class="credential-icon">→</span>
+          <p><strong>Creadora del Método M.A.R.G.E.N.™</strong> — sistema probado de escala empresarial para productos físicos</p>
+        </div>
+        <div class="credential">
+          <span class="credential-icon">→</span>
+          <p><strong>No es coach. Es operadora activa</strong> — especialista en rentabilidad y comercio exterior con operación real</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="stat-box">
+        <div class="stat-item">
+          <span class="stat-num">8+</span>
+          <span class="stat-label">Años operando en China en campo</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">60%</span>
+          <span class="stat-label">Reducción de costo promedio lograda</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">3–5x</span>
+          <span class="stat-label">Margen vs compra local típica</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">10</span>
+          <span class="stat-label">Negocios máximo / mes (capacidad)</span>
+        </div>
+      </div>
+      <div style="margin-top:20px; padding:28px; border:1px solid var(--gris-borde); background:var(--gris);">
+        <p style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--bronce);text-transform:uppercase;margin-bottom:14px;">La promesa de MARGEN™</p>
+        <p style="font-size:15px;color:var(--blanco);line-height:1.75;font-weight:400;">
+          "En 5 meses, te guío para construir un negocio con margen alto importando desde China, con tu marca propia, un sistema de ventas funcionando y una estructura que escala — sin que el negocio dependa de ti para operar."
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  <span class="footer-brand">MARGEN™</span>
+  <span style="font-family:'Bebas Neue';font-size:15px;letter-spacing:2px;color:var(--muted);">Sistema de Escala · Importación Estratégica · Marca Propia desde China</span>
+  <span class="footer-note">Diana Reátegui · 2026 · 10 Negocios / Mes</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Ventas — Diana Reátegui</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --negro: #0A0A0A; --blanco: #F8F4EE; --bronce: #B87A4E; --bronce-claro: #D4956A;
+    --gris: #141412; --gris-medio: #1C1C1A; --gris-borde: #2A2A28;
+    --muted: #6B6B62; --muted-claro: #A0A090; --verde: #5A9A6A; --rojo: #A0392A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--negro); color: var(--blanco); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(10,10,10,0.96); border-bottom: 1px solid var(--gris-borde); padding: 0 60px; display: flex; align-items: center; justify-content: space-between; height: 56px; backdrop-filter: blur(8px); }
+  .nav-brand { font-family: 'Bebas Neue'; font-size: 20px; letter-spacing: 3px; color: var(--bronce); text-decoration: none; }
+  .nav-links { display: flex; }
+  .nav-links a { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 0 18px; height: 56px; display: flex; align-items: center; border-left: 1px solid var(--gris-borde); transition: color 0.2s, background 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--bronce); background: rgba(184,122,78,0.06); }
+
+  .hero { padding: 90px 60px 70px; border-bottom: 1px solid var(--gris-borde); }
+  .badge { display: inline-block; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); border: 1px solid var(--bronce); padding: 6px 14px; margin-bottom: 36px; text-transform: uppercase; }
+  .hero-tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; margin-bottom: 18px; }
+  .hero-title { font-family: 'Bebas Neue'; font-size: clamp(56px, 8vw, 110px); line-height: 0.92; letter-spacing: -2px; margin-bottom: 14px; }
+  .hero-title em { color: var(--bronce); font-style: normal; }
+  .hero-lead { max-width: 680px; font-size: 15px; color: var(--muted-claro); line-height: 1.8; border-left: 3px solid var(--bronce); padding-left: 22px; }
+  .hero-lead strong { color: var(--blanco); font-weight: 500; }
+
+  section { padding: 80px 60px; border-bottom: 1px solid var(--gris-borde); }
+  .section-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); text-transform: uppercase; margin-bottom: 14px; }
+  .section-title { font-family: 'Bebas Neue'; font-size: clamp(34px, 5vw, 66px); line-height: 0.95; margin-bottom: 44px; letter-spacing: -1px; }
+
+  .highlight { background: rgba(184,122,78,0.07); border-left: 3px solid var(--bronce); padding: 18px 22px; font-size: 14px; color: var(--muted-claro); line-height: 1.75; margin: 28px 0; }
+  .highlight strong { color: var(--blanco); }
+
+  /* EMBUDO */
+  .embudo { display: flex; flex-direction: column; gap: 2px; margin-bottom: 48px; }
+  .etapa { display: grid; grid-template-columns: 200px 1fr auto; border: 1px solid var(--gris-borde); transition: background 0.2s; }
+  .etapa:hover { background: rgba(184,122,78,0.03); }
+  .etapa-num { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; border-right: 1px solid var(--gris-borde); text-align: center; gap: 6px; }
+  .etapa-num-n { font-family: 'Bebas Neue'; font-size: 48px; color: var(--bronce); opacity: 0.3; line-height: 1; }
+  .etapa-num-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--bronce); text-transform: uppercase; }
+  .etapa-body { padding: 24px 28px; }
+  .etapa-titulo { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .etapa-desc { font-size: 12.5px; color: var(--muted-claro); line-height: 1.6; }
+  .etapa-resp { padding: 24px 24px; border-left: 1px solid var(--gris-borde); display: flex; align-items: center; min-width: 120px; }
+  .resp-tag { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; text-align: center; }
+  .resp-tag.diana { color: var(--bronce); }
+  .resp-tag.samanta { color: var(--muted-claro); }
+  .resp-tag.sistema { color: var(--verde); }
+
+  /* CANALES */
+  .canales-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: var(--gris-borde); margin-bottom: 40px; }
+  .canal { background: var(--negro); padding: 28px 22px; }
+  .canal-icon { font-family: 'Bebas Neue'; font-size: 36px; color: var(--bronce); opacity: 0.4; line-height: 1; margin-bottom: 12px; }
+  .canal-nombre { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .canal-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .canal-meta { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--bronce); letter-spacing: 1px; text-transform: uppercase; margin-top: 10px; }
+
+  /* GUIÓN */
+  .guion { display: flex; flex-direction: column; gap: 0; margin-bottom: 48px; }
+  .guion-etapa { border: 1px solid var(--gris-borde); border-bottom: none; }
+  .guion-etapa:last-child { border-bottom: 1px solid var(--gris-borde); }
+  .guion-header { padding: 18px 24px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--gris-borde); background: var(--gris); cursor: pointer; }
+  .guion-tiempo { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--bronce); text-transform: uppercase; flex-shrink: 0; min-width: 90px; }
+  .guion-fase { font-size: 13px; font-weight: 700; }
+  .guion-body { padding: 24px; }
+  .guion-objetivo { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--bronce); text-transform: uppercase; margin-bottom: 12px; }
+  .guion-texto { font-size: 13px; color: var(--muted-claro); line-height: 1.7; margin-bottom: 14px; font-style: italic; background: var(--gris); padding: 14px 16px; border-left: 2px solid var(--bronce); }
+  .guion-preguntas { list-style: none; }
+  .guion-preguntas li { font-size: 13px; color: var(--muted-claro); padding: 8px 0; border-bottom: 1px solid #111; display: flex; gap: 10px; }
+  .guion-preguntas li:last-child { border-bottom: none; }
+  .guion-preguntas li::before { content: '?'; color: var(--bronce); font-family: 'Space Mono', monospace; font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+
+  /* OBJECIONES */
+  .objeciones { display: flex; flex-direction: column; gap: 0; margin-bottom: 48px; }
+  .objecion { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--gris-borde); border-bottom: none; }
+  .objecion:last-child { border-bottom: 1px solid var(--gris-borde); }
+  .ob-q { padding: 20px 24px; border-right: 1px solid var(--gris-borde); background: var(--gris); display: flex; align-items: center; }
+  .ob-q span { font-size: 13px; color: var(--muted-claro); font-style: italic; }
+  .ob-a { padding: 20px 24px; }
+  .ob-a-tag { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 1px; color: var(--bronce); text-transform: uppercase; margin-bottom: 6px; }
+  .ob-a p { font-size: 13px; color: var(--blanco); line-height: 1.6; }
+
+  /* MÉTRICAS */
+  .metricas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--gris-borde); margin-bottom: 40px; }
+  .metrica { background: var(--negro); padding: 28px; }
+  .metrica-nombre { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--gris-borde); }
+  .metrica-num-row { display: flex; gap: 24px; margin-bottom: 10px; }
+  .metrica-num { display: flex; flex-direction: column; }
+  .metrica-valor { font-family: 'Bebas Neue'; font-size: 38px; color: var(--bronce); line-height: 1; }
+  .metrica-sub { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-top: 2px; }
+  .metrica-meta .metrica-valor { color: var(--verde); font-size: 28px; }
+  .metrica-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  /* FLUJO POST-VENTA */
+  .flujo-list { display: flex; flex-direction: column; gap: 0; }
+  .flujo-item { display: grid; grid-template-columns: 100px 1fr; border: 1px solid var(--gris-borde); border-bottom: none; }
+  .flujo-item:last-child { border-bottom: 1px solid var(--gris-borde); }
+  .flujo-tiempo { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--bronce); text-transform: uppercase; padding: 18px 16px; border-right: 1px solid var(--gris-borde); display: flex; align-items: center; text-align: center; line-height: 1.6; }
+  .flujo-accion { padding: 16px 22px; font-size: 13px; color: var(--muted-claro); display: flex; align-items: center; line-height: 1.5; }
+
+  .footer { padding: 50px 60px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-brand { font-family: 'Bebas Neue'; font-size: 24px; letter-spacing: 3px; color: var(--bronce); }
+  .footer-note { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+
+  @media(max-width:960px) {
+    .nav { padding: 0 24px; } .nav-links { display: none; }
+    .hero, section { padding: 60px 24px; }
+    .etapa { grid-template-columns: 1fr; }
+    .etapa-resp { border-left: none; border-top: 1px solid var(--gris-borde); }
+    .canales-grid { grid-template-columns: 1fr 1fr; }
+    .metricas-grid { grid-template-columns: 1fr; }
+    .objecion { grid-template-columns: 1fr; }
+    .ob-q { border-right: none; border-bottom: 1px solid var(--gris-borde); }
+    .footer { padding: 40px 24px; flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-brand">DIANA REÁTEGUI</a>
+  <div class="nav-links">
+    <a href="../INICIO.html">← Inicio</a>
+    <a href="index.html">Master Plan</a>
+    <a href="oferta.html">Oferta</a>
+    <a href="ventas.html" class="active">Ventas</a>
+    <a href="plan-accion.html">Plan de Acción</a>
+    <a href="sops.html">SOPs</a>
+    <a href="equipo.html">Equipo</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="badge">Sistema de Ventas · MARGEN™ · Uso Interno</div>
+  <p class="hero-tag">Documento operativo de ventas</p>
+  <h1 class="hero-title">SISTEMA<br>DE <em>VENTAS</em></h1>
+  <p class="hero-lead">
+    <strong>No vendemos información. Vendemos decisión y transformación.</strong> La llamada no es para explicar — es para que el cliente diga: "esto es exactamente lo que necesito." El sistema tiene 3 capas: Samanta filtra y protege el tiempo de Diana, el posicionamiento previo llega al cliente preparado, y Diana cierra con una conversación estratégica — no una venta agresiva.
+  </p>
+</section>
+
+<!-- EMBUDO PRINCIPAL -->
+<section>
+  <p class="section-tag">01 — Embudo Principal</p>
+  <h2 class="section-title">De lead frío<br>a cliente de<br>MARGEN™.</h2>
+
+  <div class="embudo">
+    <div class="etapa">
+      <div class="etapa-num">
+        <span class="etapa-num-n">1</span>
+        <span class="etapa-num-label">Tráfico</span>
+      </div>
+      <div class="etapa-body">
+        <p class="etapa-titulo">ATRACCIÓN — Contenido orgánico + Ads</p>
+        <p class="etapa-desc">Instagram (reels diarios, historias, carruseles) · LinkedIn (posts de texto 3–4/semana) · Newsletter "Margen Real" (1/semana) · Ads en Meta ($15–$30/día para LIBRE™ y webinar). Todo el contenido empuja a UN punto de entrada: DM, LIBRE™ o webinar.</p>
+      </div>
+      <div class="etapa-resp"><span class="resp-tag">Patrick<br>+ Diana</span></div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">
+        <span class="etapa-num-n">2</span>
+        <span class="etapa-num-label">Captura</span>
+      </div>
+      <div class="etapa-body">
+        <p class="etapa-titulo">CAPTURA — DM / LIBRE™ / Webinar</p>
+        <p class="etapa-desc">3 puntos de entrada: (A) DM directo en Instagram o LinkedIn → Samanta responde en menos de 2 horas. (B) Comunidad LIBRE™ en WhatsApp → nurture de 4 semanas → invitación calificada. (C) Webinar evergreen → CTA → formulario de diagnóstico. La newsletter también dirige a cualquiera de estos 3 puntos.</p>
+      </div>
+      <div class="etapa-resp"><span class="resp-tag samanta">Samanta<br>+ Sistema</span></div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">
+        <span class="etapa-num-n">3</span>
+        <span class="etapa-num-label">Filtro</span>
+      </div>
+      <div class="etapa-body">
+        <p class="etapa-titulo">FILTRO — Diagnóstico rápido (Samanta)</p>
+        <p class="etapa-desc">Samanta aplica el Diagnóstico Rápido (SOP-01). Criterios obligatorios: ¿tiene negocio activo?, ¿vende productos físicos?, ¿factura mínimo $5K/mes?, ¿tiene urgencia real? Resultado: NO CALIFICA → DIRIGE™ ($299) o LIBRE™. CALIFICA → envía formulario de diagnóstico profundo.</p>
+      </div>
+      <div class="etapa-resp"><span class="resp-tag samanta">Samanta</span></div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">
+        <span class="etapa-num-n">4</span>
+        <span class="etapa-num-label">Formulario</span>
+      </div>
+      <div class="etapa-body">
+        <p class="etapa-titulo">FORMULARIO — Diagnóstico profundo (filtro fuerte)</p>
+        <p class="etapa-desc">Google Form o Typeform con 6–8 preguntas: tipo de negocio y producto, facturación mensual, problema principal, qué ha intentado, urgencia y disponibilidad de inversión. REGLA ABSOLUTA: si no completa el formulario → no hay llamada. El formulario hace el 80% del trabajo de calificación.</p>
+      </div>
+      <div class="etapa-resp"><span class="resp-tag sistema">Sistema<br>automático</span></div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">
+        <span class="etapa-num-n">5</span>
+        <span class="etapa-num-label">Pre-call</span>
+      </div>
+      <div class="etapa-body">
+        <p class="etapa-titulo">PRE-CALENTAMIENTO — El cliente llega preparado</p>
+        <p class="etapa-desc">Antes de la llamada, Samanta envía: 2–3 reels de Diana alineados al problema del cliente, 1 pieza de autoridad (China, resultado de cliente), contexto de qué es MARGEN™. El cliente no llega en frío — llega sabiendo quién es Diana y qué hace el programa. Reduce el trabajo de la llamada a la mitad.</p>
+      </div>
+      <div class="etapa-resp"><span class="resp-tag samanta">Samanta</span></div>
+    </div>
+    <div class="etapa" style="border:1px solid rgba(184,122,78,0.3);">
+      <div class="etapa-num">
+        <span class="etapa-num-n">6</span>
+        <span class="etapa-num-label">Cierre</span>
+      </div>
+      <div class="etapa-body">
+        <p class="etapa-titulo">LLAMADA DE CIERRE — Diana · 45 minutos</p>
+        <p class="etapa-desc">Estructura: Contexto (3 min) → Diagnóstico (15 min) → Amplificación (8 min) → Visión (5 min) → Presentación MARGEN™ (5 min) → Cierre (5 min) → Decisión. Diana lee el formulario antes. El objetivo no es convencer — es que el cliente vea su problema con total claridad y tome una decisión informada.</p>
+      </div>
+      <div class="etapa-resp"><span class="resp-tag diana">Diana</span></div>
+    </div>
+    <div class="etapa">
+      <div class="etapa-num">
+        <span class="etapa-num-n">7</span>
+        <span class="etapa-num-label">Post-call</span>
+      </div>
+      <div class="etapa-body">
+        <p class="etapa-titulo">POST-LLAMADA — Seguimiento y cierre (Samanta)</p>
+        <p class="etapa-desc">Si cierra en llamada → Samanta procesa contrato + pago en menos de 2 horas. Si no cierra → Samanta hace seguimiento en 24–48h, envía resumen de la conversación y mantiene el canal abierto. Cierra pendientes → DIRIGE™ como paso intermedio si aplica.</p>
+      </div>
+      <div class="etapa-resp"><span class="resp-tag samanta">Samanta</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CANALES DE ADQUISICIÓN -->
+<section>
+  <p class="section-tag">02 — Canales de Adquisición</p>
+  <h2 class="section-title">Por dónde<br>entran los leads.</h2>
+
+  <div class="canales-grid">
+    <div class="canal">
+      <div class="canal-icon">IG</div>
+      <p class="canal-nombre">Instagram (Principal)</p>
+      <p class="canal-desc">Reels diarios (1–2), historias diarias, carrusel semanal. Pilar 1: diagnóstico. Pilar 2: autoridad. CTA: "Escríbeme MARGEN" o link en bio.</p>
+      <p class="canal-meta">Principal fuente · DM directo a Samanta</p>
+    </div>
+    <div class="canal">
+      <div class="canal-icon">LI</div>
+      <p class="canal-nombre">LinkedIn (B2B)</p>
+      <p class="canal-desc">Posts de texto 3–4 por semana. Narrativa + datos + autoridad. Casos de éxito anonimizados. Lecciones de China. Empresarios como audiencia principal.</p>
+      <p class="canal-meta">B2B · Perfil mayor poder adquisitivo</p>
+    </div>
+    <div class="canal">
+      <div class="canal-icon">NL</div>
+      <p class="canal-nombre">Newsletter "Margen Real"</p>
+      <p class="canal-desc">Cada martes. 400–600 palabras. Problema de la semana → diagnóstico → insight → 1 CTA. Activo propio — no depende de algoritmos. Construir lista desde día 1.</p>
+      <p class="canal-meta">Activo propio · Beehiiv o MailerLite</p>
+    </div>
+    <div class="canal">
+      <div class="canal-icon">AD</div>
+      <p class="canal-nombre">Meta Ads</p>
+      <p class="canal-desc">Campaña 1: LIBRE™ ($10/día, video 30–45s). Campaña 2: Webinar ($20/día, retargeting). CPL objetivo: menor a $8. Pausa si CPL supera $15. Cambiar UNA variable a la vez.</p>
+      <p class="canal-meta">$15–$30/día · Solo si filtro activo</p>
+    </div>
+  </div>
+
+  <div class="canales-grid">
+    <div class="canal">
+      <div class="canal-icon">WB</div>
+      <p class="canal-nombre">Webinar Evergreen</p>
+      <p class="canal-desc">Grabado + automatizado. Duración 60–75 min. Estructura: Diagnóstico (15) → China (10) → Método (20) → Prueba (10) → CTA (15). CTA: formulario de diagnóstico. Plataforma: EverWebinar o Demio.</p>
+      <p class="canal-meta">Mes 2 en adelante · Embudo 24/7</p>
+    </div>
+    <div class="canal">
+      <div class="canal-icon">LB</div>
+      <p class="canal-nombre">LIBRE™ Community</p>
+      <p class="canal-desc">WhatsApp privado. Nurture de 4 semanas: semana 1 bienvenida, semana 2 diagnóstico, semana 3 caso de éxito, semana 4 invitación. 1 audio Diana/semana + 1 recurso.</p>
+      <p class="canal-meta">Activo desde semana 1 · Costo $0</p>
+    </div>
+    <div class="canal">
+      <div class="canal-icon">RF</div>
+      <p class="canal-nombre">Sistema de Referidos</p>
+      <p class="canal-desc">Clientes activos de MARGEN™ en mes 3. "$200 para ti si tu referido cierra MARGEN™." Sin límite de referidos. Crédito en SUPPLY o transferencia. Leads más calificados y baratos del sistema.</p>
+      <p class="canal-meta">Activar en mes 3 · CPL $0</p>
+    </div>
+    <div class="canal">
+      <div class="canal-icon">SC</div>
+      <p class="canal-nombre">Clientes de Sourcing Actuales</p>
+      <p class="canal-desc">Clientes actuales de sourcing y logística como primeros prospectos de MARGEN™. Ya confían en Diana, ya importan. Conversión más rápida. Contacto directo de Diana esta semana.</p>
+      <p class="canal-meta">Quick win inmediato · Semana 1</p>
+    </div>
+  </div>
+</section>
+
+<!-- GUIÓN DE LA LLAMADA -->
+<section>
+  <p class="section-tag">03 — Guión de Cierre</p>
+  <h2 class="section-title">La llamada<br>de 45 minutos.</h2>
+
+  <div class="highlight">
+    <strong>Principio de la llamada:</strong> No vendemos en la llamada. Diagnosticamos. El cliente que entiende su problema real y ve la solución correcta toma la decisión solo. Diana no convence — clarifica.
+  </div>
+
+  <div class="guion">
+    <div class="guion-etapa">
+      <div class="guion-header">
+        <span class="guion-tiempo">Min 0–3</span>
+        <span class="guion-fase">CONTEXTO — Establecer el marco</span>
+      </div>
+      <div class="guion-body">
+        <p class="guion-objetivo">Objetivo: tomar control, romper hielo, crear estructura</p>
+        <p class="guion-texto">"Gracias por tomarte el tiempo. Antes de empezar, déjame decirte cómo funciona esto: voy a hacerte algunas preguntas directas sobre tu negocio. No hay respuestas correctas o incorrectas — el objetivo es que al final de esta conversación tú tengas claridad total sobre qué está pasando y qué opciones tienes. ¿Te parece bien?"</p>
+      </div>
+    </div>
+    <div class="guion-etapa">
+      <div class="guion-header">
+        <span class="guion-tiempo">Min 3–18</span>
+        <span class="guion-fase">DIAGNÓSTICO — Hacer las preguntas correctas</span>
+      </div>
+      <div class="guion-body">
+        <p class="guion-objetivo">Objetivo: que el cliente hable, no Diana. Escuchar 80%, hablar 20%</p>
+        <ul class="guion-preguntas">
+          <li>¿Cómo está estructurado tu negocio hoy — qué vendes y a quién?</li>
+          <li>¿Cuánto margen real tienes por producto ahora mismo? (no el teórico — el que llega al banco)</li>
+          <li>Si no estás tú, ¿el negocio funciona igual? ¿Qué pasa?</li>
+          <li>¿Cuántas horas trabajas personalmente en el negocio por semana?</li>
+          <li>¿Qué has intentado para resolver esto? ¿Qué pasó?</li>
+          <li>¿Qué sería diferente en tu vida si esto estuviera resuelto?</li>
+        </ul>
+      </div>
+    </div>
+    <div class="guion-etapa">
+      <div class="guion-header">
+        <span class="guion-tiempo">Min 18–26</span>
+        <span class="guion-fase">AMPLIFICACIÓN — Profundizar el impacto real</span>
+      </div>
+      <div class="guion-body">
+        <p class="guion-objetivo">Objetivo: que el cliente sienta el peso real de seguir igual</p>
+        <p class="guion-texto">"Lo que me estás describiendo es [resume en sus propias palabras — no en las tuyas]. ¿Cuánto tiempo más puedes seguir así? ¿Cuánto dinero estimas que has dejado de ganar en los últimos 12 meses por no tener esto resuelto?"</p>
+        <p style="font-size:12px; color:var(--muted); margin-top:12px; line-height:1.6;"><strong style="color:var(--blanco);">Nota:</strong> No inventar el dolor del cliente. Usar exactamente sus palabras para reflejar la situación. Esto crea conexión y validación.</p>
+      </div>
+    </div>
+    <div class="guion-etapa">
+      <div class="guion-header">
+        <span class="guion-tiempo">Min 26–31</span>
+        <span class="guion-fase">VISIÓN — Mostrar lo que es posible</span>
+      </div>
+      <div class="guion-body">
+        <p class="guion-objetivo">Objetivo: pintar el contraste entre el presente y el futuro posible</p>
+        <p class="guion-texto">"Déjame mostrarte cómo se ve este mismo negocio tuyo con estructura. [Describir un negocio como el suyo pero con margen real, marca propia, sistema y menos dependencia del dueño. Usar números específicos basados en lo que dijo el cliente.] Eso no es fantasía — es lo que construimos en 5 meses."</p>
+      </div>
+    </div>
+    <div class="guion-etapa">
+      <div class="guion-header">
+        <span class="guion-tiempo">Min 31–36</span>
+        <span class="guion-fase">PRESENTACIÓN DE MARGEN™ — Breve y directa</span>
+      </div>
+      <div class="guion-body">
+        <p class="guion-objetivo">Objetivo: presentar MARGEN™ como la solución natural, no como un pitch</p>
+        <p class="guion-texto">"Lo que te acabo de describir es exactamente lo que construimos en MARGEN™. Son 5 meses de trabajo real. No teoría — implementación guiada. Con mi red de fábricas en China y mi operación de logística, trabajamos juntos para que tus productos lleguen con tu marca a un costo 3x menor al que pagas hoy. El resultado concreto para tu caso: [personalizar según el diagnóstico]."</p>
+        <p style="font-size:12px; color:var(--muted); margin-top:12px; line-height:1.6;"><strong style="color:var(--blanco);">NO hacer:</strong> Explicar cada módulo. Describir las sesiones. Hablar del precio sin que lo pidan. Dar demasiado detalle.</p>
+      </div>
+    </div>
+    <div class="guion-etapa" style="border-color:rgba(184,122,78,0.3);">
+      <div class="guion-header" style="background:rgba(184,122,78,0.06);">
+        <span class="guion-tiempo">Min 36–45</span>
+        <span class="guion-fase">CIERRE — Pregunta directa y decisión</span>
+      </div>
+      <div class="guion-body">
+        <p class="guion-objetivo">Objetivo: que el cliente tome una decisión — ninguna dirección es incorrecta</p>
+        <p class="guion-texto">"¿Quieres que trabajemos juntos en esto?"</p>
+        <p style="font-size:13px; color:var(--muted-claro); margin-top:12px; line-height:1.7;">Si responde SÍ: <strong style="color:var(--blanco);">"Perfecto. Samanta te envía el contrato y los accesos en los próximos 30 minutos."</strong></p>
+        <p style="font-size:13px; color:var(--muted-claro); margin-top:8px; line-height:1.7;">Si responde con objeción: entrar al protocolo de objeciones (ver sección siguiente).</p>
+        <p style="font-size:13px; color:var(--muted-claro); margin-top:8px; line-height:1.7;">Si no califica para MARGEN™: <strong style="color:var(--blanco);">"Lo que veo es que primero necesitas [X]. DIRIGE™ es el paso correcto para ti ahora."</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECIONES -->
+<section>
+  <p class="section-tag">04 — Protocolo de Objeciones</p>
+  <h2 class="section-title">No convencer.<br>Clarificar.</h2>
+
+  <div class="highlight">
+    <strong>Principio:</strong> Nunca argumentar contra una objeción. Hacer una pregunta que lleva al cliente a pensar. La claridad elimina la objeción — no el argumento.
+  </div>
+
+  <div class="objeciones">
+    <div class="objecion">
+      <div class="ob-q"><span>"Es caro / es mucha inversión"</span></div>
+      <div class="ob-a">
+        <p class="ob-a-tag">Respuesta de clarificación</p>
+        <p>"¿Caro comparado con qué? Calculemos juntos: si en 5 meses reduces tu costo de producto en un 40% — ¿cuánto es eso en tu operación actual? La inversión se recupera en el primer pedido bien negociado."</p>
+      </div>
+    </div>
+    <div class="objecion">
+      <div class="ob-q"><span>"Déjame pensarlo / consultarlo"</span></div>
+      <div class="ob-a">
+        <p class="ob-a-tag">Respuesta de clarificación</p>
+        <p>"Claro, ¿qué parte necesitas pensar exactamente — el problema que tienes o la solución que te estoy ofreciendo? Porque si el problema es claro para ti, lo único que queda es saber si esta es la solución correcta para tu caso."</p>
+      </div>
+    </div>
+    <div class="objecion">
+      <div class="ob-q"><span>"No estoy seguro si funciona para mi negocio"</span></div>
+      <div class="ob-a">
+        <p class="ob-a-tag">Respuesta de clarificación</p>
+        <p>"¿Qué necesitarías ver para estar seguro? ¿Casos similares al tuyo? ¿Entender mejor cómo se aplica a tu categoría de producto? Cuéntame qué específicamente te genera incertidumbre."</p>
+      </div>
+    </div>
+    <div class="objecion">
+      <div class="ob-q"><span>"Ahora no es el momento / estoy muy ocupado"</span></div>
+      <div class="ob-a">
+        <p class="ob-a-tag">Respuesta de clarificación</p>
+        <p>"¿Cuándo sería el momento correcto? ¿Qué tiene que pasar primero? Porque lo que describes es exactamente el síntoma de lo que resolvemos: el negocio te consume tiempo porque no tiene sistema."</p>
+      </div>
+    </div>
+    <div class="objecion">
+      <div class="ob-q"><span>"Ya intenté algo similar y no funcionó"</span></div>
+      <div class="ob-a">
+        <p class="ob-a-tag">Respuesta de clarificación</p>
+        <p>"Cuéntame qué probaste. ¿Fue un curso, una consultoría, una agencia? Porque hay una diferencia clave entre lo que hiciste antes y lo que hacemos aquí: [diferenciar específicamente]. ¿Qué fue lo que no funcionó del approach anterior?"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTRICAS CON BENCHMARKS -->
+<section>
+  <p class="section-tag">05 — Métricas y Benchmarks</p>
+  <h2 class="section-title">Lo que se mide<br>se gestiona.</h2>
+
+  <div class="metricas-grid">
+    <div class="metrica">
+      <p class="metrica-nombre">CPL · Costo por Lead</p>
+      <div class="metrica-num-row">
+        <div class="metrica-num">
+          <span class="metrica-valor">$15</span>
+          <span class="metrica-sub">Máximo aceptable</span>
+        </div>
+        <div class="metrica-num metrica-meta">
+          <span class="metrica-valor">$8</span>
+          <span class="metrica-sub">Objetivo</span>
+        </div>
+      </div>
+      <p class="metrica-desc">Solo de ads pagados. Leads orgánicos (DM, referidos) tienen CPL $0. Pausa la campaña si supera $15 por 3 días consecutivos.</p>
+    </div>
+    <div class="metrica">
+      <p class="metrica-nombre">Show-up Rate · Llamadas</p>
+      <div class="metrica-num-row">
+        <div class="metrica-num">
+          <span class="metrica-valor">60%</span>
+          <span class="metrica-sub">Mínimo aceptable</span>
+        </div>
+        <div class="metrica-num metrica-meta">
+          <span class="metrica-valor">80%</span>
+          <span class="metrica-sub">Objetivo</span>
+        </div>
+      </div>
+      <p class="metrica-desc">Si el show-up rate baja del 60%, revisar: calidad del filtro, tiempo entre agenda y llamada (máx. 48h), recordatorios de Samanta.</p>
+    </div>
+    <div class="metrica">
+      <p class="metrica-nombre">Tasa de Cierre · MARGEN™</p>
+      <div class="metrica-num-row">
+        <div class="metrica-num">
+          <span class="metrica-valor">20%</span>
+          <span class="metrica-sub">Mínimo aceptable</span>
+        </div>
+        <div class="metrica-num metrica-meta">
+          <span class="metrica-valor">35%</span>
+          <span class="metrica-sub">Objetivo</span>
+        </div>
+      </div>
+      <p class="metrica-desc">Calculado sobre llamadas que llegan a la etapa de presentación. Si baja del 20% revisar: calidad de filtro previo, estructura de llamada, manejo de objeciones.</p>
+    </div>
+    <div class="metrica">
+      <p class="metrica-nombre">Conversión DIRIGE™ → MARGEN™</p>
+      <div class="metrica-num-row">
+        <div class="metrica-num">
+          <span class="metrica-valor">15%</span>
+          <span class="metrica-sub">Mínimo</span>
+        </div>
+        <div class="metrica-num metrica-meta">
+          <span class="metrica-valor">30%</span>
+          <span class="metrica-sub">Objetivo</span>
+        </div>
+      </div>
+      <p class="metrica-desc">Del total de graduados de DIRIGE™ que reciben la oferta en día 7. Si baja, revisar la sesión de día 5 con mentor y la oferta de upgrade.</p>
+    </div>
+    <div class="metrica">
+      <p class="metrica-nombre">NPS · Clientes MARGEN™</p>
+      <div class="metrica-num-row">
+        <div class="metrica-num">
+          <span class="metrica-valor">7</span>
+          <span class="metrica-sub">Mínimo</span>
+        </div>
+        <div class="metrica-num metrica-meta">
+          <span class="metrica-valor">9</span>
+          <span class="metrica-sub">Objetivo</span>
+        </div>
+      </div>
+      <p class="metrica-desc">Medido al final del mes 1 y mes 3. NPS menor a 7: alerta inmediata a Diana. NPS mayor a 8: solicitar testimonio inmediatamente.</p>
+    </div>
+    <div class="metrica">
+      <p class="metrica-nombre">Retención SUPPLY™</p>
+      <div class="metrica-num-row">
+        <div class="metrica-num">
+          <span class="metrica-valor">3</span>
+          <span class="metrica-sub">Mínimo (meses)</span>
+        </div>
+        <div class="metrica-num metrica-meta">
+          <span class="metrica-valor">6+</span>
+          <span class="metrica-sub">Objetivo (meses)</span>
+        </div>
+      </div>
+      <p class="metrica-desc">Si un cliente sale antes del mes 3, analizar la causa. Baja retención = problema de entrega de valor o expectativa mal alineada en el cierre.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FLUJO POST-VENTA -->
+<section>
+  <p class="section-tag">06 — Flujo Post-Venta y Ascenso</p>
+  <h2 class="section-title">Después del<br>cierre: lo que<br>hace Samanta.</h2>
+
+  <div class="flujo-list">
+    <div class="flujo-item"><div class="flujo-tiempo">T+0<br>Pago</div><div class="flujo-accion">Samanta confirma pago → envía contrato (DocuSign o PDF) → mensaje de confirmación al cliente vía WhatsApp</div></div>
+    <div class="flujo-item"><div class="flujo-tiempo">T+30 min<br>Bienvenida</div><div class="flujo-accion">Email de bienvenida "Luxury Welcome" → video de bienvenida de Diana (3–5 min, grabado) → roadmap del programa en PDF</div></div>
+    <div class="flujo-item"><div class="flujo-tiempo">T+2 horas<br>Acceso</div><div class="flujo-accion">Agregar al grupo privado de MARGEN™ en WhatsApp → acceso a plataforma (grabaciones y recursos) → formulario de diagnóstico profundo inicial</div></div>
+    <div class="flujo-item"><div class="flujo-tiempo">T+48 horas<br>Primera sesión</div><div class="flujo-accion">Samanta agenda primera sesión individual con Diana → Diana lee formulario antes de la sesión → registrar cliente en tracker de Airtable</div></div>
+    <div class="flujo-item"><div class="flujo-tiempo">Semana 2<br>Check-in</div><div class="flujo-accion">Samanta envía mensaje: "¿Cómo va tu primera semana?" → registra feedback → escala si hay problema → alerta Diana si NPS bajo</div></div>
+    <div class="flujo-item"><div class="flujo-tiempo">Fin Mes 1<br>NPS</div><div class="flujo-accion">Samanta envía encuesta NPS (3 preguntas) → Si ≥8: solicitar testimonio en video o texto → Si ≤6: alerta inmediata a Diana</div></div>
+    <div class="flujo-item"><div class="flujo-tiempo">Mes 3<br>Ascenso</div><div class="flujo-accion">Diana introduce MARGEN SUPPLY™ en sesión → Samanta envía información formal 1 semana después → oferta de preventa para clientes activos</div></div>
+    <div class="flujo-item"><div class="flujo-tiempo">Mes 3<br>Referidos</div><div class="flujo-accion">"¿Tienes algún colega empresario que esté pasando por lo mismo que tú hace 3 meses?" → activar mecanismo de $200 por referido que cierra MARGEN™</div></div>
+    <div class="flujo-item"><div class="flujo-tiempo">Mes 5<br>Graduación</div><div class="flujo-accion">Llamada de cierre del programa → oferta formal de MARGEN SUPPLY™ ($400/mes primeros 3 meses) → invitación a ORIGEN™ Diciembre 2026</div></div>
+  </div>
+</section>
+
+<div class="footer">
+  <span class="footer-brand">DIANA REÁTEGUI</span>
+  <span style="font-family:'Bebas Neue';font-size:15px;letter-spacing:2px;color:var(--muted);">Sistema de Ventas · MARGEN™ · 2026</span>
+  <span class="footer-note">Documento Interno · Uso Operativo</span>
+</div>
+
+</body>
+</html>

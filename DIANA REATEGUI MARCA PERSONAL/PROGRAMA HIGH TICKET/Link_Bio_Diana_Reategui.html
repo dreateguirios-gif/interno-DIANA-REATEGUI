@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diana Reátegui | Enlaces</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --negro: #0A0A0A;
+            --blanco: #F8F4EE;
+            --bronce: #B87A4E;
+            --bronce-hover: #A06740;
+            --gris: #1A1A1A;
+            --gris-texto: #A09890;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--negro);
+            color: var(--blanco);
+            font-family: 'DM Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .link-container {
+            width: 100%;
+            max-width: 480px; /* Ancho típico de móvil/Linktree */
+            padding: 60px 20px 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--bronce);
+            margin-bottom: 20px;
+            padding: 4px;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .bio {
+            font-size: 15px;
+            color: var(--gris-texto);
+            margin-bottom: 40px;
+            line-height: 1.5;
+            font-weight: 300;
+            max-width: 300px;
+        }
+        
+        .bio strong {
+            color: var(--blanco);
+            font-weight: 500;
+        }
+
+        .links-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 18px 24px;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 0; /* Bordes rectos, estilo editorial */
+            transition: all 0.2s ease;
+        }
+
+        /* Botón Principal (Destacado) */
+        .btn-primary {
+            background-color: var(--bronce);
+            color: var(--negro);
+            border: 1px solid var(--bronce);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--bronce-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Botón Secundario (Outline) */
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--blanco);
+            border: 1px solid rgba(184, 122, 78, 0.5); /* Borde bronce sutil */
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(184, 122, 78, 0.1);
+            border-color: var(--bronce);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            margin-top: auto;
+            padding-top: 60px;
+            font-family: 'Space Mono', monospace, sans-serif;
+            font-size: 10px;
+            color: #555;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Para indicar si un botón tiene un tag extra */
+        .btn-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-tag {
+            font-size: 9px;
+            color: var(--negro);
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-secondary .btn-tag {
+            color: var(--bronce);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="link-container">
+        <!-- Reemplazar el src con la ruta real de la foto 0026 subida a un hosting -->
+        <img src="Diana_Reategui_0026.jpg" alt="Diana Reátegui" class="profile-pic" onerror="this.src='https://via.placeholder.com/150/0A0A0A/B87A4E?text=DR'">
+        
+        <h1>Diana Reátegui</h1>
+        <p class="bio">
+            8 años operando desde China.<br>
+            <strong>Estructura + China = Escala Real.</strong>
+        </p>
+
+        <div class="links-wrapper">
+            
+            <!-- Link Principal: MAYO (Comunidad Libre) -->
+            <a href="https://chat.whatsapp.com/TU_ENLACE_AQUI" class="btn btn-primary">
+                <div class="btn-content">
+                    <span>Únete a LIBRE™</span>
+                    <span class="btn-tag">Comunidad en WhatsApp</span>
+                </div>
+            </a>
+
+            <!-- Link Secundario: Smart Import Trade -->
+            <a href="https://wa.me/51TU_NUMERO_AQUI" class="btn btn-secondary">
+                <div class="btn-content">
+                    <span>Cotiza tu Importación</span>
+                    <span class="btn-tag">Smart Import Trade</span>
+                </div>
+            </a>
+
+            <!-- Link Futuro (Para Junio) -> De momento puede ir sin destaque o comentado 
+            <a href="#aplicar" class="btn btn-secondary">
+                <div class="btn-content">
+                    <span>Aplica a MARGEN™</span>
+                    <span class="btn-tag">Programa de Escala</span>
+                </div>
+            </a>
+            -->
+            
+        </div>
+
+        <div class="footer">
+            Diana Reátegui © 2026
+        </div>
+    </div>
+
+</body>
+</html>

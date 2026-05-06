@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan de Negocio V2 — Diana Reátegui · Unidad de Negocio · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --negro: #0A0A0A;
+  --negro-suave: #141414;
+  --negro-card: #111111;
+  --blanco: #F8F4EE;
+  --bronce: #B87A4E;
+  --bronce-claro: #D4956A;
+  --rosa: #C9A09A;
+  --gris: #1C1C1C;
+  --gris-texto: #7A7470;
+  --verde: #4A7C59;
+  --rojo-suave: #8B3A3A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--negro); color: var(--blanco); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+
+/* ── PORTADA ── */
+.portada {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 80px;
+  border-bottom: 1px solid #222;
+  position: relative; overflow: hidden;
+}
+.portada::before {
+  content: '';
+  position: absolute; bottom: -100px; right: -80px;
+  width: 600px; height: 600px;
+  background: radial-gradient(ellipse, rgba(184,122,78,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.portada-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.portada-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--bronce); letter-spacing: 2px; }
+.portada-tipo { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--gris-texto); text-transform: uppercase; text-align: right; line-height: 1.8; }
+.portada-centro { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 100px 0 60px; }
+.portada-tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 4px; color: var(--bronce); text-transform: uppercase; margin-bottom: 32px; }
+.portada-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(64px, 7vw, 108px);
+  font-weight: 700; line-height: 0.88; letter-spacing: -3px;
+  max-width: 900px;
+}
+.portada-titulo span { color: var(--bronce); display: block; }
+.portada-titulo em { color: var(--rosa); font-style: normal; font-weight: 400; }
+.portada-sub { font-size: 17px; color: #A09890; max-width: 560px; line-height: 1.8; margin-top: 40px; }
+.portada-sub strong { color: var(--blanco); font-weight: 500; }
+.portada-bottom { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 40px; border-top: 1px solid #1E1E1E; }
+.portada-nombre { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.portada-fecha { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gris-texto); text-transform: uppercase; }
+
+/* ── LAYOUT GENERAL ── */
+.seccion { padding: 80px; border-bottom: 1px solid #1A1A1A; }
+.seccion-oscura { background: var(--negro-suave); }
+.seccion-header { margin-bottom: 56px; }
+.seccion-num { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); text-transform: uppercase; margin-bottom: 12px; }
+.seccion-titulo { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 4.5vw, 72px); font-weight: 700; line-height: .9; letter-spacing: -1px; }
+.seccion-titulo span { color: var(--bronce); }
+.seccion-titulo em { color: var(--rosa); font-style: normal; }
+.seccion-intro { font-size: 16px; color: #A09890; max-width: 720px; line-height: 1.85; margin-top: 24px; }
+.seccion-intro strong { color: var(--blanco); font-weight: 500; }
+
+/* ── RESUMEN EJECUTIVO ── */
+.resumen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #1A1A1A; margin-top: 48px; }
+.resumen-item { background: var(--negro-card); padding: 40px 36px; }
+.resumen-item-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 3px; color: var(--bronce); text-transform: uppercase; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #1E1E1E; }
+.resumen-item-texto { font-size: 15px; color: #B0A8A2; line-height: 1.8; }
+.resumen-item-texto strong { color: var(--blanco); font-weight: 500; }
+.resumen-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: #1A1A1A; margin-top: 2px; }
+.resumen-kpi { background: var(--negro-card); padding: 32px 28px; text-align: center; }
+.resumen-kpi-num { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 700; color: var(--bronce); line-height: 1; }
+.resumen-kpi-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--gris-texto); text-transform: uppercase; margin-top: 8px; line-height: 1.6; }
+
+/* ── MODELO DE NEGOCIO ── */
+.modelo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; background: #1A1A1A; margin-top: 48px; }
+.modelo-col { background: var(--negro-card); padding: 40px 32px; }
+.modelo-col-titulo { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blanco); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #1E1E1E; }
+.modelo-col-titulo span { color: var(--bronce); }
+.modelo-lista { list-style: none; }
+.modelo-lista li { font-size: 13.5px; color: #A09890; padding: 10px 0; border-bottom: 1px solid #111; display: flex; gap: 12px; line-height: 1.5; }
+.modelo-lista li:last-child { border-bottom: none; }
+.modelo-lista li::before { content: '→'; color: var(--bronce); flex-shrink: 0; font-size: 11px; margin-top: 2px; }
+.modelo-lista li strong { color: var(--blanco); font-weight: 500; }
+.streams-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 48px; }
+.stream-card { border: 1px solid #252525; padding: 32px; background: var(--negro-card); }
+.stream-card.principal { border-color: rgba(184,122,78,.4); background: rgba(184,122,78,.04); }
+.stream-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 700; color: rgba(184,122,78,.25); line-height: 1; margin-bottom: 12px; }
+.stream-titulo { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: var(--blanco); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .5px; }
+.stream-desc { font-size: 13px; color: var(--gris-texto); line-height: 1.6; }
+.stream-tag { display: inline-block; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; padding: 4px 10px; text-transform: uppercase; margin-top: 12px; }
+.stream-tag.activo { background: rgba(74,124,89,.15); color: #6AAF7E; }
+.stream-tag.nuevo { background: rgba(184,122,78,.15); color: var(--bronce); }
+.stream-tag.futuro { background: rgba(120,120,120,.1); color: var(--gris-texto); }
+
+/* ── FODA ── */
+.foda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #1A1A1A; margin-top: 48px; }
+.foda-cuadro { padding: 48px 40px; }
+.foda-cuadro.f { background: rgba(74,124,89,.08); }
+.foda-cuadro.o { background: rgba(184,122,78,.06); }
+.foda-cuadro.d { background: rgba(120,100,100,.06); }
+.foda-cuadro.a { background: rgba(139,58,58,.06); }
+.foda-letra { font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+.foda-cuadro.f .foda-letra { color: rgba(74,124,89,.3); }
+.foda-cuadro.o .foda-letra { color: rgba(184,122,78,.3); }
+.foda-cuadro.d .foda-letra { color: rgba(180,130,100,.2); }
+.foda-cuadro.a .foda-letra { color: rgba(139,58,58,.25); }
+.foda-nombre { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid #1E1E1E; }
+.foda-cuadro.f .foda-nombre { color: #6AAF7E; }
+.foda-cuadro.o .foda-nombre { color: var(--bronce); }
+.foda-cuadro.d .foda-nombre { color: #C8A880; }
+.foda-cuadro.a .foda-nombre { color: #C08080; }
+.foda-lista { list-style: none; }
+.foda-lista li { font-size: 14px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.04); display: flex; gap: 14px; line-height: 1.55; color: #B0A8A2; }
+.foda-lista li:last-child { border-bottom: none; }
+.foda-lista li strong { color: var(--blanco); font-weight: 500; display: block; margin-bottom: 2px; }
+.foda-cuadro.f li::before { content: '✓'; color: #6AAF7E; flex-shrink: 0; font-size: 11px; margin-top: 2px; }
+.foda-cuadro.o li::before { content: '→'; color: var(--bronce); flex-shrink: 0; font-size: 11px; margin-top: 2px; }
+.foda-cuadro.d li::before { content: '△'; color: #C8A880; flex-shrink: 0; font-size: 10px; margin-top: 2px; }
+.foda-cuadro.a li::before { content: '!'; color: #C08080; flex-shrink: 0; font-size: 11px; margin-top: 2px; font-weight: 700; }
+
+/* ── BENCHMARK ── */
+.bench-grid { display: flex; flex-direction: column; gap: 2px; margin-top: 48px; background: #1A1A1A; }
+.bench-row { display: grid; grid-template-columns: 200px 140px 160px 1fr 1fr; gap: 0; background: var(--negro-card); }
+.bench-row.header { background: #0D0D0D; }
+.bench-cell { padding: 20px 20px; font-size: 12.5px; color: #A09890; border-right: 1px solid #151515; line-height: 1.5; }
+.bench-cell:last-child { border-right: none; }
+.bench-row.header .bench-cell { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--gris-texto); text-transform: uppercase; padding: 14px 20px; }
+.bench-nombre { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; color: var(--blanco); }
+.bench-handle { font-family: 'Space Mono', monospace; font-size: 8px; color: var(--gris-texto); letter-spacing: 1px; margin-top: 4px; }
+.bench-tag-tipo { display: inline-block; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 1.5px; padding: 3px 8px; text-transform: uppercase; }
+.bench-tag-tipo.directo { background: rgba(139,58,58,.15); color: #C08080; }
+.bench-tag-tipo.ref-ht { background: rgba(184,122,78,.15); color: var(--bronce); }
+.bench-tag-tipo.intl { background: rgba(120,120,120,.1); color: var(--gris-texto); }
+.bench-positivo { color: #6AAF7E; }
+.bench-gap { color: var(--bronce); }
+.bench-diana { background: rgba(184,122,78,.04); border-left: 3px solid var(--bronce); }
+.bench-diana .bench-nombre { color: var(--bronce); }
+.bench-insight { margin-top: 40px; background: rgba(184,122,78,.07); border-left: 4px solid var(--bronce); padding: 28px 32px; }
+.bench-insight p { font-size: 15px; color: #C0B0A4; line-height: 1.8; }
+.bench-insight strong { color: var(--blanco); font-weight: 500; }
+
+/* ── ESCALERA DE VALOR ── */
+.escalera-wrap { margin-top: 48px; position: relative; }
+.escalera-wrap::before {
+  content: '';
+  position: absolute; left: 47px; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, transparent 0%, var(--bronce) 10%, var(--bronce) 90%, transparent 100%);
+  opacity: .2;
+}
+.escalon { display: grid; grid-template-columns: 96px 1fr auto; gap: 32px; padding: 32px 0; border-bottom: 1px solid #151515; align-items: start; }
+.escalon:last-child { border-bottom: none; }
+.escalon-nivel { text-align: center; }
+.escalon-n { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 700; color: rgba(184,122,78,.3); line-height: 1; }
+.escalon-tipo { font-family: 'Space Mono', monospace; font-size: 7px; letter-spacing: 1.5px; color: var(--gris-texto); text-transform: uppercase; display: block; margin-top: 4px; }
+
+.escalon-nombre { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; color: var(--blanco); margin-bottom: 8px; }
+.escalon-desc { font-size: 13.5px; color: #A09890; line-height: 1.65; max-width: 680px; margin-bottom: 12px; }
+.escalon-desc strong { color: var(--blanco); font-weight: 500; }
+.escalon-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.escalon-tag { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 1.5px; padding: 3px 10px; text-transform: uppercase; border: 1px solid; }
+.escalon-tag.activo { border-color: rgba(74,124,89,.5); color: #6AAF7E; }
+.escalon-tag.nuevo { border-color: rgba(184,122,78,.5); color: var(--bronce); }
+.escalon-tag.futuro { border-color: rgba(120,120,120,.3); color: var(--gris-texto); }
+.escalon-precio { text-align: right; white-space: nowrap; }
+.escalon-precio-num { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--bronce); line-height: 1; }
+.escalon-precio-tipo { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 1.5px; color: var(--gris-texto); text-transform: uppercase; margin-top: 4px; }
+.escalon.core { background: rgba(184,122,78,.04); margin: 0 -80px; padding: 32px 80px; border-left: 3px solid var(--bronce); }
+
+/* ── PLAN 12 MESES ── */
+.plan-fases { display: flex; flex-direction: column; gap: 2px; margin-top: 48px; background: #1A1A1A; }
+.fase { background: var(--negro-card); padding: 40px; }
+.fase-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; }
+
+.fase-num { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); text-transform: uppercase; margin-bottom: 8px; }
+.fase-titulo { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 700; letter-spacing: -.5px; }
+.fase-periodo { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gris-texto); text-transform: uppercase; text-align: right; }
+.fase-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+.fase-col-titulo { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gris-texto); margin-bottom: 16px; }
+.fase-lista { list-style: none; }
+.fase-lista li { font-size: 13px; color: #A09890; padding: 9px 0; border-bottom: 1px solid #151515; display: flex; gap: 10px; line-height: 1.5; }
+.fase-lista li:last-child { border-bottom: none; }
+.fase-lista li::before { content: '→'; color: var(--bronce); flex-shrink: 0; font-size: 10px; margin-top: 2px; }
+.fase-meta { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1.5px; color: #6AAF7E; text-transform: uppercase; margin-top: 20px; padding: 10px 16px; border: 1px solid rgba(74,124,89,.3); display: inline-block; }
+
+/* ── PROYECCIONES ── */
+.proy-escenarios { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; background: #1A1A1A; margin-top: 48px; }
+.proy-escenario { background: var(--negro-card); padding: 40px 32px; }
+.proy-escenario.moderado { background: rgba(184,122,78,.04); border-top: 3px solid var(--bronce); }
+.proy-esc-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 3px; color: var(--gris-texto); text-transform: uppercase; margin-bottom: 20px; }
+.proy-esc-label.m { color: var(--bronce); }
+.proy-esc-anual { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 700; color: var(--bronce); line-height: 1; margin-bottom: 8px; }
+.proy-esc-mensual { font-size: 13px; color: var(--gris-texto); margin-bottom: 24px; }
+.proy-tabla { list-style: none; }
+.proy-tabla li { font-size: 12.5px; color: #A09890; padding: 10px 0; border-bottom: 1px solid #111; display: flex; justify-content: space-between; }
+.proy-tabla li span { color: var(--blanco); font-weight: 500; font-family: 'Space Mono', monospace; font-size: 11px; }
+.proy-nota { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 1px; color: var(--gris-texto); text-transform: uppercase; margin-top: 40px; padding: 20px 24px; border: 1px solid #1E1E1E; line-height: 2; }
+.proy-anual-tabla { margin-top: 40px; }
+.tabla-header { display: grid; grid-template-columns: 80px repeat(4, 1fr); gap: 0; background: #0D0D0D; }
+.tabla-row { display: grid; grid-template-columns: 80px repeat(4, 1fr); gap: 0; border-bottom: 1px solid #141414; }
+.tabla-row:last-child { border-bottom: none; background: rgba(184,122,78,.05); }
+.tabla-cell { padding: 14px 16px; font-size: 12.5px; color: #A09890; border-right: 1px solid #151515; }
+.tabla-cell:last-child { border-right: none; }
+.tabla-header .tabla-cell { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--gris-texto); text-transform: uppercase; }
+.tabla-row.total .tabla-cell { color: var(--blanco); font-weight: 500; }
+.tabla-row.total .tabla-cell:last-child { color: var(--bronce); font-weight: 700; font-family: 'Cormorant Garamond', serif; font-size: 18px; }
+
+/* ── KPIS ── */
+.kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #1A1A1A; margin-top: 48px; }
+.kpi-card { background: var(--negro-card); padding: 36px 28px; }
+.kpi-area { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--bronce); text-transform: uppercase; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #1E1E1E; }
+.kpi-lista { list-style: none; }
+.kpi-lista li { font-size: 13px; color: #A09890; padding: 10px 0; border-bottom: 1px solid #111; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.kpi-lista li:last-child { border-bottom: none; }
+.kpi-lista li span { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--bronce); flex-shrink: 0; font-weight: 700; }
+
+/* ── PRÓXIMOS PASOS ── */
+.pasos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #1A1A1A; margin-top: 48px; }
+.pasos-semana { background: var(--negro-card); padding: 36px 32px; }
+.pasos-sem-num { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--bronce); text-transform: uppercase; margin-bottom: 8px; }
+.pasos-sem-titulo { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; margin-bottom: 24px; }
+.pasos-lista { list-style: none; }
+.pasos-lista li { font-size: 13.5px; color: #A09890; padding: 12px 0; border-bottom: 1px solid #111; display: flex; gap: 14px; line-height: 1.5; }
+.pasos-lista li:last-child { border-bottom: none; }
+.pasos-lista li::before { content: '☐'; color: var(--bronce); flex-shrink: 0; font-size: 13px; }
+.pasos-lista li strong { color: var(--blanco); font-weight: 500; }
+
+/* ── FOOTER ── */
+.footer-doc { padding: 48px 80px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-logo-doc { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--bronce); }
+.footer-tagline-doc { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--gris-texto); text-transform: uppercase; }
+.footer-conf { font-family: 'Space Mono', monospace; font-size: 7.5px; letter-spacing: 1.5px; color: #2A2A2A; text-transform: uppercase; }
+
+/* ── UTILITIES ── */
+.divider { border: none; border-top: 1px solid #1A1A1A; margin: 0; }
+.callout-doc { background: rgba(184,122,78,.07); border-left: 4px solid var(--bronce); padding: 24px 28px; margin-top: 32px; font-size: 14.5px; color: #C0B0A4; line-height: 1.8; }
+.callout-doc strong { color: var(--blanco); font-weight: 500; }
+
+@media print {
+  body { background: white; color: #0A0A0A; font-size: 11pt; }
+  .portada { min-height: auto; page-break-after: always; }
+  .seccion { padding: 48px; page-break-inside: avoid; }
+  .foda-grid, .resumen-grid { page-break-inside: avoid; }
+}
+@media(max-width: 900px) {
+  .portada, .seccion, .footer-doc { padding: 40px 24px; }
+  .portada-titulo { font-size: 52px; }
+  .resumen-grid, .modelo-grid, .foda-grid, .proy-escenarios, .kpi-grid, .pasos-grid { grid-template-columns: 1fr; }
+  .bench-row { grid-template-columns: 1fr 1fr; }
+  .bench-row .bench-cell:nth-child(3),
+  .bench-row .bench-cell:nth-child(4),
+  .bench-row .bench-cell:nth-child(5) { display: none; }
+  .fase-cols { grid-template-columns: 1fr; }
+  .escalon { grid-template-columns: 72px 1fr; }
+  .escalon-precio { display: none; }
+  .streams-grid { grid-template-columns: 1fr; }
+  .tabla-header, .tabla-row { grid-template-columns: 60px 1fr 1fr; }
+  .tabla-cell:nth-child(3), .tabla-cell:nth-child(4) { display: none; }
+  .escalon.core { margin: 0 -24px; padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═════════════════ PORTADA ═════════════════ -->
+<div class="portada">
+  <div class="portada-top">
+    <div class="portada-logo">DIANA REÁTEGUI</div>
+    <div class="portada-tipo">
+      Documento estratégico · Confidencial<br>
+      Versión 2.0 · Mayo 2026
+    </div>
+  </div>
+  <div class="portada-centro">
+    <p class="portada-tag">✦ Plan de Negocio · Unidad de Negocio · Análisis Estratégico</p>
+    <h1 class="portada-titulo">
+      Unidad de<br>
+      <span>Negocio</span><br>
+      <em>Diana Reátegui.</em>
+    </h1>
+    <p class="portada-sub">
+      Plan de negocio integral para la unidad Diana Reátegui — marca personal, programa MARGEN™, escalera de valor completa y expansión multiplataforma. <strong>Respaldada por Smart Import Trade como empresa operativa.</strong> Mercado: empresarios LATAM de productos físicos. Horizonte: Mayo 2026 – Abril 2027.
+    </p>
+  </div>
+  <div class="portada-bottom">
+    <div class="portada-nombre">Diana Reátegui · @dianareategui_ · Fundadora Smart Import Trade</div>
+    <div class="portada-fecha">TikTok 189K · Instagram 15K · China 8+ años · Perú + Chile + LATAM</div>
+  </div>
+</div>
+
+<!-- ═════════════════ 01. RESUMEN EJECUTIVO ═════════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <p class="seccion-num">01 — Resumen Ejecutivo</p>
+    <h2 class="seccion-titulo">La oportunidad<br>de <span>mercado.</span></h2>
+    <p class="seccion-intro">
+      Diana Reátegui es la fundadora y manager de <strong>Smart Import Trade</strong>, una empresa de sourcing y logística puerta a puerta desde China a LATAM. Con 8 años de operación real en fábricas, no es coach — es operadora. Ahora lanza MARGEN™ para resolver lo que vio durante 8 años: <strong>empresarios que importan pero no escalan porque les falta estructura.</strong> Posicionamiento único, audiencia existente de 204K seguidores, cero competencia directa equivalente.
+    </p>
+  </div>
+
+  <div class="resumen-grid">
+    <div class="resumen-item">
+      <p class="resumen-item-label">La Persona y la Empresa</p>
+      <p class="resumen-item-texto">
+        Diana Reátegui: Fundadora de Smart Import Trade (empresa de sourcing y logística China→LATAM), Agente de Carga Internacional activa, creadora del Sistema MARGEN™. <strong>No enseña a importar — ella opera importaciones puerta a puerta todos los días.</strong> Smart Import Trade es el respaldo operativo; MARGEN™ es el producto core de la marca personal. El insight: "importar no es el método, es parte del sistema. Lo que falta es estructura."
+      </p>
+    </div>
+    <div class="resumen-item">
+      <p class="resumen-item-label">El Producto Core</p>
+      <p class="resumen-item-texto">
+        <strong>MARGEN™</strong> — Programa de acompañamiento 1:1 de 5 meses para empresarios de productos físicos que facturan $8K–$20K/mes. Combina diagnóstico financiero, reestructuración del modelo de ingresos, importación desde China y estructura de equipo. Resultado objetivo: <strong>2x facturación con margen real.</strong>
+      </p>
+    </div>
+    <div class="resumen-item">
+      <p class="resumen-item-label">El Mercado</p>
+      <p class="resumen-item-texto">
+        Empresarios LATAM con negocios de productos físicos (e-commerce, retail, distribución) que facturan entre $8K y $20K USD mensuales. <strong>Atrapados en el rango medio: venden bien, no escalan.</strong> El mercado de programas high-ticket en español crece exponencialmente — y el nicho de "escala + China" está prácticamente vacío.
+      </p>
+    </div>
+    <div class="resumen-item">
+      <p class="resumen-item-label">La Ventaja Competitiva</p>
+      <p class="resumen-item-texto">
+        <strong>8 años de relaciones construidas en campo en China.</strong> No contactos de Alibaba — fábricas visitadas, auditadas, negociadas con presencia física. Ningún competidor identificado combina este nivel de operación real con un programa de escala empresarial para LATAM. <strong>Este activo es imposible de replicar rápidamente.</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="resumen-kpi-grid">
+    <div class="resumen-kpi">
+      <div class="resumen-kpi-num">204K</div>
+      <div class="resumen-kpi-label">Seguidores combinados<br>TikTok + Instagram</div>
+    </div>
+    <div class="resumen-kpi">
+      <div class="resumen-kpi-num">10</div>
+      <div class="resumen-kpi-label">Cupos máximos<br>MARGEN™ / mes</div>
+    </div>
+    <div class="resumen-kpi">
+      <div class="resumen-kpi-num">8+</div>
+      <div class="resumen-kpi-label">Años operando<br>en China</div>
+    </div>
+    <div class="resumen-kpi">
+      <div class="resumen-kpi-num">$0</div>
+      <div class="resumen-kpi-label">Competidores directos<br>con perfil equivalente</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════════════ 02. MODELO DE NEGOCIO ═════════════════ -->
+<div class="seccion seccion-oscura">
+  <div class="seccion-header">
+    <p class="seccion-num">02 — Modelo de Negocio</p>
+    <h2 class="seccion-titulo">Cómo genera<br><span>valor</span> y dinero.</h2>
+    <p class="seccion-intro">
+      La unidad de negocio Diana Reátegui opera sobre dos pilares complementarios: la <strong>marca personal como motor de generación de leads</strong> y el <strong>programa MARGEN™ como activo principal de ingresos</strong>. El negocio de agencia de carga funciona en paralelo como prueba de operación real y fuente de credibilidad.
+    </p>
+  </div>
+
+  <div class="modelo-grid">
+    <div class="modelo-col">
+      <p class="modelo-col-titulo"><span>Propuesta</span> de Valor</p>
+      <ul class="modelo-lista">
+        <li><strong>Sistema completo, no curso:</strong> acompañamiento 1:1 de 5 meses con ejecución real</li>
+        <li><strong>China operativo:</strong> acceso a red de fábricas verificadas en 8 años de campo</li>
+        <li><strong>Marca propia desde origen:</strong> producto con logo, empaque y estándar propios</li>
+        <li><strong>Reestructuración empresarial:</strong> diagnóstico financiero, modelo de ingresos, procesos y equipo</li>
+        <li><strong>Garantía de continuidad:</strong> el acompañamiento no termina hasta que el negocio funcione</li>
+      </ul>
+    </div>
+    <div class="modelo-col">
+      <p class="modelo-col-titulo"><span>Segmento</span> Objetivo</p>
+      <ul class="modelo-lista">
+        <li><strong>Facturación:</strong> $8K–$20K USD/mes actuales</li>
+        <li><strong>Tipo:</strong> productos físicos (e-commerce, retail, distribución, B2B)</li>
+        <li><strong>Problema:</strong> stagnation — facturan bien, no crecen</li>
+        <li><strong>Motivación:</strong> escalar sin trabajar más, construir activo, mejorar margen</li>
+        <li><strong>Geografía:</strong> LATAM (México, Perú, Colombia, Chile, Argentina prioritario)</li>
+      </ul>
+    </div>
+    <div class="modelo-col">
+      <p class="modelo-col-titulo"><span>Canales</span> de Adquisición</p>
+      <ul class="modelo-lista">
+        <li><strong>TikTok orgánico:</strong> 189K seguidores — repositioning en curso</li>
+        <li><strong>Instagram:</strong> 15K seguidores — contenido premium y Stories</li>
+        <li><strong>Referidos:</strong> clientes existentes de importación → prospectos naturales</li>
+        <li><strong>Sesión estratégica:</strong> conversión directa en call de 30 min</li>
+        <li><strong>Largo plazo:</strong> comunidad, email list, podcast, alianzas</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="streams-grid">
+    <div class="stream-card principal">
+      <div class="stream-num">01</div>
+      <div class="stream-titulo">MARGEN™ — Programa High Ticket</div>
+      <div class="stream-desc">Programa 1:1 de 5 meses. Capacidad máxima: 10 clientes/mes. Precio revelado en sesión estratégica. Motor principal de ingresos de la marca personal.</div>
+      <span class="stream-tag nuevo">Nuevo · En lanzamiento</span>
+    </div>
+    <div class="stream-card">
+      <div class="stream-num">02</div>
+      <div class="stream-titulo">Agencia de Carga + Sourcing</div>
+      <div class="stream-desc">Operación activa como Agente de Carga Internacional. Gestión de logística, aduana y sourcing para clientes existentes en LATAM. Fuente de prueba social y credibilidad operativa.</div>
+      <span class="stream-tag activo">Activo · Negocio base</span>
+    </div>
+    <div class="stream-card">
+      <div class="stream-num">03</div>
+      <div class="stream-titulo">MARGEN SUPPLY™ — Retainer Logístico</div>
+      <div class="stream-desc">Soporte logístico y de abastecimiento continuo para graduados de MARGEN™. Smart Import Trade como brazo operativo del cliente. Recurrencia mensual predecible. Activa cuando el negocio alcanza Hito 2 (+$20K/mes).</div>
+      <span class="stream-tag futuro">Post Hito 2 · +$20K/mes</span>
+    </div>
+    <div class="stream-card">
+      <div class="stream-num">04</div>
+      <div class="stream-titulo">Producto Digital de Entrada</div>
+      <div class="stream-desc">Curso autoguiado de menor precio (~$300–$600) para monetizar la audiencia TikTok que no califica para MARGEN™. Actúa como filtro de calificación y fuente de ingresos pasivos.</div>
+      <span class="stream-tag futuro">Futuro · Mes 9+</span>
+    </div>
+  </div>
+
+  <div class="callout-doc" style="margin-top:40px;">
+    <strong>Modelo de negocio central:</strong> Contenido gratuito en redes → sesión estratégica gratuita → MARGEN™ high ticket. El embudo es simple y directo. La clave es que el contenido califique al prospecto antes de que llegue a la sesión.
+  </div>
+</div>
+
+<!-- ═════════════════ 03. FODA ═════════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <p class="seccion-num">03 — Análisis FODA</p>
+    <h2 class="seccion-titulo">Dónde está<br>parada la <span>marca.</span></h2>
+    <p class="seccion-intro">
+      Un análisis honesto del estado actual — fortalezas reales, debilidades a gestionar, oportunidades a capturar y amenazas a mitigar. Base para las decisiones estratégicas del plan.
+    </p>
+  </div>
+
+  <div class="foda-grid">
+    <div class="foda-cuadro f">
+      <div class="foda-letra">F</div>
+      <p class="foda-nombre">Fortalezas — activos que nadie puede replicar rápido</p>
+      <ul class="foda-lista">
+        <li>
+          <strong>8 años de operación real en China</strong>
+          Red de fábricas verificadas construida con presencia física. No un curso — un activo operativo.
+        </li>
+        <li>
+          <strong>Agente de Carga Internacional activa</strong>
+          Opera logística real hoy. No teórica. Da credibilidad que ningún coach puede fabricar.
+        </li>
+        <li>
+          <strong>204K seguidores combinados</strong>
+          Audiencia existente grande. El relanzamiento parte desde una base, no desde cero.
+        </li>
+        <li>
+          <strong>Testimonios reales de importación</strong>
+          Clientes que importaron contenedores, construyeron marcas, mejoraron márgenes. Prueba de resultados medibles.
+        </li>
+        <li>
+          <strong>Posicionamiento único en LATAM</strong>
+          Ningún competidor identificado combina reestructuración + China operativo + marca propia en high-ticket.
+        </li>
+        <li>
+          <strong>Marca personal auténtica</strong>
+          Identidad real: operadora, no aspiracional. Más creíble y diferenciadora en mercado saturado de coaches.
+        </li>
+      </ul>
+    </div>
+
+    <div class="foda-cuadro o">
+      <div class="foda-letra">O</div>
+      <p class="foda-nombre">Oportunidades — ventanas abiertas ahora</p>
+      <ul class="foda-lista">
+        <li>
+          <strong>Nicho high-ticket sin dueño en LATAM</strong>
+          El segmento "empresarios de productos físicos $8K–$20K/mes que quieren escalar" está prácticamente sin atender a nivel premium.
+        </li>
+        <li>
+          <strong>Demanda creciente de importación directa</strong>
+          Cada vez más empresarios LATAM buscan alternativas a intermediarios — Diana tiene la red que ellos necesitan.
+        </li>
+        <li>
+          <strong>TikTok como generador masivo de leads</strong>
+          189K seguidores + algoritmo favorable para contenido de negocios = caudal de prospectos a costo cero.
+        </li>
+        <li>
+          <strong>Material China no explotado</strong>
+          8 años de fotos, videos, operaciones reales = contenido ilimitado que ningún competidor puede replicar.
+        </li>
+        <li>
+          <strong>Escalera de valor pendiente de construir</strong>
+          Producto digital de entrada, comunidad, mastermind — múltiples capas de monetización disponibles.
+        </li>
+        <li>
+          <strong>Alianzas estratégicas posibles</strong>
+          Proveedores, plataformas de e-commerce, asociaciones empresariales LATAM como canales de distribución.
+        </li>
+      </ul>
+    </div>
+
+    <div class="foda-cuadro d">
+      <div class="foda-letra">D</div>
+      <p class="foda-nombre">Debilidades — áreas a gestionar proactivamente</p>
+      <ul class="foda-lista">
+        <li>
+          <strong>Cuenta inactiva — reposicionamiento necesario</strong>
+          La audiencia actual está acostumbrada a contenido para principiantes. El cambio de registro puede generar fricción inicial.
+        </li>
+        <li>
+          <strong>Sin casos de éxito de MARGEN™ aún</strong>
+          Programa nuevo. Los testimonios de importación existen pero no son del programa específico. Brecha temporal.
+        </li>
+        <li>
+          <strong>Capacidad limitada por modelo 1:1</strong>
+          10 clientes/mes es el techo con el modelo actual. Escalar ingresos requiere añadir productos de menor contacto.
+        </li>
+        <li>
+          <strong>Dependencia de una sola persona</strong>
+          El programa, la operación y el contenido dependen de Diana. Sin equipo, el sistema no escala ni resiste ausencias.
+        </li>
+        <li>
+          <strong>Sin lista de email</strong>
+          Las redes sociales son terreno ajeno. Sin email list propia, la audiencia no es un activo controlado.
+        </li>
+      </ul>
+    </div>
+
+    <div class="foda-cuadro a">
+      <div class="foda-letra">A</div>
+      <p class="foda-nombre">Amenazas — factores externos a monitorear</p>
+      <ul class="foda-lista">
+        <li>
+          <strong>Copycats con menor credibilidad</strong>
+          El éxito visible atrae imitadores. Coaches que adopten el "China + escala" sin experiencia real pueden confundir al mercado.
+        </li>
+        <li>
+          <strong>Cambios de algoritmo en TikTok/Instagram</strong>
+          El alcance orgánico puede cambiar. Dependencia excesiva de plataformas sin activos propios (email, comunidad) es riesgo.
+        </li>
+        <li>
+          <strong>Tensiones geopolíticas China–LATAM</strong>
+          Cambios en políticas arancelarias o restricciones comerciales pueden afectar la viabilidad del modelo de importación directa.
+        </li>
+        <li>
+          <strong>Fatiga de programas high-ticket en LATAM</strong>
+          El mercado está saturado de coaches y programas. La diferenciación basada en resultado concreto y operación real es el antídoto.
+        </li>
+        <li>
+          <strong>Ciclos económicos adversos</strong>
+          En recesión, los empresarios cortan gastos discrecionales. La propuesta de ROI medible (más margen = más dinero) es la mejor defensa.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout-doc">
+    <strong>Síntesis FODA:</strong> La ventaja competitiva de Diana es estructural — no se puede copiar rápidamente. La mayor urgencia es construir la infraestructura de negocio (equipo, email list, sistema de ventas) antes de que el volumen de demanda supere la capacidad de respuesta.
+  </div>
+</div>
+
+<!-- ═════════════════ 04. BENCHMARK ═════════════════ -->
+<div class="seccion seccion-oscura">
+  <div class="seccion-header">
+    <p class="seccion-num">04 — Benchmark Competitivo</p>
+    <h2 class="seccion-titulo">El mapa del<br><span>mercado.</span></h2>
+    <p class="seccion-intro">
+      Análisis de competidores directos, referentes de posicionamiento y benchmarks internacionales. La conclusión principal: <strong>Diana ocupa un espacio que nadie más tiene en LATAM.</strong>
+    </p>
+  </div>
+
+  <div class="bench-grid">
+    <div class="bench-row header">
+      <div class="bench-cell">Competidor / Referente</div>
+      <div class="bench-cell">Plataforma · Alcance</div>
+      <div class="bench-cell">Tipo · Precio est.</div>
+      <div class="bench-cell">Fortaleza diferencial</div>
+      <div class="bench-cell">Gap vs. Diana Reátegui</div>
+    </div>
+
+    <div class="bench-row bench-diana">
+      <div class="bench-cell">
+        <div class="bench-nombre">Diana Reátegui</div>
+        <div class="bench-handle">@dianareategui_</div>
+      </div>
+      <div class="bench-cell">
+        <span class="bench-tag-tipo directo">Posición actual</span><br>
+        <span style="font-size:11px; color:var(--gris-texto);">TikTok 189K<br>IG 15K</span>
+      </div>
+      <div class="bench-cell">
+        High Ticket<br>
+        <span style="color:var(--bronce); font-size:11px;">Precio privado</span>
+      </div>
+      <div class="bench-cell">
+        <span class="bench-positivo">8 años China operativo + Agente de Carga activa + reestructuración empresarial + marca propia. Combinación única en LATAM.</span>
+      </div>
+      <div class="bench-cell">
+        <span style="color:var(--bronce);">— Posición sin competidor directo equivalente</span>
+      </div>
+    </div>
+
+    <div class="bench-row">
+      <div class="bench-cell">
+        <div class="bench-nombre">Roberto Emprendiendo</div>
+        <div class="bench-handle">@robertoemprendiendo</div>
+      </div>
+      <div class="bench-cell">
+        <span class="bench-tag-tipo directo">Competidor directo</span><br>
+        <span style="font-size:11px; color:var(--gris-texto);">YouTube 130K+<br>TikTok/IG</span>
+      </div>
+      <div class="bench-cell">
+        Mid-ticket<br>
+        <span style="color:var(--gris-texto); font-size:11px;">$300–$800 USD</span>
+      </div>
+      <div class="bench-cell">
+        7+ años exp. Mentoría integral + desaduanaje. Enfoque accesible, bajo capital.
+      </div>
+      <div class="bench-cell bench-gap">
+        Low/mid ticket. Sin reestructuración empresarial ni marca propia. No high-ticket.
+      </div>
+    </div>
+
+    <div class="bench-row">
+      <div class="bench-cell">
+        <div class="bench-nombre">Pablo Importador</div>
+        <div class="bench-handle">@soypabloimportador</div>
+      </div>
+      <div class="bench-cell">
+        <span class="bench-tag-tipo directo">Competidor directo</span><br>
+        <span style="font-size:11px; color:var(--gris-texto);">IG + Web<br>LATAM</span>
+      </div>
+      <div class="bench-cell">
+        Mid-ticket<br>
+        <span style="color:var(--gris-texto); font-size:11px;">$300–$600 USD</span>
+      </div>
+      <div class="bench-cell">
+        Mentorías 1:1 y grupales. Promesa: primera importación rentable en 90 días.
+      </div>
+      <div class="bench-cell bench-gap">
+        Enfoque en primera importación, no en escala empresarial. Sin visión de reestructuración ni marca propia.
+      </div>
+    </div>
+
+    <div class="bench-row">
+      <div class="bench-cell">
+        <div class="bench-nombre">Mentorlat</div>
+        <div class="bench-handle">mentorlat.com</div>
+      </div>
+      <div class="bench-cell">
+        <span class="bench-tag-tipo directo">Competidor directo</span><br>
+        <span style="font-size:11px; color:var(--gris-texto);">Web + Ferias<br>Presencial</span>
+      </div>
+      <div class="bench-cell">
+        Consultoría B2B<br>
+        <span style="color:var(--gris-texto); font-size:11px;">Variable</span>
+      </div>
+      <div class="bench-cell">
+        Verificación de fábricas + logística. Acompañamiento en Feria de Cantón. Transformación digital.
+      </div>
+      <div class="bench-cell bench-gap">
+        Servicio, no programa estructurado. Sin marca personal ni contenido. Sin high-ticket escalable.
+      </div>
+    </div>
+
+    <div class="bench-row">
+      <div class="bench-cell">
+        <div class="bench-nombre">China Experience Latam</div>
+        <div class="bench-handle">china-experience.com</div>
+      </div>
+      <div class="bench-cell">
+        <span class="bench-tag-tipo ref-ht">Referente intl.</span><br>
+        <span style="font-size:11px; color:var(--gris-texto);">Web + Eventos</span>
+      </div>
+      <div class="bench-cell">
+        High Ticket<br>
+        <span style="color:var(--gris-texto); font-size:11px;">$3K–$8K USD</span>
+      </div>
+      <div class="bench-cell">
+        Viajes de inmersión a Shanghai/Beijing. Networking empresarial. Acceso a tech hubs.
+      </div>
+      <div class="bench-cell bench-gap">
+        Viajes de networking, no programa de escala. Sin acompañamiento post-viaje. Sin importación real.
+      </div>
+    </div>
+
+    <div class="bench-row">
+      <div class="bench-cell">
+        <div class="bench-nombre">Carla Sánchez</div>
+        <div class="bench-handle">@carlasanchez.oficial</div>
+      </div>
+      <div class="bench-cell">
+        <span class="bench-tag-tipo ref-ht">Referente HT</span><br>
+        <span style="font-size:11px; color:var(--gris-texto);">IG 49K · TikTok 16K</span>
+      </div>
+      <div class="bench-cell">
+        High Ticket<br>
+        <span style="color:var(--gris-texto); font-size:11px;">$3K–$8K USD</span>
+      </div>
+      <div class="bench-cell">
+        Sistema high-ticket para coaches LATAM. $8M+ reportados. Metodología de ventas sólida.
+      </div>
+      <div class="bench-cell bench-gap">
+        Vertical de coaching, no producto físico. Sin China. Referente de modelo, no competencia.
+      </div>
+    </div>
+  </div>
+
+  <div class="bench-insight">
+    <p><strong>Conclusión del benchmark (actualizado Mayo 2026):</strong> El mercado LATAM tiene 3 categorías: (1) cursos low/mid de importación para principiantes, (2) consultoras de sourcing sin marca personal, (3) referentes high-ticket en otras verticales. <strong>Nadie combina reestructuración empresarial + importación operativa real + marca propia + programa high-ticket para productos físicos.</strong> La ventana sigue abierta. La tendencia 2026 es hacia inmersión presencial y IA en sourcing — Diana tiene ambas.</p>
+  </div>
+</div>
+
+<!-- ═════════════════ 05. ESCALERA DE VALOR ═════════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <p class="seccion-num">05 — Escalera de Valor</p>
+    <h2 class="seccion-titulo">El sistema de<br><span>monetización</span><br>completo.</h2>
+    <p class="seccion-intro">
+      6 niveles de monetización. Cada nivel entrega valor real y filtra para el siguiente. <strong>El objetivo: que quien no pueda pagar MARGEN™ tenga otra opción, y que quien ya graduó tenga algo más arriba.</strong> Estimaciones de precio en USD.
+    </p>
+  </div>
+
+  <div class="escalera-wrap">
+
+    <div class="escalon">
+      <div class="escalon-nivel">
+        <div class="escalon-n">0</div>
+        <span class="escalon-tipo">Entrada</span>
+      </div>
+      <div class="escalon-body">
+        <div class="escalon-nombre">Contenido Orgánico — TikTok + Instagram + YouTube (Q3) + LinkedIn (Q3)</div>
+        <div class="escalon-desc">Parte superior del embudo. Contenido de diagnóstico empresarial, autoridad técnica China y behind-the-scenes. <strong>Califica al prospecto y lo envía a LIBRE™ o al link en bio.</strong> En Q3 se expande a YouTube (contenido largo, SEO permanente) y LinkedIn (red B2B, credibilidad corporativa).</div>
+        <div class="escalon-tags">
+          <span class="escalon-tag activo">Activo — en reactivación</span>
+          <span class="escalon-tag nuevo">YouTube + LinkedIn → Q3</span>
+        </div>
+      </div>
+      <div class="escalon-precio">
+        <div class="escalon-precio-num">$0</div>
+        <div class="escalon-precio-tipo">Gratuito</div>
+      </div>
+    </div>
+
+    <div class="escalon">
+      <div class="escalon-nivel">
+        <div class="escalon-n">1</div>
+        <span class="escalon-tipo">Comunidad</span>
+      </div>
+      <div class="escalon-body">
+        <div class="escalon-nombre">LIBRE™ — Comunidad de Empresarios en Escala (WhatsApp)</div>
+        <div class="escalon-desc">Comunidad gratuita de WhatsApp para dueños de negocio de productos físicos. <strong>Recurso semanal + pregunta de diagnóstico + audios de Diana.</strong> Genera confianza, permite identificar prospectos calificados y crea urgencia natural cuando se lanza MARGEN™. Meta: 500 miembros en 3 meses.</div>
+        <div class="escalon-tags">
+          <span class="escalon-tag nuevo">Nuevo · Mayo 2026</span>
+          <span class="escalon-tag activo">Gratuito · Lead magnet</span>
+        </div>
+      </div>
+      <div class="escalon-precio">
+        <div class="escalon-precio-num">$0</div>
+        <div class="escalon-precio-tipo">Gratuito</div>
+      </div>
+    </div>
+
+    <div class="escalon">
+      <div class="escalon-nivel">
+        <div class="escalon-n">2</div>
+        <span class="escalon-tipo">Low Ticket</span>
+      </div>
+      <div class="escalon-body">
+        <div class="escalon-nombre">DIRIGE™ — Programa de Activación</div>
+        <div class="escalon-desc">Programa de activación para dueños de negocio que quieren entrar al método antes de MARGEN™ o que no califican aún. <strong>Introduce el diagnóstico, el cálculo de costo landed y la estrategia de marca propia.</strong> Descuenta $200 en MARGEN™ al momento de aplicar — convierte estudiantes en prospectos calificados. Disponible de forma continua.</div>
+        <div class="escalon-tags">
+          <span class="escalon-tag activo">Disponible ahora</span>
+          <span class="escalon-tag activo">Descuenta $200 en MARGEN™</span>
+        </div>
+      </div>
+      <div class="escalon-precio">
+        <div class="escalon-precio-num">$299</div>
+        <div class="escalon-precio-tipo">Pago único</div>
+      </div>
+    </div>
+
+    <div class="escalon core">
+      <div class="escalon-nivel">
+        <div class="escalon-n">3</div>
+        <span class="escalon-tipo">Core · HT</span>
+      </div>
+      <div class="escalon-body">
+        <div class="escalon-nombre">MARGEN™ — Programa High Ticket · Método M.A.R.G.E.N.</div>
+        <div class="escalon-desc">El producto core. <strong>5 meses, 6 fases: Mapeo → Arquitectura → Rentabilidad → Generación → Escala → Negocio Libre.</strong> Incluye diagnóstico financiero, rediseño de modelo de ingresos, diseño de marca propia, primera importación desde fábrica, validación de ventas DENTRO del programa, y estructura de equipo. Capacidad: 10 clientes/mes máximo. Precio revelado en sesión estratégica (estimado: $2,500 USD). Garantía de Continuidad™.</div>
+        <div class="escalon-tags">
+          <span class="escalon-tag nuevo">En lanzamiento · Junio 2026</span>
+          <span class="escalon-tag nuevo">10 cupos / mes</span>
+          <span class="escalon-tag nuevo">Solo productos físicos</span>
+        </div>
+      </div>
+      <div class="escalon-precio">
+        <div class="escalon-precio-num">~$2.5K</div>
+        <div class="escalon-precio-tipo">Estimado<br>5 meses · 1:1</div>
+      </div>
+    </div>
+
+    <div class="escalon">
+      <div class="escalon-nivel">
+        <div class="escalon-n">4</div>
+        <span class="escalon-tipo">Recurrencia</span>
+      </div>
+      <div class="escalon-body">
+        <div class="escalon-nombre">MARGEN SUPPLY™ — Soporte Logístico Recurrente</div>
+        <div class="escalon-desc">Para graduados de MARGEN™. <strong>Soporte logístico y de abastecimiento continuo</strong> — nuevas importaciones, expansión de producto, negociación con fábricas, revisión de costo landed. Smart Import Trade como brazo operativo del cliente. Activa cuando el negocio alcanza Hito 2 (+$20K/mes). Genera ingreso recurrente predecible para Diana.</div>
+        <div class="escalon-tags">
+          <span class="escalon-tag futuro">Post Hito 2 · +$20K/mes</span>
+          <span class="escalon-tag futuro">$500/mes + 4% sobre importación</span>
+        </div>
+      </div>
+      <div class="escalon-precio">
+        <div class="escalon-precio-num">$500</div>
+        <div class="escalon-precio-tipo">/mes + 4%<br>Recurrente</div>
+      </div>
+    </div>
+
+    <div class="escalon">
+      <div class="escalon-nivel">
+        <div class="escalon-n">5</div>
+        <span class="escalon-tipo">Elite</span>
+      </div>
+      <div class="escalon-body">
+        <div class="escalon-nombre">ORIGEN™ — Inmersión Presencial en China</div>
+        <div class="escalon-desc">El nivel máximo. <strong>Para alumni de MARGEN™ o empresarios que facturan $25K+ que quieren acelerar en campo.</strong> Incluye: viaje grupal a China (7–10 días) para visitar fábricas verificadas de la red de Diana, negociar en persona y cerrar acuerdos de marca propia directamente con fabricantes. Grupos de 5–8 empresarios por viaje. 2 viajes/año máximo. Activa cuando haya suficientes casos de éxito y autoridad consolidada (Hito 3).</div>
+        <div class="escalon-tags">
+          <span class="escalon-tag futuro">Post Hito 3 · Año 2 (2027)</span>
+          <span class="escalon-tag futuro">5–8 empresarios / viaje</span>
+        </div>
+      </div>
+      <div class="escalon-precio">
+        <div class="escalon-precio-num">$8K–12K</div>
+        <div class="escalon-precio-tipo">Estimado · Año 2</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout-doc" style="margin-top:40px;">
+    <strong>Sugerencia estratégica:</strong> DIRIGE™ ($299) es la pieza que monetiza el 90% de la audiencia que no puede o no califica aún para MARGEN™. Funciona como puerta de entrada al método y como filtro de prospectos calificados. Ya disponible — asegurarse de que Samanta lo ofrezca a leads tipo B que no pasan a llamada directa con Diana.
+  </div>
+</div>
+
+<!-- ═════════════════ 06. PLAN 12 MESES ═════════════════ -->
+<div class="seccion seccion-oscura">
+  <div class="seccion-header">
+    <p class="seccion-num">06 — Plan de Ejecución 12 Meses</p>
+    <h2 class="seccion-titulo">Qué pasa<br>cada <span>trimestre.</span></h2>
+    <p class="seccion-intro">
+      12 meses divididos en 4 fases estratégicas. Cada fase tiene un objetivo primario, acciones específicas y métricas de éxito. <strong>El negocio no se construye todo al mismo tiempo — se construye en capas.</strong>
+    </p>
+  </div>
+
+  <div class="plan-fases">
+
+    <div class="fase">
+      <div class="fase-header">
+        <div class="fase-num-titulo">
+          <p class="fase-num">Fase 01 · Meses 1–3</p>
+          <h3 class="fase-titulo">Fundación y Relanzamiento</h3>
+        </div>
+        <p class="fase-periodo">Mayo — Julio 2026</p>
+      </div>
+      <div class="fase-cols">
+        <div>
+          <p class="fase-col-titulo">Marca y Contenido</p>
+          <ul class="fase-lista">
+            <li>Publicar identidad Empress: nueva bio, foto de perfil, highlights</li>
+            <li>Video ancla de relanzamiento: quién es Diana ahora</li>
+            <li>5–7 TikToks/semana con nuevo tono empresarial</li>
+            <li>Activar serie "Desde China" con material propio</li>
+            <li><strong>CTA por mes:</strong> Mayo → "Únete a LIBRE™" · Junio → "Aplica a MARGEN™" · Julio → "Regístrate al Webinar"</li>
+          </ul>
+        </div>
+        <div>
+          <p class="fase-col-titulo">Ventas y Programa</p>
+          <ul class="fase-lista">
+            <li><strong>Mayo — cero ventas:</strong> solo autoridad y crecimiento de comunidad LIBRE™ (meta: 150–200 miembros)</li>
+            <li><strong>Junio:</strong> Activar landing MARGEN™ + funnel de aplicación · abrir sesiones estratégicas · cerrar 2–3 clientes</li>
+            <li><strong>Julio:</strong> Primer webinar en vivo "De Dueño de Negocio a Empresario Importador" · cerrar 3–5 clientes adicionales</li>
+            <li>Webinar pasa a evergreen automático tras el lanzamiento</li>
+            <li>Solicitar testimonios a clientes de importación existentes</li>
+          </ul>
+        </div>
+        <div>
+          <p class="fase-col-titulo">Infraestructura</p>
+          <ul class="fase-lista">
+            <li>Contratar editor audiovisual con el brief entregado</li>
+            <li>Implementar CRM simple para seguimiento de prospectos</li>
+            <li>Crear lista de email — captura desde landing y redes</li>
+            <li>Establecer proceso de sesión estratégica estandarizado</li>
+            <li>Brief diseñador: kit visual Empress completo</li>
+          </ul>
+        </div>
+      </div>
+      <span class="fase-meta">Meta Q2 (May–Jul): 5–8 clientes MARGEN™ · 150–200 miembros LIBRE™ · Webinar lanzado · $12.5K–$20K facturación · Ads Q2: ~$2,950</span>
+    </div>
+
+    <div class="fase">
+      <div class="fase-header">
+        <div class="fase-num-titulo">
+          <p class="fase-num">Fase 02 · Meses 4–6</p>
+          <h3 class="fase-titulo">Autoridad, Tracción + YouTube/LinkedIn</h3>
+        </div>
+        <p class="fase-periodo">Agosto — Octubre 2026 (Q3)</p>
+      </div>
+      <div class="fase-cols">
+        <div>
+          <p class="fase-col-titulo">Marca y Contenido</p>
+          <ul class="fase-lista">
+            <li>Publicar primeros resultados de clientes MARGEN™</li>
+            <li><strong>Lanzar canal de YouTube:</strong> videos largos (10–15 min) de diagnóstico empresarial, casos reales, búsqueda orgánica permanente</li>
+            <li><strong>Activar LinkedIn:</strong> posts de posicionamiento B2B, red de empresarios, credibilidad corporativa</li>
+            <li>Serie "La Radiografía": diagnósticos en video</li>
+            <li>Colaboraciones con empresarios de productos físicos LATAM</li>
+          </ul>
+        </div>
+        <div>
+          <p class="fase-col-titulo">Ventas y Programa</p>
+          <ul class="fase-lista">
+            <li>Objetivo: 6–8 clientes activos en MARGEN™/mes</li>
+            <li>Crear testimonios video de primeros graduados</li>
+            <li>Webinar evergreen corriendo 24/7</li>
+            <li>Evaluar activación de MARGEN SUPPLY™ con primeros graduados</li>
+            <li>Optimizar tasa de conversión sesión → enrollment</li>
+          </ul>
+        </div>
+        <div>
+          <p class="fase-col-titulo">Infraestructura</p>
+          <ul class="fase-lista">
+            <li>Asistente virtual para gestión de inbox y agenda</li>
+            <li>Automatizar secuencia de email post-aplicación</li>
+            <li>Crear base de casos de estudio documentados</li>
+            <li>Escalar inversión en ads con datos de Q2</li>
+            <li>Revisión financiera: márgenes, costos, pricing</li>
+          </ul>
+        </div>
+      </div>
+      <span class="fase-meta">Meta: 6–8 clientes/mes · YouTube lanzado · LinkedIn activo · 3+ testimonios video · 500+ email list</span>
+    </div>
+
+    <div class="fase">
+      <div class="fase-header">
+        <div class="fase-num-titulo">
+          <p class="fase-num">Fase 03 · Meses 7–9</p>
+          <h3 class="fase-titulo">Escala y Sistemas</h3>
+        </div>
+        <p class="fase-periodo">Noviembre 2026 — Enero 2027</p>
+      </div>
+      <div class="fase-cols">
+        <div>
+          <p class="fase-col-titulo">Marca y Contenido</p>
+          <ul class="fase-lista">
+            <li>Consolidar presencia en 2–3 plataformas con equipo</li>
+            <li>Lanzar primer episodio de podcast o serie larga</li>
+            <li>Posicionamiento como voz experta para medios LATAM</li>
+            <li>Campaña de lanzamiento: resultados del primer semestre</li>
+            <li>Inicio de construcción de comunidad (Telegram o similar)</li>
+          </ul>
+        </div>
+        <div>
+          <p class="fase-col-titulo">Ventas y Programa</p>
+          <ul class="fase-lista">
+            <li>Objetivo: 9–10 clientes activos/mes (capacidad máxima)</li>
+            <li>Lanzar MARGEN SUPPLY™ con primeros graduados de MARGEN™</li>
+            <li>Escalar DIRIGE™: actualizar con testimonios reales y optimizar conversión</li>
+            <li>Evaluar lista de espera y sistema de pre-inscripción</li>
+            <li>Considerar subir precio ante demanda consolidada</li>
+          </ul>
+        </div>
+        <div>
+          <p class="fase-col-titulo">Infraestructura</p>
+          <ul class="fase-lista">
+            <li>Equipo consolidado: editor, VA, posible account manager</li>
+            <li>Sistema de referidos activo para clientes graduados</li>
+            <li>Métricas financieras mensuales automatizadas</li>
+            <li>Planificación del producto digital de entrada</li>
+            <li>Viaje a China para material de contenido + proveedores</li>
+          </ul>
+        </div>
+      </div>
+      <span class="fase-meta">Meta: 10 clientes/mes · MARGEN SUPPLY™ activo · 2,000+ email list</span>
+    </div>
+
+    <div class="fase">
+      <div class="fase-header">
+        <div class="fase-num-titulo">
+          <p class="fase-num">Fase 04 · Meses 10–12</p>
+          <h3 class="fase-titulo">Diversificación y Año 2</h3>
+        </div>
+        <p class="fase-periodo">Febrero — Abril 2027</p>
+      </div>
+      <div class="fase-cols">
+        <div>
+          <p class="fase-col-titulo">Marca y Contenido</p>
+          <ul class="fase-lista">
+            <li>Lanzamiento del curso digital de entrada al mercado</li>
+            <li>Balance público del primer año: resultados, aprendizajes</li>
+            <li>Campaña de posicionamiento para año 2 con nuevo nivel de autoridad</li>
+            <li>Keynotes / charlas en eventos empresariales LATAM</li>
+            <li>Consolidar TikTok +250K seguidores objetivo</li>
+          </ul>
+        </div>
+        <div>
+          <p class="fase-col-titulo">Ventas y Programa</p>
+          <ul class="fase-lista">
+            <li>Lanzar curso digital de entrada ($300–$600)</li>
+            <li>Planificar MARGEN™ Intensivo (elite tier, año 2)</li>
+            <li>Diseñar estructura de mastermind / comunidad</li>
+            <li>Lista de espera para clientes que no entraron en año 1</li>
+            <li>Revisión de pricing según resultados y demanda</li>
+          </ul>
+        </div>
+        <div>
+          <p class="fase-col-titulo">Infraestructura</p>
+          <ul class="fase-lista">
+            <li>Equipo autónomo para operaciones de contenido</li>
+            <li>SOP completo del programa MARGEN™ documentado</li>
+            <li>Sistema de referidos consolidado con incentivos</li>
+            <li>Alianzas estratégicas: plataformas e-commerce, asociaciones</li>
+            <li>Planificación financiera año 2 con múltiples streams</li>
+          </ul>
+        </div>
+      </div>
+      <span class="fase-meta">Meta: +10 clientes/mes via retainer + nuevo programa · Curso digital lanzado · $500K+ año</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═════════════════ 07. PROYECCIONES FINANCIERAS ═════════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <p class="seccion-num">07 — Proyecciones Financieras</p>
+    <h2 class="seccion-titulo">Los números<br>del <span>negocio.</span></h2>
+    <p class="seccion-intro">
+      Proyecciones basadas en precio estimado de MARGEN™ ($2,500 USD), DIRIGE™ ($299), MARGEN SUPPLY™ ($500/mes + 4%) y Smart Import Trade como ingreso base. <strong>Números realistas — no aspiracionales. Ajustar con datos reales de los primeros 90 días.</strong>
+    </p>
+  </div>
+
+  <div class="proy-escenarios">
+    <div class="proy-escenario">
+      <p class="proy-esc-label">Escenario A · Conservador</p>
+      <div class="proy-esc-anual">$150K</div>
+      <p class="proy-esc-mensual">~$12.5K USD promedio mensual</p>
+      <ul class="proy-tabla">
+        <li>Clientes MARGEN™ promedio <span>3 / mes</span></li>
+        <li>Meses de rampa (1–3) <span>1–2 / mes</span></li>
+        <li>Meses de crucero (7–12) <span>4–5 / mes</span></li>
+        <li>Smart Import Trade (base) <span>$3K / mes</span></li>
+        <li>Alumni Retainer (mes 8+) <span>3 × $500</span></li>
+        <li>Revenue anual estimado <span style="color:var(--bronce);">~$150K</span></li>
+      </ul>
+    </div>
+
+    <div class="proy-escenario moderado">
+      <p class="proy-esc-label m">Escenario B · Moderado ★ Base</p>
+      <div class="proy-esc-anual">$265K</div>
+      <p class="proy-esc-mensual">~$22K USD promedio mensual</p>
+      <ul class="proy-tabla">
+        <li>Clientes MARGEN™ promedio <span>5 / mes</span></li>
+        <li>Meses de rampa (1–3) <span>2–3 / mes</span></li>
+        <li>Meses de crucero (7–12) <span>6–8 / mes</span></li>
+        <li>Smart Import Trade (base) <span>$3K / mes</span></li>
+        <li>MARGEN SUPPLY™ (post Hito 2) <span>5 × $500</span></li>
+        <li>DIRIGE™ (continuo) <span>10 / mes × $299</span></li>
+        <li>Revenue anual estimado <span style="color:var(--bronce);">~$265K</span></li>
+      </ul>
+    </div>
+
+    <div class="proy-escenario">
+      <p class="proy-esc-label">Escenario C · Optimista</p>
+      <div class="proy-esc-anual">$420K+</div>
+      <p class="proy-esc-mensual">~$35K USD promedio mensual</p>
+      <ul class="proy-tabla">
+        <li>MARGEN™ a capacidad <span>8–10 / mes</span></li>
+        <li>Meses para llegar a máx. <span>5–6 meses</span></li>
+        <li>MARGEN SUPPLY™ activo <span>8 × $500</span></li>
+        <li>DIRIGE™ <span>20 / mes × $299</span></li>
+        <li>Smart Import Trade <span>$5K / mes</span></li>
+        <li>Revenue anual estimado <span style="color:var(--bronce);">$420K+</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="proy-anual-tabla" style="margin-top:40px;">
+    <p style="font-family:'Space Mono',monospace; font-size:9px; letter-spacing:3px; color:var(--bronce); text-transform:uppercase; margin-bottom:16px;">Proyección mensual — Escenario B (Moderado) · Precio MARGEN™: $2,500</p>
+    <div class="tabla-header">
+      <div class="tabla-cell">Período</div>
+      <div class="tabla-cell">Clientes MARGEN™</div>
+      <div class="tabla-cell">Revenue MARGEN™</div>
+      <div class="tabla-cell">Otros ingresos</div>
+    </div>
+    <div class="tabla-row">
+      <div class="tabla-cell">Mes 1 (May)</div>
+      <div class="tabla-cell">0 clientes</div>
+      <div class="tabla-cell">$0</div>
+      <div class="tabla-cell">Solo autoridad. SIT: $3K</div>
+    </div>
+    <div class="tabla-row">
+      <div class="tabla-cell">Mes 2 (Jun)</div>
+      <div class="tabla-cell">2–3 clientes</div>
+      <div class="tabla-cell">$5K–$7.5K</div>
+      <div class="tabla-cell">Primeras ventas. SIT: $3K</div>
+    </div>
+    <div class="tabla-row">
+      <div class="tabla-cell">Mes 3 (Jul)</div>
+      <div class="tabla-cell">3–5 clientes</div>
+      <div class="tabla-cell">$7.5K–$12.5K</div>
+      <div class="tabla-cell">Webinar live. SIT: $3K</div>
+    </div>
+    <div class="tabla-row">
+      <div class="tabla-cell">Mes 4–6 (Q3)</div>
+      <div class="tabla-cell">5–7 / mes</div>
+      <div class="tabla-cell">$12.5K–$17.5K</div>
+      <div class="tabla-cell">YouTube+LinkedIn. SIT: $3K</div>
+    </div>
+    <div class="tabla-row">
+      <div class="tabla-cell">Mes 7–9</div>
+      <div class="tabla-cell">6–8 / mes</div>
+      <div class="tabla-cell">$15K–$20K</div>
+      <div class="tabla-cell">SUPPLY™: $1.5K. SIT: $3K</div>
+    </div>
+    <div class="tabla-row">
+      <div class="tabla-cell">Mes 10–12</div>
+      <div class="tabla-cell">7–10 / mes</div>
+      <div class="tabla-cell">$17.5K–$25K</div>
+      <div class="tabla-cell">DIRIGE™: $3K. SUPPLY™: $2.5K</div>
+    </div>
+    <div class="tabla-row total">
+      <div class="tabla-cell">Año 1</div>
+      <div class="tabla-cell">Promedio 5/mes</div>
+      <div class="tabla-cell">MARGEN™: ~$150K</div>
+      <div class="tabla-cell">Total: ~$265K USD</div>
+    </div>
+  </div>
+
+  <div class="proy-nota">
+    Supuestos del modelo · Precio MARGEN™: $2,500 USD (estimado, ajustar con precio real) · Smart Import Trade genera ~$3K/mes como ingreso base · DIRIGE™ ($299) disponible de forma continua, 10–20 ventas/mes objetivo vía TikTok · MARGEN SUPPLY™ a $500/mes + 4% activando post Hito 2 · Costos operativos estimados: 20–30% de ingresos brutos (equipo, ads, herramientas) · Margen neto estimado: 70–80% en MARGEN™, 90%+ en DIRIGE™ · Presupuesto ads Q2: ~$2,950 total (Mayo $500–700 awareness · Junio $800–1,200 leads/retargeting · Julio $1,200–1,500 conversión) · ROI esperado ads Q2: 5.5x · Meta financiera Q2: $12,500–$20,000 USD en 5–8 enrolamientos MARGEN™
+  </div>
+</div>
+
+<!-- ═════════════════ 08. KPIS Y MÉTRICAS ═════════════════ -->
+<div class="seccion seccion-oscura">
+  <div class="seccion-header">
+    <p class="seccion-num">08 — KPIs y Métricas Clave</p>
+    <h2 class="seccion-titulo">Cómo saber si<br>va <span>bien.</span></h2>
+    <p class="seccion-intro">
+      Las métricas que importan organizadas por área. <strong>Si no se puede medir, no se puede mejorar.</strong> Revisar semanalmente (ventas) y mensualmente (marca y operación).
+    </p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <p class="kpi-area">Ventas y Conversión</p>
+      <ul class="kpi-lista">
+        <li>Aplicaciones recibidas / mes <span>Objetivo: 20+</span></li>
+        <li>Sesiones estratégicas realizadas <span>Objetivo: 12–15</span></li>
+        <li>Tasa de conversión sesión→cliente <span>Objetivo: 40–50%</span></li>
+        <li>Clientes activos en MARGEN™ <span>Objetivo: 7–10</span></li>
+        <li>Revenue mensual MARGEN™ <span>Meta: Escenario B</span></li>
+        <li>LTV (valor de vida del cliente) <span>MARGEN™ + retainer</span></li>
+      </ul>
+    </div>
+
+    <div class="kpi-card">
+      <p class="kpi-area">Contenido y Audiencia</p>
+      <ul class="kpi-lista">
+        <li>Nuevos seguidores TikTok / mes <span>Objetivo: +5K</span></li>
+        <li>Engagement rate Instagram <span>Objetivo: &gt;4%</span></li>
+        <li>Views promedio por TikTok <span>Objetivo: 50K+</span></li>
+        <li>Vistas al perfil de aplicación <span>Rastrear semanalmente</span></li>
+        <li>Clicks en bio link / mes <span>Objetivo: 500+</span></li>
+        <li>Suscriptores email list <span>Objetivo: 1K mes 3</span></li>
+      </ul>
+    </div>
+
+    <div class="kpi-card">
+      <p class="kpi-area">Calidad del Programa</p>
+      <ul class="kpi-lista">
+        <li>NPS de clientes activos <span>Objetivo: &gt;8/10</span></li>
+        <li>% clientes que alcanzan resultados <span>Objetivo: &gt;80%</span></li>
+        <li>Testimonios recolectados <span>Objetivo: 1 / cliente</span></li>
+        <li>Referidos generados por alumni <span>Objetivo: 1 / graduado</span></li>
+        <li>Tiempo promedio 1ª importación <span>Rastrear por caso</span></li>
+        <li>% reducción de costos logrado <span>Benchmark: 40–60%</span></li>
+      </ul>
+    </div>
+
+    <div class="kpi-card">
+      <p class="kpi-area">Indicadores de Audiencia Calificada</p>
+      <ul class="kpi-lista">
+        <li>Comentarios de perfil empresarial <span>Señal cualitativa clave</span></li>
+        <li>DMs de prospectos calificados <span>Rastrear origen</span></li>
+        <li>Perfiles de $8K–$20K en analytics <span>Validar mensualmente</span></li>
+        <li>Guardados en Instagram (saves) <span>Métrica de valor real</span></li>
+        <li>Tiempo visto de videos largos <span>Objetivo: &gt;60%</span></li>
+        <li>Shares de contenido empresarial <span>Viralidad interna</span></li>
+      </ul>
+    </div>
+
+    <div class="kpi-card">
+      <p class="kpi-area">Operación y Finanzas</p>
+      <ul class="kpi-lista">
+        <li>Margen neto del negocio <span>Objetivo: &gt;70%</span></li>
+        <li>Costo de adquisición de cliente <span>Rastrear desde mes 3</span></li>
+        <li>Horas Diana / cliente / semana <span>Objetivo: &lt;3h</span></li>
+        <li>% tiempo Diana en contenido <span>Objetivo: 30%</span></li>
+        <li>Capacidad usada del programa <span>Objetivo: &gt;80%</span></li>
+        <li>Runway financiero (meses) <span>Objetivo: 3+ meses</span></li>
+      </ul>
+    </div>
+
+    <div class="kpi-card">
+      <p class="kpi-area">Marca y Posicionamiento</p>
+      <ul class="kpi-lista">
+        <li>Menciones de marca espontáneas <span>Monitorear mensual</span></li>
+        <li>Búsquedas del nombre "Diana Reátegui" <span>Google Trends</span></li>
+        <li>Aplicaciones de perfiles incorrectos <span>Señal de filtro malo</span></li>
+        <li>Apariciones en medios LATAM <span>Objetivo: 1 / trimestre</span></li>
+        <li>Colaboraciones con empresarios <span>Objetivo: 2 / mes</span></li>
+        <li>Claridad del posicionamiento <span>Encuesta trimestral</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════════════ 09. PRÓXIMOS PASOS ═════════════════ -->
+<div class="seccion">
+  <div class="seccion-header">
+    <p class="seccion-num">09 — Próximos Pasos Inmediatos</p>
+    <h2 class="seccion-titulo">Lo que pasa<br>en las próximas<br><span>4 semanas.</span></h2>
+    <p class="seccion-intro">
+      El plan más detallado vale cero sin ejecución. Estos son los 20 pasos concretos que activan el relanzamiento. <strong>Cada semana tiene su foco. No todo puede pasar al mismo tiempo.</strong>
+    </p>
+  </div>
+
+  <div class="pasos-grid">
+    <div class="pasos-semana">
+      <p class="pasos-sem-num">Semana 1</p>
+      <h4 class="pasos-sem-titulo">Identidad + Base</h4>
+      <ul class="pasos-lista">
+        <li><strong>Entregar brief al diseñador</strong> (paleta Empress, tipografías, templates)</li>
+        <li><strong>Actualizar bio</strong> en Instagram y TikTok con textos nuevos</li>
+        <li><strong>Activar landing MARGEN™</strong> — subir a dominio / link en bio</li>
+        <li><strong>Guionar video ancla</strong> de relanzamiento</li>
+        <li><strong>Organizar material de China</strong> para serie "Desde China"</li>
+      </ul>
+    </div>
+
+    <div class="pasos-semana">
+      <p class="pasos-sem-num">Semana 2</p>
+      <h4 class="pasos-sem-titulo">Lanzamiento Público</h4>
+      <ul class="pasos-lista">
+        <li><strong>Publicar video ancla</strong> — nuevo posicionamiento, nueva era</li>
+        <li><strong>Publicar 3–4 TikToks</strong> con tono empresarial y filtro de audiencia</li>
+        <li><strong>Activar Stories diarias</strong> con nuevo visual y tono</li>
+        <li><strong>Abrir agenda de sesiones estratégicas</strong> — calendario en link de bio</li>
+        <li><strong>Contactar 3–5 clientes</strong> de importación para testimoniales</li>
+      </ul>
+    </div>
+
+    <div class="pasos-semana">
+      <p class="pasos-sem-num">Semana 3</p>
+      <h4 class="pasos-sem-titulo">Autoridad + Comunidad LIBRE™</h4>
+      <ul class="pasos-lista">
+        <li><strong>Lanzar serie "Desde China"</strong> con material propio</li>
+        <li><strong>Activar LIBRE™:</strong> primer mensaje de bienvenida + recurso semanal para miembros</li>
+        <li><strong>Publicar contenido de diagnóstico:</strong> los problemas reales del cliente ideal (sin mencionar MARGEN™ aún)</li>
+        <li><strong>Crear Highlights</strong> con nueva identidad visual</li>
+        <li><strong>Implementar CRM básico</strong> para seguimiento de prospectos</li>
+      </ul>
+    </div>
+
+    <div class="pasos-semana">
+      <p class="pasos-sem-num">Semana 4</p>
+      <h4 class="pasos-sem-titulo">Comunidad + Preparar Junio</h4>
+      <ul class="pasos-lista">
+        <li><strong>Medir crecimiento LIBRE™</strong> — meta: 50+ miembros al cierre de Mayo</li>
+        <li><strong>Publicar primer carrusel de autoridad</strong> en Instagram</li>
+        <li><strong>Preparar landing MARGEN™</strong> — lista para activar la primera semana de Junio</li>
+        <li><strong>Revisar métricas de semana 1–4</strong> y ajustar estrategia de contenido</li>
+        <li><strong>Planificar contenido de Junio</strong> con editor — se introduce MARGEN™ como solución</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout-doc" style="margin-top:40px;">
+    <strong>Lógica de las 3 fases Q2:</strong> Mayo es cero ventas — el trabajo es de autoridad y comunidad LIBRE™. Junio introduce MARGEN™ y abre el funnel de aplicación (meta: 2–3 clientes). Julio ejecuta el primer webinar en vivo y cierra el trimestre con 5–8 clientes totales. <strong>Las sesiones estratégicas no se abren hasta Junio — en Mayo, el contenido es el que califica.</strong>
+  </div>
+</div>
+
+<!-- ═════════════════ FOOTER ═════════════════ -->
+<div class="footer-doc">
+  <div class="footer-logo-doc">DIANA REÁTEGUI</div>
+  <div class="footer-tagline-doc">Márgenes reales. Marca propia. Negocio libre.</div>
+  <div class="footer-conf">Documento confidencial · @dianareategui_ · 2026</div>
+</div>
+
+</body>
+</html>

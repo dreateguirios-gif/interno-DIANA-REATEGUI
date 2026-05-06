@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centro de Operaciones — Diana Reátegui · Sistema MARGEN™</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --negro: #0A0A0A;
+  --negro-suave: #111111;
+  --negro-card: #141414;
+  --blanco: #F8F4EE;
+  --bronce: #B87A4E;
+  --bronce-claro: #D4956A;
+  --rosa: #C9A09A;
+  --gris: #1C1C1C;
+  --gris-borde: #252525;
+  --gris-texto: #7A7470;
+  --verde: #4A7C59;
+  --azul: #4A7C99;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--negro);
+  color: var(--blanco);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── TOP BAR ── */
+.top-bar {
+  background: var(--bronce);
+  padding: 10px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.top-bar p {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--negro);
+  font-weight: 700;
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--negro);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ── HEADER ── */
+.header {
+  padding: 80px 60px 60px;
+  border-bottom: 1px solid var(--gris-borde);
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: 'MARGEN';
+  position: absolute;
+  bottom: -60px; right: -20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 260px;
+  font-weight: 700;
+  color: rgba(184,122,78,0.04);
+  letter-spacing: -8px;
+  pointer-events: none;
+  line-height: 1;
+}
+.header-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--bronce);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  margin-bottom: 8px;
+}
+.header h1 span { color: var(--bronce); }
+.header-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--gris-texto);
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+.header-lead {
+  max-width: 680px;
+  font-size: 16px;
+  color: #A09890;
+  line-height: 1.85;
+  border-left: 3px solid var(--bronce);
+  padding-left: 22px;
+}
+.header-lead strong { color: var(--blanco); font-weight: 500; }
+
+/* ── NEGOCIO OVERVIEW ── */
+.negocio-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--gris-borde);
+  margin: 0;
+  border-bottom: 1px solid var(--gris-borde);
+}
+.negocio-col {
+  background: var(--negro-card);
+  padding: 40px 48px;
+}
+.negocio-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: var(--bronce);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--gris-borde);
+}
+.negocio-nombre {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.negocio-desc {
+  font-size: 14px;
+  color: #A09890;
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.negocio-desc strong { color: var(--blanco); font-weight: 500; }
+.negocio-tag {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+.tag-activo { border-color: rgba(74,124,89,.5); color: #6AAF7E; }
+.tag-nuevo { border-color: rgba(184,122,78,.5); color: var(--bronce); }
+.tag-futuro { border-color: rgba(120,120,120,.3); color: var(--gris-texto); }
+
+/* ── ESCALERA DE VALOR ── */
+.seccion {
+  padding: 60px;
+  border-bottom: 1px solid var(--gris-borde);
+}
+.seccion-header {
+  margin-bottom: 40px;
+}
+.seccion-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--bronce);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+}
+.seccion h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4.5vw, 60px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -1px;
+}
+.seccion h2 span { color: var(--bronce); }
+
+/* ── ROLES ── */
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--gris-borde);
+}
+.rol-card {
+  background: var(--negro-card);
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.rol-card.diana { border-top: 3px solid var(--bronce); }
+.rol-card.editor { border-top: 3px solid var(--rosa); }
+.rol-card.asistente { border-top: 3px solid var(--azul); }
+.rol-icono {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--gris-borde);
+}
+.rol-card.diana .rol-icono { color: var(--bronce); }
+.rol-card.editor .rol-icono { color: var(--rosa); }
+.rol-card.asistente .rol-icono { color: var(--azul); }
+.rol-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.rol-desc {
+  font-size: 13px;
+  color: var(--gris-texto);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+.rol-docs {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+.doc-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gris-borde);
+  text-decoration: none;
+  transition: background 0.2s;
+  margin: 0 -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 2px;
+}
+.doc-link:hover { background: rgba(184,122,78,0.06); }
+.doc-link:last-child { border-bottom: none; }
+.doc-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--gris-texto);
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 20px;
+}
+.doc-info { flex: 1; }
+.doc-titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blanco);
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.doc-desc {
+  font-size: 12px;
+  color: var(--gris-texto);
+  line-height: 1.4;
+}
+.doc-arrow {
+  color: var(--bronce);
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  opacity: 0.5;
+}
+.doc-link:hover .doc-arrow { opacity: 1; }
+.doc-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+.badge-verde { background: rgba(74,124,89,.15); color: #6AAF7E; }
+.badge-bronce { background: rgba(184,122,78,.15); color: var(--bronce); }
+.badge-azul { background: rgba(74,124,153,.15); color: var(--azul); }
+.badge-gris { background: rgba(120,120,120,.1); color: var(--gris-texto); }
+
+/* ── REFERENCIA RÁPIDA ── */
+.ref-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2px;
+  background: var(--gris-borde);
+  margin-top: 40px;
+}
+.ref-card {
+  background: var(--negro-card);
+  padding: 28px 24px;
+}
+.ref-titulo {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--bronce);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--gris-borde);
+}
+.ref-item {
+  font-size: 12.5px;
+  color: #A09890;
+  padding: 7px 0;
+  border-bottom: 1px solid #111;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.ref-item:last-child { border-bottom: none; }
+.ref-item strong { color: var(--blanco); font-weight: 500; font-family: 'Space Mono', monospace; font-size: 11px; }
+
+/* ── KPI STRIP ── */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border-bottom: 1px solid var(--gris-borde);
+}
+.kpi-item {
+  padding: 32px 24px;
+  border-right: 1px solid var(--gris-borde);
+  text-align: center;
+}
+.kpi-item:last-child { border-right: none; }
+.kpi-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 44px;
+  font-weight: 700;
+  color: var(--bronce);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.kpi-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--gris-texto);
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+/* ── CALLOUT ── */
+.callout {
+  background: rgba(184,122,78,.07);
+  border-left: 4px solid var(--bronce);
+  padding: 24px 28px;
+  margin-top: 32px;
+  font-size: 14.5px;
+  color: #C0B0A4;
+  line-height: 1.8;
+}
+.callout strong { color: var(--blanco); font-weight: 500; }
+
+/* ── INSTRUCCIONES DE USO ── */
+.instrucciones {
+  background: var(--negro-suave);
+  border-bottom: 1px solid var(--gris-borde);
+  padding: 60px;
+}
+.instr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  background: var(--gris-borde);
+  margin-top: 40px;
+}
+.instr-card {
+  background: var(--negro-card);
+  padding: 32px 28px;
+}
+.instr-paso {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 700;
+  color: rgba(184,122,78,.2);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.instr-titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--blanco);
+  margin-bottom: 10px;
+}
+.instr-desc {
+  font-size: 13.5px;
+  color: #A09890;
+  line-height: 1.7;
+}
+.instr-desc strong { color: var(--blanco); font-weight: 500; }
+
+/* ── FOOTER ── */
+.footer {
+  padding: 40px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--bronce);
+}
+.footer-tagline {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--gris-texto);
+  text-transform: uppercase;
+}
+.footer-conf {
+  font-family: 'Space Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 1.5px;
+  color: #1E1E1E;
+  text-transform: uppercase;
+}
+
+@media(max-width: 960px) {
+  .top-bar, .header, .seccion, .instrucciones, .footer { padding: 40px 24px; }
+  .negocio-strip, .roles-grid, .instr-grid, .ref-grid { grid-template-columns: 1fr; }
+  .kpi-strip { grid-template-columns: 1fr 1fr; }
+  .header h1 { font-size: 52px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOP BAR ── -->
+<div class="top-bar">
+  <p><span class="status-dot"></span>Sistema activo · Mayo 2026</p>
+  <p>Confidencial · Uso interno del equipo</p>
+</div>
+
+<!-- ── HEADER ── -->
+<div class="header">
+  <p class="header-tag">✦ Centro de Operaciones · Diana Reátegui</p>
+  <h1>Sistema<br><span>MARGEN™</span></h1>
+  <p class="header-sub">Todos los documentos del negocio · Organizados por rol</p>
+  <p class="header-lead">
+    Este es el punto de entrada único para operar la marca personal de Diana Reátegui y el programa MARGEN™.
+    <strong>Aquí el editor, el asistente comercial y Diana misma encuentran exactamente lo que necesitan para trabajar</strong>, sin buscar ni improvisar.
+    Todo está actualizado a Mayo 2026.
+  </p>
+</div>
+
+<!-- ── KPI STRIP ── -->
+<div class="kpi-strip">
+  <div class="kpi-item">
+    <div class="kpi-num">204K</div>
+    <div class="kpi-label">Seguidores<br>TikTok + IG</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-num">10</div>
+    <div class="kpi-label">Cupos máx.<br>MARGEN™/mes</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-num">8+</div>
+    <div class="kpi-label">Años operando<br>en China</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-num">2</div>
+    <div class="kpi-label">Líneas de<br>negocio activas</div>
+  </div>
+  <div class="kpi-item">
+    <div class="kpi-num">5m</div>
+    <div class="kpi-label">Duración del<br>programa MARGEN™</div>
+  </div>
+</div>
+
+<!-- ── LAS 2 LÍNEAS DE NEGOCIO ── -->
+<div class="negocio-strip">
+  <div class="negocio-col">
+    <p class="negocio-label">Línea 1 · Operativa</p>
+    <h3 class="negocio-nombre">Smart Import Trade</h3>
+    <p class="negocio-desc">
+      Empresa de sourcing y logística China → LATAM. Gestiona importaciones puerta a puerta: flete, aduana, aranceles, entrega final.
+      <strong>Esta es la operación que da credibilidad real a la marca personal.</strong>
+    </p>
+    <p class="negocio-desc" style="font-size:12px; color:#6A6060;">
+      WA: Número Smart Import Trade · Foto: Logo · Tono: corporativo, B2B
+    </p>
+    <span class="negocio-tag tag-activo">Operando hoy</span>
+  </div>
+  <div class="negocio-col">
+    <p class="negocio-label">Línea 2 · Marca Personal</p>
+    <h3 class="negocio-nombre">Diana Reátegui</h3>
+    <p class="negocio-desc">
+      Marca personal que posiciona a Diana como referente de escala empresarial para dueños de negocios físicos en LATAM.
+      <strong>Vehículo: contenido en TikTok + Instagram → comunidad LIBRE™ → programa MARGEN™.</strong>
+    </p>
+    <p class="negocio-desc" style="font-size:12px; color:#6A6060;">
+      WA: Línea personal · Foto: Diana_0026 · Handle: @dianareategui_ · Tono: directo, selectivo
+    </p>
+    <span class="negocio-tag tag-nuevo">En relanzamiento</span>
+    &nbsp;
+    <span class="negocio-tag tag-activo">LIBRE™ activo</span>
+    &nbsp;
+    <span class="negocio-tag tag-futuro">MARGEN™ desde Junio</span>
+  </div>
+</div>
+
+<!-- ── ESCALERA DE VALOR ── -->
+<div class="seccion" style="background: var(--negro-suave); padding-top: 50px; padding-bottom: 50px;">
+  <div class="seccion-header">
+    <span class="seccion-num">00 — Escalera de Valor</span>
+    <h2>Los 5 productos<br>del <span>negocio</span></h2>
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap: 2px; background: var(--gris-borde);">
+
+    <!-- LIBRE™ -->
+    <div style="background: var(--negro-card); padding: 28px 20px; position: relative;">
+      <div style="position:absolute; top:0; left:0; right:0; height:3px; background:rgba(74,124,89,.7);"></div>
+      <p style="font-family:'Space Mono',monospace; font-size:7px; letter-spacing:2px; color:#6AAF7E; text-transform:uppercase; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #1A1A1A;">Nivel 1 · Entrada</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; line-height:1; margin-bottom:8px;">LIBRE™</p>
+      <p style="font-family:'Space Mono',monospace; font-size:20px; font-weight:700; color:#6AAF7E; margin-bottom:16px; line-height:1;">$0</p>
+      <p style="font-size:12px; color:#8A8080; line-height:1.65; margin-bottom:16px;">Comunidad WhatsApp gratuita. Filtra y clasifica prospectos calificados para MARGEN™. Base de confianza y audiencia.</p>
+      <span style="display:inline-block; font-family:'Space Mono',monospace; font-size:7px; letter-spacing:1px; padding:3px 8px; border:1px solid rgba(74,124,89,.5); color:#6AAF7E; text-transform:uppercase;">Activo ahora</span>
+    </div>
+
+    <!-- DIRIGE™ -->
+    <div style="background: var(--negro-card); padding: 28px 20px; position: relative;">
+      <div style="position:absolute; top:0; left:0; right:0; height:3px; background:rgba(74,124,153,.7);"></div>
+      <p style="font-family:'Space Mono',monospace; font-size:7px; letter-spacing:2px; color:var(--azul); text-transform:uppercase; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #1A1A1A;">Nivel 2 · Activación</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; line-height:1; margin-bottom:8px;">DIRIGE™</p>
+      <p style="font-family:'Space Mono',monospace; font-size:20px; font-weight:700; color:var(--azul); margin-bottom:16px; line-height:1;">$299</p>
+      <p style="font-size:12px; color:#8A8080; line-height:1.65; margin-bottom:16px;">Programa online de activación. Puerta de entrada al método. Descuenta $200 en MARGEN™ al momento de aplicar.</p>
+      <span style="display:inline-block; font-family:'Space Mono',monospace; font-size:7px; letter-spacing:1px; padding:3px 8px; border:1px solid rgba(74,124,153,.5); color:var(--azul); text-transform:uppercase;">Disponible</span>
+    </div>
+
+    <!-- MARGEN™ -->
+    <div style="background: var(--negro-card); padding: 28px 20px; position: relative;">
+      <div style="position:absolute; top:0; left:0; right:0; height:3px; background:var(--bronce);"></div>
+      <p style="font-family:'Space Mono',monospace; font-size:7px; letter-spacing:2px; color:var(--bronce); text-transform:uppercase; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #1A1A1A;">Nivel 3 · Core</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; line-height:1; margin-bottom:8px;">MARGEN™</p>
+      <p style="font-family:'Space Mono',monospace; font-size:20px; font-weight:700; color:var(--bronce); margin-bottom:16px; line-height:1;">$2,500</p>
+      <p style="font-size:12px; color:#8A8080; line-height:1.65; margin-bottom:16px;">Acompañamiento 1:1, 5 meses. Las 6 fases M.A.R.G.E.N. Máx. 10 cupos. Acceso por evaluación con Diana.</p>
+      <span style="display:inline-block; font-family:'Space Mono',monospace; font-size:7px; letter-spacing:1px; padding:3px 8px; border:1px solid rgba(184,122,78,.5); color:var(--bronce); text-transform:uppercase;">Lanza Junio 2026</span>
+    </div>
+
+    <!-- SUPPLY™ -->
+    <div style="background: var(--negro-card); padding: 28px 20px; position: relative; opacity:0.75;">
+      <div style="position:absolute; top:0; left:0; right:0; height:3px; background:rgba(201,160,154,.5);"></div>
+      <p style="font-family:'Space Mono',monospace; font-size:7px; letter-spacing:2px; color:var(--rosa); text-transform:uppercase; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #1A1A1A;">Nivel 4 · Extensión</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; line-height:1; margin-bottom:8px;">SUPPLY™</p>
+      <p style="font-family:'Space Mono',monospace; font-size:14px; font-weight:700; color:var(--rosa); margin-bottom:16px; line-height:1.4;">$500/mes + 4%</p>
+      <p style="font-size:12px; color:#8A8080; line-height:1.65; margin-bottom:16px;">Soporte logístico continuo post-MARGEN™. Activa solo al alcanzar Hito 2 ($20K/mes). Smart Import como brazo operativo.</p>
+      <span style="display:inline-block; font-family:'Space Mono',monospace; font-size:7px; letter-spacing:1px; padding:3px 8px; border:1px solid rgba(120,120,120,.3); color:var(--gris-texto); text-transform:uppercase;">Post Hito 2</span>
+    </div>
+
+    <!-- ORIGEN™ -->
+    <div style="background: var(--negro-card); padding: 28px 20px; position: relative; opacity:0.55;">
+      <div style="position:absolute; top:0; left:0; right:0; height:3px; background:rgba(100,100,100,.3);"></div>
+      <p style="font-family:'Space Mono',monospace; font-size:7px; letter-spacing:2px; color:var(--gris-texto); text-transform:uppercase; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #1A1A1A;">Nivel 5 · Premium</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; line-height:1; margin-bottom:8px;">ORIGEN™</p>
+      <p style="font-family:'Space Mono',monospace; font-size:20px; font-weight:700; color:var(--gris-texto); margin-bottom:16px; line-height:1;">$8K–12K</p>
+      <p style="font-size:12px; color:#8A8080; line-height:1.65; margin-bottom:16px;">Viaje presencial a China. Sourcing de alto valor para alumni de MARGEN™. Experiencia inmersiva de 7-10 días.</p>
+      <span style="display:inline-block; font-family:'Space Mono',monospace; font-size:7px; letter-spacing:1px; padding:3px 8px; border:1px solid rgba(80,80,80,.2); color:#404040; text-transform:uppercase;">Futuro · Post Hito 3</span>
+    </div>
+
+  </div>
+
+  <!-- Hitos de Escala -->
+  <div style="margin-top:2px; display:grid; grid-template-columns: repeat(3, 1fr); gap:2px; background:var(--gris-borde);">
+    <div style="background:#0D0D0D; padding:26px 24px;">
+      <p style="font-family:'Space Mono',monospace; font-size:7px; letter-spacing:2px; color:var(--bronce); text-transform:uppercase; margin-bottom:10px;">Hito 1 · Escala operativa</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:700; line-height:1.1; margin-bottom:10px;">6 ventas MARGEN™</p>
+      <p style="font-size:12.5px; color:#8A8080; line-height:1.65;">Contratar closer de ventas + mentor de implementación. Diana sale del cierre y de la entrega operativa.</p>
+    </div>
+    <div style="background:#0D0D0D; padding:26px 24px;">
+      <p style="font-family:'Space Mono',monospace; font-size:7px; letter-spacing:2px; color:var(--bronce); text-transform:uppercase; margin-bottom:10px;">Hito 2 · Ingresos estructurados</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:700; line-height:1.1; margin-bottom:10px;">+$20K / mes</p>
+      <p style="font-size:12.5px; color:#8A8080; line-height:1.65;">Activar MARGEN SUPPLY™. Estructurar el brazo logístico como extensión directa de los clientes del programa.</p>
+    </div>
+    <div style="background:#0D0D0D; padding:26px 24px;">
+      <p style="font-family:'Space Mono',monospace; font-size:7px; letter-spacing:2px; color:var(--bronce); text-transform:uppercase; margin-bottom:10px;">Hito 3 · Negocio Libre</p>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:700; line-height:1.1; margin-bottom:10px;">$30K–50K / mes</p>
+      <p style="font-size:12.5px; color:#8A8080; line-height:1.65;">Diana sale de ventas y entrega. Lanzar ORIGEN™. El negocio opera sin depender de su presencia operativa.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECCIÓN: DOCUMENTOS POR ROL ── -->
+<div class="seccion">
+  <div class="seccion-header">
+    <span class="seccion-num">01 — Acceso por Rol</span>
+    <h2>¿Quién eres<br>tú en este <span>equipo?</span></h2>
+  </div>
+
+  <div class="roles-grid">
+
+    <!-- DIANA -->
+    <div class="rol-card diana">
+      <p class="rol-icono">Fundadora · Directora</p>
+      <h3 class="rol-titulo">Diana Reátegui</h3>
+      <p class="rol-desc">Visión estratégica, toma de decisiones, grabación de contenido, sesiones con clientes y dirección de equipo.</p>
+      <div class="rol-docs">
+        <a href="PROGRAMA%20HIGH%20TICKET/Plan-Negocio-Diana-Reategui-V2.html" class="doc-link" target="_blank">
+          <span class="doc-num">01</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Plan de Negocio V2</div>
+            <div class="doc-desc">Modelo completo, FODA, proyecciones, escalera de valor, KPIs para 12 meses</div>
+          </div>
+          <span class="doc-badge badge-bronce">Core</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/index.html" class="doc-link" target="_blank">
+          <span class="doc-num">02</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Master Plan Operativo</div>
+            <div class="doc-desc">Escalera de valor, modelo de ingresos, hitos del negocio, visión</div>
+          </div>
+          <span class="doc-badge badge-bronce">Core</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/plan-accion.html" class="doc-link" target="_blank">
+          <span class="doc-num">03</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Plan de Acción</div>
+            <div class="doc-desc">Qué hace quién cada semana, prioridades inmediatas y próximas 4 semanas</div>
+          </div>
+          <span class="doc-badge badge-verde">Ejecutable</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/oferta.html" class="doc-link" target="_blank">
+          <span class="doc-num">04</span>
+          <div class="doc-info">
+            <div class="doc-titulo">La Oferta</div>
+            <div class="doc-desc">Estructura completa de MARGEN™: qué incluye, precio, escalera, comunidad LIBRE™</div>
+          </div>
+          <span class="doc-badge badge-bronce">Ventas</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/equipo.html" class="doc-link" target="_blank">
+          <span class="doc-num">05</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Estructura del Equipo</div>
+            <div class="doc-desc">Roles, responsabilidades, flujo de trabajo entre Diana, editor y asistente</div>
+          </div>
+          <span class="doc-badge badge-gris">Gestión</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="PROGRAMA%20HIGH%20TICKET/MARGEN-Landing-Nueva.html" class="doc-link" target="_blank">
+          <span class="doc-num">06</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Landing Page MARGEN™</div>
+            <div class="doc-desc">Página de ventas del programa — revisar y aprobar antes de publicar</div>
+          </div>
+          <span class="doc-badge badge-bronce">Aprobar</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="PROGRAMA%20HIGH%20TICKET/Link_Bio_Diana_Reategui.html" class="doc-link" target="_blank">
+          <span class="doc-num">07</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Link en Bio</div>
+            <div class="doc-desc">Página de links (LIBRE™ + Smart Import). Agregar URLs reales antes de publicar</div>
+          </div>
+          <span class="doc-badge badge-verde">Completar URLs</span>
+          <span class="doc-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- EDITOR -->
+    <div class="rol-card editor">
+      <p class="rol-icono">Audiovisual · Diseño</p>
+      <h3 class="rol-titulo">Editor</h3>
+      <p class="rol-desc">Edita videos, diseña carruseles, aplica identidad visual, produce contenido para TikTok e Instagram según el calendario semanal.</p>
+      <div class="rol-docs">
+        <a href="index/Brief_Editor_Diana_Reategui_V2.html" class="doc-link" target="_blank">
+          <span class="doc-num">01</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Manual de Marca V2</div>
+            <div class="doc-desc">Identidad visual, tono, paleta, fotos, plantillas, plan semanal y checklist. LEER PRIMERO.</div>
+          </div>
+          <span class="doc-badge badge-bronce">Prioritario</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/sops.html" class="doc-link" target="_blank">
+          <span class="doc-num">02</span>
+          <div class="doc-info">
+            <div class="doc-titulo">SOPs de Contenido</div>
+            <div class="doc-desc">Procedimientos exactos: cómo editar cada tipo de pieza, qué entregar y cuándo</div>
+          </div>
+          <span class="doc-badge badge-verde">Ejecutable</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/plan-accion.html" class="doc-link" target="_blank">
+          <span class="doc-num">03</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Plan de Acción Semanal</div>
+            <div class="doc-desc">Qué se entrega en cada semana. El calendario de producción.</div>
+          </div>
+          <span class="doc-badge badge-verde">Ejecutable</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/equipo.html" class="doc-link" target="_blank">
+          <span class="doc-num">04</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Tu Rol en el Equipo</div>
+            <div class="doc-desc">Qué se espera de ti, a quién reportas, cómo fluye el trabajo</div>
+          </div>
+          <span class="doc-badge badge-gris">Contexto</span>
+          <span class="doc-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Referencia visual rápida para el editor -->
+      <div style="margin-top: 28px; padding: 20px; background: #0D0D0D; border: 1px solid var(--gris-borde);">
+        <p style="font-family:'Space Mono',monospace; font-size:8px; letter-spacing:2px; color:var(--rosa); text-transform:uppercase; margin-bottom:14px;">Referencia Rápida · Paleta Empress</p>
+        <div style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="width:16px; height:16px; background:#0A0A0A; border:1px solid #333;"></div>
+            <span style="font-family:'Space Mono',monospace; font-size:9px; color:#555;">#0A0A0A</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="width:16px; height:16px; background:#F8F4EE;"></div>
+            <span style="font-family:'Space Mono',monospace; font-size:9px; color:#555;">#F8F4EE</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="width:16px; height:16px; background:#B87A4E;"></div>
+            <span style="font-family:'Space Mono',monospace; font-size:9px; color:#555;">#B87A4E</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="width:16px; height:16px; background:#C9A09A;"></div>
+            <span style="font-family:'Space Mono',monospace; font-size:9px; color:#555;">#C9A09A</span>
+          </div>
+        </div>
+        <p style="font-size:11px; color:#5A5050; line-height:1.6;">
+          Tipografías: <span style="color:#888;">Cormorant Garamond</span> (títulos) · <span style="color:#888;">Montserrat</span> (subtítulos) · <span style="color:#888;">DM Sans</span> (cuerpo) · <span style="color:#888;">Space Mono</span> (datos)<br>
+          Fotos prioritarias: <span style="color:var(--bronce);">0026 · 0037 · 0049</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- ASISTENTE COMERCIAL -->
+    <div class="rol-card asistente">
+      <p class="rol-icono">Comercial · Atención</p>
+      <h3 class="rol-titulo">Asistente Comercial</h3>
+      <p class="rol-desc">Atiende WhatsApp de ambas líneas, gestiona el CRM, califica prospectos, agenda sesiones con Diana y da seguimiento a la comunidad LIBRE™.</p>
+      <div class="rol-docs">
+        <a href="PROGRAMA%20HIGH%20TICKET/Brief_Asistente_Comercial_Diana_Reategui.html" class="doc-link" target="_blank">
+          <span class="doc-num">01</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Brief del Asistente Comercial</div>
+            <div class="doc-desc">Protocolos WhatsApp, tono por línea, scripts, etiquetado CRM, SLAs. LEER PRIMERO.</div>
+          </div>
+          <span class="doc-badge badge-azul">Prioritario</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/ventas.html" class="doc-link" target="_blank">
+          <span class="doc-num">02</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Proceso de Ventas</div>
+            <div class="doc-desc">Embudo completo, scripts de conversación, cómo mover a un prospecto hacia MARGEN™</div>
+          </div>
+          <span class="doc-badge badge-verde">Ejecutable</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/oferta.html" class="doc-link" target="_blank">
+          <span class="doc-num">03</span>
+          <div class="doc-info">
+            <div class="doc-titulo">La Oferta</div>
+            <div class="doc-desc">Qué es exactamente MARGEN™, comunidad LIBRE™, precios y escalera — para explicar con precisión</div>
+          </div>
+          <span class="doc-badge badge-bronce">Producto</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/sops.html" class="doc-link" target="_blank">
+          <span class="doc-num">04</span>
+          <div class="doc-info">
+            <div class="doc-titulo">SOPs Operativos</div>
+            <div class="doc-desc">Procedimientos para situaciones específicas: cotizaciones, escalados, comunidad</div>
+          </div>
+          <span class="doc-badge badge-verde">Ejecutable</span>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="index/equipo.html" class="doc-link" target="_blank">
+          <span class="doc-num">05</span>
+          <div class="doc-info">
+            <div class="doc-titulo">Tu Rol en el Equipo</div>
+            <div class="doc-desc">Qué se espera de ti, con quién coordinas y cómo fluye el trabajo</div>
+          </div>
+          <span class="doc-badge badge-gris">Contexto</span>
+          <span class="doc-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Scripts rápidos para el asistente -->
+      <div style="margin-top: 28px; padding: 20px; background: #0D0D0D; border: 1px solid var(--gris-borde); font-family:'Space Mono',monospace; font-size:11px; color:#A09890; line-height:1.8;">
+        <p style="font-size:8px; letter-spacing:2px; color:var(--azul); text-transform:uppercase; margin-bottom:12px;">Regla de oro · Etiquetas CRM</p>
+        <p><span style="color:var(--bronce);">Diana / MARGEN™</span> → interés en marca personal, LIBRE™ o escalar negocio</p>
+        <p><span style="color:#6AAF7E;">Smart Import Trade</span> → cotización o logística B2B</p>
+        <p style="margin-top:10px; font-size:10px; color:#4A4A4A;">Si un cliente de SIT menciona que "está atascado" → agregar etiqueta Diana/MARGEN™</p>
+      </div>
+    </div>
+
+  </div><!-- /roles-grid -->
+</div>
+
+<!-- ── INSTRUCCIONES DE USO ── -->
+<div class="instrucciones">
+  <div class="seccion-header">
+    <span class="seccion-num">02 — Cómo usar este sistema</span>
+    <h2>Para empezar<br>a <span>operar</span> hoy</h2>
+  </div>
+
+  <div class="instr-grid">
+    <div class="instr-card">
+      <div class="instr-paso">1</div>
+      <div class="instr-titulo">Lee tu documento prioritario</div>
+      <p class="instr-desc">
+        Cada rol tiene un documento marcado como <strong>"Prioritario"</strong> arriba. Ese es el único que necesitas leer en tu primer día.
+        Es el manual de tu trabajo. Todo lo demás es referencia.
+      </p>
+    </div>
+    <div class="instr-card">
+      <div class="instr-paso">2</div>
+      <div class="instr-titulo">Consulta el plan de acción</div>
+      <p class="instr-desc">
+        El <strong>Plan de Acción</strong> dice qué se hace esta semana y quién lo hace.
+        Es el documento que se actualiza más frecuentemente y donde coordina el equipo.
+      </p>
+    </div>
+    <div class="instr-card">
+      <div class="instr-paso">3</div>
+      <div class="instr-titulo">Ante dudas, consulta los SOPs</div>
+      <p class="instr-desc">
+        Los <strong>SOPs</strong> tienen el procedimiento exacto para cada situación operativa:
+        cómo editar, cómo responder, qué hacer cuando hay algo fuera de lo normal.
+        No adivines — busca el SOP primero.
+      </p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:32px;">
+    <strong>Regla del equipo:</strong> Si algo no está documentado aquí, se lo dice a Diana y se documenta. La operación no depende de la memoria de nadie — depende del sistema.
+  </div>
+</div>
+
+<!-- ── REFERENCIA RÁPIDA ── -->
+<div class="seccion" style="background: var(--negro-suave);">
+  <div class="seccion-header">
+    <span class="seccion-num">03 — Referencia Rápida</span>
+    <h2>Datos clave<br>del <span>negocio</span></h2>
+  </div>
+
+  <div class="ref-grid">
+    <div class="ref-card">
+      <p class="ref-titulo">Plataformas</p>
+      <div class="ref-item"><span>Handle</span><strong>@dianareategui_</strong></div>
+      <div class="ref-item"><span>TikTok</span><strong>189K seguidores</strong></div>
+      <div class="ref-item"><span>Instagram</span><strong>15K seguidores</strong></div>
+      <div class="ref-item"><span>Bio</span><strong>Link en Bio activo</strong></div>
+      <div class="ref-item"><span>Highlights IG</span><strong>MARGEN™ · China Real · El Método · Sobre mí · Aplica</strong></div>
+    </div>
+    <div class="ref-card">
+      <p class="ref-titulo">MARGEN™</p>
+      <div class="ref-item"><span>Tipo</span><strong>Programa 1:1</strong></div>
+      <div class="ref-item"><span>Duración</span><strong>5 meses</strong></div>
+      <div class="ref-item"><span>Cupos</span><strong>6-8 fase actual · 10 máx</strong></div>
+      <div class="ref-item"><span>Acceso</span><strong>Por evaluación</strong></div>
+      <div class="ref-item"><span>Lanzamiento</span><strong>Junio 2026</strong></div>
+      <div class="ref-item"><span>Cliente ideal</span><strong>$8K–$20K/mes</strong></div>
+    </div>
+    <div class="ref-card">
+      <p class="ref-titulo">Comunidad LIBRE™</p>
+      <div class="ref-item"><span>Tipo</span><strong>WhatsApp grupal</strong></div>
+      <div class="ref-item"><span>Precio</span><strong>Gratuito</strong></div>
+      <div class="ref-item"><span>Fase</span><strong>Activa ahora</strong></div>
+      <div class="ref-item"><span>Función</span><strong>Calificar prospectos MARGEN™</strong></div>
+      <div class="ref-item"><span>Webinar</span><strong>Evergreen → cierra MARGEN™</strong></div>
+    </div>
+    <div class="ref-card">
+      <p class="ref-titulo">Frecuencia de Contenido</p>
+      <div class="ref-item"><span>Reels TikTok + IG</span><strong>2–3 /día</strong></div>
+      <div class="ref-item"><span>Stories</span><strong>Diario (ambas)</strong></div>
+      <div class="ref-item"><span>Carruseles IG</span><strong>1 cada 2–3 días</strong></div>
+      <div class="ref-item"><span>Grabación</span><strong>Lunes (bloque)</strong></div>
+      <div class="ref-item"><span>WA respuesta</span><strong>Máx. 2 horas</strong></div>
+    </div>
+  </div>
+
+  <!-- Tono de marca – referencia rápida -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--gris-borde); margin-top:2px;">
+    <div style="background:var(--negro-card); padding:28px 32px;">
+      <p style="font-family:'Space Mono',monospace; font-size:8px; letter-spacing:2px; color:#4A7C59; text-transform:uppercase; margin-bottom:16px;">✓ Tono correcto</p>
+      <p style="font-style:italic; font-size:14px; color:#B0A8A2; line-height:1.7; border-left:3px solid rgba(74,124,89,.4); padding-left:14px;">"Si facturas $10K al mes y a fin de mes no sabes exactamente cuánto te queda, el problema no es tu volumen. Es tu estructura. Aquí te explico."</p>
+    </div>
+    <div style="background:var(--negro-card); padding:28px 32px;">
+      <p style="font-family:'Space Mono',monospace; font-size:8px; letter-spacing:2px; color:#8B3A3A; text-transform:uppercase; margin-bottom:16px;">✕ Tono incorrecto</p>
+      <p style="font-style:italic; font-size:14px; color:#6A6060; line-height:1.7; border-left:3px solid rgba(139,58,58,.4); padding-left:14px;">"¡Hola chicos! Hoy les enseño cómo comprar en Alibaba paso a paso 🛒✨ No olviden darle like y suscribirse para más tips de importación 🙌"</p>
+    </div>
+  </div>
+
+  <!-- Las 6 fases M.A.R.G.E.N. -->
+  <div style="margin-top:2px; background:var(--negro-card); border:1px solid var(--gris-borde); padding:32px;">
+    <p style="font-family:'Space Mono',monospace; font-size:8px; letter-spacing:3px; color:var(--bronce); text-transform:uppercase; margin-bottom:20px;">Las 6 Fases del Método M.A.R.G.E.N.™</p>
+    <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:2px; background:var(--gris-borde);">
+      <div style="background:#0D0D0D; padding:16px 12px; text-align:center;">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; color:rgba(184,122,78,.5); line-height:1;">M</p>
+        <p style="font-family:'Space Mono',monospace; font-size:8px; color:var(--bronce); letter-spacing:1px; text-transform:uppercase; margin-top:4px;">Mapeo</p>
+      </div>
+      <div style="background:#0D0D0D; padding:16px 12px; text-align:center;">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; color:rgba(184,122,78,.5); line-height:1;">A</p>
+        <p style="font-family:'Space Mono',monospace; font-size:8px; color:var(--bronce); letter-spacing:1px; text-transform:uppercase; margin-top:4px;">Arquitectura</p>
+      </div>
+      <div style="background:#0D0D0D; padding:16px 12px; text-align:center;">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; color:rgba(184,122,78,.5); line-height:1;">R</p>
+        <p style="font-family:'Space Mono',monospace; font-size:8px; color:var(--bronce); letter-spacing:1px; text-transform:uppercase; margin-top:4px;">Rentabilidad</p>
+      </div>
+      <div style="background:#0D0D0D; padding:16px 12px; text-align:center;">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; color:rgba(184,122,78,.5); line-height:1;">G</p>
+        <p style="font-family:'Space Mono',monospace; font-size:8px; color:var(--bronce); letter-spacing:1px; text-transform:uppercase; margin-top:4px;">Generación</p>
+      </div>
+      <div style="background:#0D0D0D; padding:16px 12px; text-align:center;">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; color:rgba(184,122,78,.5); line-height:1;">E</p>
+        <p style="font-family:'Space Mono',monospace; font-size:8px; color:var(--bronce); letter-spacing:1px; text-transform:uppercase; margin-top:4px;">Escala</p>
+      </div>
+      <div style="background:#0D0D0D; padding:16px 12px; text-align:center;">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:700; color:rgba(184,122,78,.5); line-height:1;">N</p>
+        <p style="font-family:'Space Mono',monospace; font-size:8px; color:var(--bronce); letter-spacing:1px; text-transform:uppercase; margin-top:4px;">Negocio Libre</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TODOS LOS DOCUMENTOS ── -->
+<div class="seccion">
+  <div class="seccion-header">
+    <span class="seccion-num">04 — Biblioteca Completa</span>
+    <h2>Todos los<br><span>documentos</span></h2>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--gris-borde);">
+
+    <div style="background:var(--negro-card); padding:32px 28px;">
+      <p style="font-family:'Space Mono',monospace; font-size:8px; letter-spacing:2px; color:var(--bronce); text-transform:uppercase; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--gris-borde);">Estrategia &amp; Negocio</p>
+      <a href="PROGRAMA%20HIGH%20TICKET/Plan-Negocio-Diana-Reategui-V2.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #111; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>Plan de Negocio V2 — Completo</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+      <a href="index/index.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #111; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>Master Plan Operativo</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+      <a href="index/oferta.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #111; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>La Oferta — MARGEN™ &amp; LIBRE™</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+      <a href="index/plan-accion.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #111; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>Plan de Acción — Semana a Semana</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+      <a href="index/equipo.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:none; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>Estructura del Equipo</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+    </div>
+
+    <div style="background:var(--negro-card); padding:32px 28px;">
+      <p style="font-family:'Space Mono',monospace; font-size:8px; letter-spacing:2px; color:var(--bronce); text-transform:uppercase; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--gris-borde);">Operación &amp; Equipo</p>
+      <a href="index/Brief_Editor_Diana_Reategui_V2.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #111; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>Manual de Marca V2 — Editor</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+      <a href="PROGRAMA%20HIGH%20TICKET/Brief_Asistente_Comercial_Diana_Reategui.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #111; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>Brief Asistente Comercial</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+      <a href="index/sops.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #111; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>SOPs — Procedimientos Operativos</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+      <a href="index/ventas.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #111; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>Proceso de Ventas</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+      <a href="PROGRAMA%20HIGH%20TICKET/MARGEN-Landing-Nueva.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid #111; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>Landing Page MARGEN™</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+      <a href="PROGRAMA%20HIGH%20TICKET/Link_Bio_Diana_Reategui.html" target="_blank" style="display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:none; text-decoration:none; color:var(--blanco); font-size:13.5px;">
+        <span>Link en Bio</span>
+        <span style="font-family:'Space Mono',monospace; font-size:9px; color:var(--bronce);">→</span>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="callout" style="margin-top:24px;">
+    <strong>Nota sobre Arquitectura de Negocio:</strong> La carpeta <code style="background:#1A1A1A; padding:2px 6px; font-size:12px; color:var(--bronce);">Arquitectura de negocio- Diana Reategui/</code> contiene 6 documentos .docx (Fases 1–6) con el desarrollo detallado del modelo de negocio. Abrirlos con Word o Google Docs. Son el antecedente del Plan de Negocio V2.
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <div class="footer-logo">Diana Reátegui</div>
+  <div class="footer-tagline">Márgenes reales · Marca propia · Negocio libre</div>
+  <div class="footer-conf">Confidencial · Uso interno · Mayo 2026</div>
+</div>
+
+</body>
+</html>

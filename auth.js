@@ -129,7 +129,7 @@ async function authLogin(email, password, btnEl, errEl) {
   const h = await _sha256(password);
   if (_USERS[e] && _USERS[e] === h) {
     localStorage.setItem(_KEY, JSON.stringify({ ok: true, email: e, ts: Date.now() }));
-    const ret = localStorage.getItem("dr_return") || "index.html";
+    const ret = localStorage.getItem("dr_return") || "dashboard.html";
     localStorage.removeItem("dr_return");
     location.replace(ret);
   } else {

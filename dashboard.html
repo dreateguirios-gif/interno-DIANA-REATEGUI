@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema MARGEN™</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="auth.js"></script>
+<script>
+// Auth check manual — sin inyectar la barra flotante (el dashboard tiene su propio header)
+if (!_isLoggedIn()) {
+  localStorage.setItem('dr_return', location.href);
+  location.replace('login.html');
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+/* ══ RESET & BASE ══════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans',sans-serif;font-weight:300;}
+
+/* ══ HEADER ════════════════════════════════════ */
+.db-header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:56px;
+  background:rgba(10,10,10,0.98);
+  border-bottom:1px solid #1A1A1A;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;
+  gap:16px;
+}
+.db-header-left{display:flex;align-items:center;gap:16px;}
+.db-logo{
+  font-family:'Montserrat',sans-serif;
+  font-size:14px;font-weight:700;letter-spacing:3px;
+  color:#B87A4E;text-transform:uppercase;
+  text-decoration:none;white-space:nowrap;
+}
+.db-system-tag{
+  font-family:'Space Mono',monospace;
+  font-size:8px;letter-spacing:3px;text-transform:uppercase;
+  color:#2A2A2A;padding-left:16px;border-left:1px solid #1E1E1E;
+}
+.db-header-right{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+.db-user-email{
+  font-family:'Space Mono',monospace;
+  font-size:8px;letter-spacing:1px;color:#3A3430;
+  text-transform:lowercase;
+}
+.db-logout-btn{
+  background:none;border:1px solid #252525;
+  color:#4A4440;
+  font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;
+  padding:7px 14px;cursor:pointer;transition:color .2s,border-color .2s;
+}
+.db-logout-btn:hover{color:#B87A4E;border-color:rgba(184,122,78,0.4);}
+
+/* ══ MAIN ══════════════════════════════════════ */
+.db-main{
+  padding:88px 32px 64px;
+  max-width:1280px;
+  margin:0 auto;
+}
+
+/* ══ HERO ══════════════════════════════════════ */
+.db-hero{
+  margin-bottom:36px;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;
+}
+.db-greeting{
+  font-family:'Cormorant Garamond',serif;
+  font-size:52px;font-weight:300;line-height:1;letter-spacing:-1.5px;
+  color:#F8F4EE;
+}
+.db-greeting strong{font-weight:700;color:#B87A4E;}
+.db-date-block{text-align:right;}
+.db-date{
+  font-family:'Space Mono',monospace;
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#2A2A2A;
+  margin-bottom:4px;
+}
+.db-role-badge{
+  display:inline-block;
+  font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 10px;
+  background:rgba(184,122,78,0.1);
+  border:1px solid rgba(184,122,78,0.2);
+  color:#B87A4E;
+}
+
+/* ══ QUICK STATS ═══════════════════════════════ */
+.db-stats{
+  display:flex;gap:0;
+  border:1px solid #1E1E1E;
+  margin-bottom:48px;
+  overflow:hidden;
+}
+.db-stat{
+  flex:1;padding:18px 24px;
+  border-right:1px solid #1E1E1E;
+  transition:background .2s;
+}
+.db-stat:last-child{border-right:none;}
+.db-stat:hover{background:rgba(184,122,78,0.03);}
+.db-stat-val{
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:700;line-height:1;
+  color:#B87A4E;margin-bottom:6px;
+}
+.db-stat-lbl{
+  font-family:'Space Mono',monospace;
+  font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#2E2E2E;
+}
+
+/* ══ SECTION ═══════════════════════════════════ */
+.db-section{margin-bottom:40px;}
+.db-section-header{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:16px;
+}
+.db-section-label{
+  font-family:'Space Mono',monospace;
+  font-size:8px;letter-spacing:4px;text-transform:uppercase;
+  color:#3A3430;white-space:nowrap;
+}
+.db-section-line{flex:1;height:1px;background:#161616;}
+
+/* ══ APP GRID ══════════════════════════════════ */
+.db-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+@media(max-width:1000px){.db-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.db-grid{grid-template-columns:1fr;}}
+
+/* ══ APP CARD ══════════════════════════════════ */
+.app-card{
+  position:relative;
+  background:#111;
+  border:1px solid #1E1E1E;
+  border-top:2px solid #1A1A1A;
+  padding:28px 24px 22px;
+  cursor:pointer;overflow:hidden;
+  min-height:148px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  transition:border-color .2s,border-top-color .2s,transform .15s,box-shadow .2s;
+  text-decoration:none;
+}
+.app-card:hover{
+  border-color:rgba(184,122,78,0.35);
+  border-top-color:#B87A4E;
+  box-shadow:0 4px 32px rgba(184,122,78,0.06);
+  transform:translateY(-2px);
+}
+/* Background glyph */
+.card-glyph{
+  position:absolute;
+  top:-4px;right:-4px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:96px;font-weight:700;
+  color:rgba(184,122,78,0.04);
+  line-height:1;letter-spacing:-2px;
+  user-select:none;pointer-events:none;
+  transition:color .2s;
+}
+.app-card:hover .card-glyph{color:rgba(184,122,78,0.07);}
+
+.card-inner{position:relative;z-index:1;}
+.card-kpi{
+  font-family:'Space Mono',monospace;
+  font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  color:#B87A4E;margin-bottom:10px;min-height:14px;
+}
+.card-name{
+  font-family:'Space Mono',monospace;
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:#F8F4EE;margin-bottom:7px;
+}
+.card-desc{
+  font-family:'DM Sans',sans-serif;
+  font-size:12px;font-weight:300;
+  color:#3A3430;line-height:1.5;
+}
+.card-arrow{
+  position:absolute;bottom:20px;right:20px;
+  font-size:14px;color:#2A2A2A;
+  transition:color .2s,right .15s;
+}
+.app-card:hover .card-arrow{color:#B87A4E;right:16px;}
+
+/* ── Coming soon card ── */
+.card-soon{
+  opacity:0.35;cursor:default;
+}
+.card-soon:hover{
+  transform:none;box-shadow:none;
+  border-color:#1E1E1E;border-top-color:#1A1A1A;
+}
+.card-soon:hover .card-glyph{color:rgba(184,122,78,0.04);}
+.card-kpi-soon{color:#2A2A2A !important;}
+
+/* ── Director-locked card (for team users) ── */
+.card-locked{
+  opacity:0.28;cursor:not-allowed;
+}
+.card-locked:hover{
+  transform:none;box-shadow:none;
+  border-color:#1E1E1E;border-top-color:#1A1A1A;
+}
+.card-locked:hover .card-glyph{color:rgba(184,122,78,0.04);}
+.card-lock-tag{
+  font-family:'Space Mono',monospace;
+  font-size:7px;letter-spacing:2px;text-transform:uppercase;
+  color:#9A6060;margin-bottom:10px;min-height:14px;
+}
+
+/* ══ TOAST ═════════════════════════════════════ */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:500;
+  background:rgba(10,10,10,0.98);
+  border:1px solid rgba(184,122,78,0.28);border-left:3px solid #B87A4E;
+  padding:12px 20px;
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  color:#B87A4E;
+  opacity:0;transform:translateY(6px);
+  transition:opacity .25s,transform .25s;pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateY(0);}
+.toast.locked{border-left-color:#9A6060;color:#9A6060;}
+
+/* ══ FOOTER ════════════════════════════════════ */
+.db-footer{
+  text-align:center;padding:40px 32px 32px;
+  font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;
+  color:#1A1A1A;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header class="db-header">
+  <div class="db-header-left">
+    <span class="db-logo">Diana Reátegui</span>
+    <span class="db-system-tag">Sistema MARGEN™</span>
+  </div>
+  <div class="db-header-right">
+    <span class="db-user-email" id="db-user-email"></span>
+    <button class="db-logout-btn" onclick="authLogout()">Salir</button>
+  </div>
+</header>
+
+<!-- ═══════════════════ MAIN ════════════════════ -->
+<main class="db-main">
+
+  <!-- HERO -->
+  <div class="db-hero">
+    <h1 class="db-greeting" id="db-greeting">
+      Bienvenida, <strong>Diana</strong>
+    </h1>
+    <div class="db-date-block">
+      <div class="db-date" id="db-date"></div>
+      <span class="db-role-badge" id="db-role-badge"></span>
+    </div>
+  </div>
+
+  <!-- QUICK STATS -->
+  <div class="db-stats">
+    <div class="db-stat">
+      <span class="db-stat-val" id="s-total">—</span>
+      <span class="db-stat-lbl">Total leads</span>
+    </div>
+    <div class="db-stat">
+      <span class="db-stat-val" id="s-activos">—</span>
+      <span class="db-stat-lbl">Leads activos</span>
+    </div>
+    <div class="db-stat">
+      <span class="db-stat-val" id="s-pipeline">—</span>
+      <span class="db-stat-lbl">Valor pipeline</span>
+    </div>
+    <div class="db-stat">
+      <span class="db-stat-val" id="s-ganados">—</span>
+      <span class="db-stat-lbl">Cerrados ganados</span>
+    </div>
+  </div>
+
+  <!-- ─── SECCIÓN 1: OPERACIONES ─── -->
+  <section class="db-section">
+    <div class="db-section-header">
+      <span class="db-section-label">Operaciones</span>
+      <div class="db-section-line"></div>
+    </div>
+    <div class="db-grid">
+
+      <div class="app-card" onclick="location.href='crm.html'">
+        <div class="card-glyph">CRM</div>
+        <div class="card-inner">
+          <div class="card-kpi" id="kpi-crm">Cargando...</div>
+          <div class="card-name">CRM</div>
+          <div class="card-desc">Pipeline · Leads · Seguimiento · Clientes</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+
+      <div class="app-card" onclick="location.href='ventas.html'">
+        <div class="card-glyph">VNT</div>
+        <div class="card-inner">
+          <div class="card-kpi">&nbsp;</div>
+          <div class="card-name">Ventas</div>
+          <div class="card-desc">Script de cierre · KPIs · Objeciones · Funnel</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+
+      <div class="app-card" onclick="location.href='asistente-comercial.html'">
+        <div class="card-glyph">AST</div>
+        <div class="card-inner">
+          <div class="card-kpi">&nbsp;</div>
+          <div class="card-name">Asistente Comercial</div>
+          <div class="card-desc">WhatsApp · Protocolos · Templates · SLA</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── SECCIÓN 2: ESTRATEGIA ─── -->
+  <section class="db-section">
+    <div class="db-section-header">
+      <span class="db-section-label">Estrategia</span>
+      <div class="db-section-line"></div>
+    </div>
+    <div class="db-grid">
+
+      <div class="app-card" onclick="location.href='index.html'">
+        <div class="card-glyph">DOC</div>
+        <div class="card-inner">
+          <div class="card-kpi">&nbsp;</div>
+          <div class="card-name">Documentos Internos</div>
+          <div class="card-desc">Master Plan · Oferta · Manuales · Procesos</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+
+      <div class="app-card" onclick="location.href='plan-accion.html'">
+        <div class="card-glyph">PA</div>
+        <div class="card-inner">
+          <div class="card-kpi">&nbsp;</div>
+          <div class="card-name">Plan de Acción</div>
+          <div class="card-desc">Timeline · Semana a semana · Hitos 2026</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+
+      <div class="app-card card-director" id="card-finanzas" onclick="gotoDirector('plan-negocio-v2.html')">
+        <div class="card-glyph">FIN</div>
+        <div class="card-inner">
+          <div class="card-kpi" id="kpi-fin">&nbsp;</div>
+          <div class="card-name">Finanzas</div>
+          <div class="card-desc">Plan de Negocio · Proyecciones · Revenue · FODA</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── SECCIÓN 3: MARKETING & EQUIPO ─── -->
+  <section class="db-section">
+    <div class="db-section-header">
+      <span class="db-section-label">Marketing · Equipo · Operaciones</span>
+      <div class="db-section-line"></div>
+    </div>
+    <div class="db-grid">
+
+      <div class="app-card" onclick="location.href='brief-editor-v2.html'">
+        <div class="card-glyph">MKT</div>
+        <div class="card-inner">
+          <div class="card-kpi">&nbsp;</div>
+          <div class="card-name">Marketing</div>
+          <div class="card-desc">Manual Editor · Contenido · Brief · Calendario</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+
+      <div class="app-card" onclick="location.href='equipo.html'">
+        <div class="card-glyph">EQP</div>
+        <div class="card-inner">
+          <div class="card-kpi">&nbsp;</div>
+          <div class="card-name">Equipo</div>
+          <div class="card-desc">Roles · Rutinas · KPIs · Responsabilidades</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+
+      <div class="app-card" onclick="location.href='sops.html'">
+        <div class="card-glyph">OPS</div>
+        <div class="card-inner">
+          <div class="card-kpi">&nbsp;</div>
+          <div class="card-name">Operaciones</div>
+          <div class="card-desc">SOPs · Workflows · Procesos · Checklists</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── SECCIÓN 4: ESTRATEGIA AVANZADA ─── -->
+  <section class="db-section">
+    <div class="db-section-header">
+      <span class="db-section-label">Estrategia Avanzada</span>
+      <div class="db-section-line"></div>
+    </div>
+    <div class="db-grid">
+
+      <div class="app-card card-director" id="card-masterplan" onclick="gotoDirector('master-plan.html')">
+        <div class="card-glyph">MP</div>
+        <div class="card-inner">
+          <div class="card-kpi" id="kpi-mp">&nbsp;</div>
+          <div class="card-name">Master Plan</div>
+          <div class="card-desc">Arquitectura · Sistema · Hitos · Escalabilidad</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+
+      <div class="app-card card-soon">
+        <div class="card-glyph">IA</div>
+        <div class="card-inner">
+          <div class="card-kpi card-kpi-soon">Próximamente</div>
+          <div class="card-name">IA · Automatizaciones</div>
+          <div class="card-desc">Prompts · GPTs · Workflows · Zapier</div>
+        </div>
+      </div>
+
+      <div class="app-card card-soon">
+        <div class="card-glyph">EDU</div>
+        <div class="card-inner">
+          <div class="card-kpi card-kpi-soon">Próximamente</div>
+          <div class="card-name">Academia</div>
+          <div class="card-desc">Trainings · Capacitaciones · Recursos · Onboarding</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="db-footer">
+  Sistema MARGEN™ · Uso Interno · Confidencial · Solo personal autorizado
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════════════
+   INIT — greeting, user info, role
+══════════════════════════════════════════════════ */
+(function init() {
+  // User email in header
+  const s = JSON.parse(localStorage.getItem('dr_auth_v1') || '{}');
+  if (s.email) {
+    document.getElementById('db-user-email').textContent = s.email;
+    // Personalized greeting
+    const name = s.email.split('.')[0];
+    const cap  = name.charAt(0).toUpperCase() + name.slice(1);
+    const hr   = new Date().getHours();
+    const greet= hr < 12 ? 'Buenos días' : hr < 19 ? 'Buenas tardes' : 'Buenas noches';
+    document.getElementById('db-greeting').innerHTML =
+      greet + ', <strong>' + cap + '</strong>';
+  }
+
+  // Date
+  const now = new Date();
+  document.getElementById('db-date').textContent = now.toLocaleDateString('es-PE', {
+    weekday:'long', day:'numeric', month:'long', year:'numeric'
+  }).replace(/^\w/, c => c.toUpperCase());
+
+  // Role badge
+  const role = typeof _getRole === 'function' ? _getRole() : 'team';
+  document.getElementById('db-role-badge').textContent =
+    role === 'director' ? 'Directivo · Acceso total' : 'Equipo · Acceso operativo';
+
+  // Lock director cards for team users
+  if (role !== 'director') {
+    ['card-finanzas','card-masterplan'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('card-locked');
+      el.querySelector('.card-kpi').innerHTML =
+        '<span class="card-lock-tag">Restringido · Solo directivos</span>';
+    });
+  } else {
+    // Director: show subtle badge on those cards
+    ['kpi-fin','kpi-mp'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = 'Acceso director';
+    });
+  }
+})();
+
+/* ══════════════════════════════════════════════════
+   LOAD STATS desde Supabase
+══════════════════════════════════════════════════ */
+async function loadStats() {
+  try {
+    const { data, error } = await _supabase
+      .from('leads')
+      .select('estado, valor_estimado');
+    if (error) throw error;
+
+    const leads   = data || [];
+    const activos = leads.filter(l => !['cerrado_ganado','cerrado_perdido'].includes(l.estado));
+    const ganados = leads.filter(l => l.estado === 'cerrado_ganado');
+    const pipeline= activos.reduce((s,l) => s + (parseFloat(l.valor_estimado)||0), 0);
+
+    document.getElementById('s-total').textContent   = leads.length;
+    document.getElementById('s-activos').textContent = activos.length;
+    document.getElementById('s-pipeline').textContent= '$' + pipeline.toLocaleString('en-US');
+    document.getElementById('s-ganados').textContent = ganados.length;
+    document.getElementById('kpi-crm').textContent   =
+      leads.length + ' lead' + (leads.length !== 1 ? 's' : '') +
+      ' · ' + activos.length + ' activos';
+  } catch (e) {
+    document.getElementById('kpi-crm').textContent = 'CRM conectado';
+    ['s-total','s-activos','s-pipeline','s-ganados'].forEach(id => {
+      document.getElementById(id).textContent = '—';
+    });
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   GOTO DIRECTOR — solo si es director
+══════════════════════════════════════════════════ */
+function gotoDirector(url) {
+  const role = typeof _getRole === 'function' ? _getRole() : 'team';
+  if (role === 'director') {
+    location.href = url;
+  } else {
+    showToast('Acceso restringido · Solo directivos');
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════════ */
+let _toastTmr;
+function showToast(msg, isLocked) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isLocked ? ' locked' : '');
+  clearTimeout(_toastTmr);
+  _toastTmr = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+/* ══════════════════════════════════════════════════
+   START
+══════════════════════════════════════════════════ */
+loadStats();
+</script>
+</body>
+</html>

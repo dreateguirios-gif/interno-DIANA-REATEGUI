@@ -85,11 +85,13 @@ html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans'
 }
 .stat-coming{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;color:#1E1A18;}
 
-/* ══ APP GRID ══ */
-.apps-label{
+/* ══ SECTION LABEL ══ */
+.section-label{
   font-family:'Space Mono',monospace;font-size:7px;letter-spacing:4px;
   text-transform:uppercase;color:#222;margin-bottom:20px;
 }
+
+/* ══ APP GRID ══ */
 .apps{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(148px,1fr));
@@ -129,8 +131,8 @@ html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans'
 }
 .app:hover .app-name{color:#C8C0B8;}
 
-/* ── States ── */
-.app.soon{opacity:0.3;cursor:default;pointer-events:none;}
+/* ── Card states ── */
+.app.soon{opacity:0.28;cursor:default;pointer-events:none;}
 .app.locked{opacity:0.2;cursor:not-allowed;}
 .app.locked:hover{background:#0E0E0E;border-color:#1A1A1A;transform:none;box-shadow:none;}
 
@@ -146,6 +148,12 @@ html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans'
 .toast.on{opacity:1;transform:translateY(0);}
 .toast.warn{border-left-color:#9A6060;color:#9A6060;}
 
+@media(max-width:600px){
+  .stats{flex-wrap:wrap;}
+  .stat{flex:1 1 45%;border-right:none;border-bottom:1px solid #181818;}
+  .inner{padding:32px 16px 60px;}
+  .greeting{font-size:32px;}
+}
 </style>
 </head>
 <body>
@@ -173,7 +181,7 @@ html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans'
     </div>
   </div>
 
-  <!-- STATS -->
+  <!-- STATS CRM -->
   <div class="stats">
     <div class="stat">
       <span class="stat-num" id="s-total">—</span>
@@ -199,14 +207,15 @@ html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans'
   </div>
 
   <!-- APPS -->
-  <div class="apps-label">Módulos del sistema</div>
+  <div class="section-label">Aplicaciones del sistema</div>
   <div class="apps" id="apps">
 
     <!-- CRM -->
     <div class="app" onclick="go('crm.html')">
       <div class="app-icon">
         <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round">
-          <circle cx="18" cy="12" r="6"/><path d="M4 34c0-7.732 6.268-14 14-14s14 6.268 14 14"/>
+          <circle cx="18" cy="12" r="6"/>
+          <path d="M4 34c0-7.732 6.268-14 14-14s14 6.268 14 14"/>
         </svg>
       </div>
       <span class="app-name">CRM</span>
@@ -216,49 +225,15 @@ html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans'
     <div class="app" onclick="go('ventas.html')">
       <div class="app-icon">
         <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="3,29 12,18 20,23 33,8"/><polyline points="26,8 33,8 33,15"/>
+          <polyline points="3,29 12,18 20,23 33,8"/>
+          <polyline points="26,8 33,8 33,15"/>
         </svg>
       </div>
       <span class="app-name">Ventas</span>
     </div>
 
-    <!-- Asistente Comercial -->
-    <div class="app" onclick="go('asistente-comercial.html')">
-      <div class="app-icon">
-        <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round">
-          <path d="M32 16c0 7.732-6.268 14-14 14a13.9 13.9 0 01-6.98-1.87L4 30l1.87-7.02A13.9 13.9 0 014 16C4 8.268 10.268 2 18 2s14 6.268 14 14z"/>
-          <line x1="11" y1="14" x2="25" y2="14"/><line x1="11" y1="20" x2="19" y2="20"/>
-        </svg>
-      </div>
-      <span class="app-name">Asistente Comercial</span>
-    </div>
-
-    <!-- Documentos Internos -->
-    <div class="app" onclick="go('index.html')">
-      <div class="app-icon">
-        <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round">
-          <rect x="8" y="4" width="20" height="28" rx="2"/>
-          <line x1="12" y1="12" x2="24" y2="12"/><line x1="12" y1="18" x2="24" y2="18"/><line x1="12" y1="24" x2="18" y2="24"/>
-        </svg>
-      </div>
-      <span class="app-name">Documentos Internos</span>
-    </div>
-
-    <!-- Plan de Acción -->
-    <div class="app" onclick="go('plan-accion.html')">
-      <div class="app-icon">
-        <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="4" y="7" width="28" height="25" rx="2"/>
-          <line x1="4" y1="15" x2="32" y2="15"/>
-          <line x1="12" y1="3" x2="12" y2="11"/><line x1="24" y1="3" x2="24" y2="11"/>
-          <polyline points="11,23 15,27 25,19"/>
-        </svg>
-      </div>
-      <span class="app-name">Plan de Acción</span>
-    </div>
-
     <!-- Operaciones -->
-    <div class="app" onclick="go('sops.html')">
+    <div class="app" onclick="go('operaciones.html')">
       <div class="app-icon">
         <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round">
           <circle cx="18" cy="18" r="5"/>
@@ -269,7 +244,7 @@ html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans'
     </div>
 
     <!-- Marketing -->
-    <div class="app" onclick="go('brief-editor-v2.html')">
+    <div class="app" onclick="go('marketing.html')">
       <div class="app-icon">
         <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M8 13h5l15-9v28L13 23H8z"/>
@@ -280,39 +255,43 @@ html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans'
       <span class="app-name">Marketing</span>
     </div>
 
+    <!-- Finanzas — director only -->
+    <div class="app" id="card-fin" onclick="goDir('finanzas.html')">
+      <div class="app-icon">
+        <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round">
+          <rect x="2" y="10" width="32" height="20" rx="2"/>
+          <line x1="2" y1="17" x2="34" y2="17"/>
+          <circle cx="18" cy="25" r="3"/>
+          <line x1="11" y1="5" x2="11" y2="12"/>
+          <line x1="25" y1="5" x2="25" y2="12"/>
+        </svg>
+      </div>
+      <span class="app-name">Finanzas</span>
+    </div>
+
     <!-- Equipo -->
     <div class="app" onclick="go('equipo.html')">
       <div class="app-icon">
         <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round">
-          <circle cx="13" cy="12" r="5"/><circle cx="24" cy="12" r="5"/>
+          <circle cx="13" cy="12" r="5"/>
+          <circle cx="24" cy="12" r="5"/>
           <path d="M1 34c0-6.075 5.373-11 12-11h10c6.627 0 12 4.925 12 11"/>
         </svg>
       </div>
       <span class="app-name">Equipo</span>
     </div>
 
-    <!-- Finanzas — director only -->
-    <div class="app" id="card-fin" onclick="goDir('plan-negocio-v2.html')">
+    <!-- Documentos Internos -->
+    <div class="app" onclick="go('documentos.html')">
       <div class="app-icon">
         <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round">
-          <rect x="2" y="10" width="32" height="20" rx="2"/>
-          <line x1="2" y1="17" x2="34" y2="17"/>
-          <circle cx="18" cy="25" r="3"/>
-          <line x1="11" y1="5" x2="11" y2="12"/><line x1="25" y1="5" x2="25" y2="12"/>
+          <path d="M8 4h12l8 8v20a2 2 0 01-2 2H8a2 2 0 01-2-2V6a2 2 0 012-2z"/>
+          <polyline points="20,4 20,12 28,12"/>
+          <line x1="11" y1="20" x2="25" y2="20"/>
+          <line x1="11" y1="26" x2="19" y2="26"/>
         </svg>
       </div>
-      <span class="app-name">Finanzas</span>
-    </div>
-
-    <!-- Master Plan — director only -->
-    <div class="app" id="card-mp" onclick="goDir('master-plan.html')">
-      <div class="app-icon">
-        <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="18" cy="18" r="14"/>
-          <polygon points="18,7 21,18 18,29 15,18"/>
-        </svg>
-      </div>
-      <span class="app-name">Master Plan</span>
+      <span class="app-name">Documentos Internos</span>
     </div>
 
     <!-- IA — coming soon -->
@@ -337,6 +316,24 @@ html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans'
       <span class="app-name">Academia</span>
     </div>
 
+    <!-- Calendario — coming soon -->
+    <div class="app soon">
+      <div class="app-icon">
+        <svg width="28" height="28" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="7" width="28" height="25" rx="2"/>
+          <line x1="4" y1="15" x2="32" y2="15"/>
+          <line x1="12" y1="3" x2="12" y2="11"/>
+          <line x1="24" y1="3" x2="24" y2="11"/>
+          <line x1="10" y1="21" x2="10" y2="21"/>
+          <line x1="18" y1="21" x2="18" y2="21"/>
+          <line x1="26" y1="21" x2="26" y2="21"/>
+          <line x1="10" y1="27" x2="10" y2="27"/>
+          <line x1="18" y1="27" x2="18" y2="27"/>
+        </svg>
+      </div>
+      <span class="app-name">Calendario</span>
+    </div>
+
   </div><!-- /apps -->
 
 </div><!-- /inner -->
@@ -345,40 +342,31 @@ html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans'
 <div class="toast" id="toast"></div>
 
 <script>
-/* ── Init ───────────────────────────────────── */
 (function(){
   const s    = JSON.parse(localStorage.getItem('dr_auth_v1')||'{}');
   const role = (typeof _getRole==='function') ? _getRole() : 'team';
 
-  // Header user
   if(s.email) document.getElementById('h-user').textContent = s.email;
 
-  // Greeting
   const first = s.email ? s.email.split('.')[0] : 'Diana';
   const name  = first.charAt(0).toUpperCase()+first.slice(1);
   const hr    = new Date().getHours();
   const hi    = hr<12?'Buenos días':hr<19?'Buenas tardes':'Buenas noches';
   document.getElementById('greeting').innerHTML = hi+', <b>'+name+'</b>';
 
-  // Date
   document.getElementById('g-date').textContent = new Date()
     .toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long',year:'numeric'})
     .replace(/^\w/,c=>c.toUpperCase());
 
-  // Role chip
   document.getElementById('g-role').textContent =
     role==='director'?'Directivo · Acceso total':'Equipo · Acceso operativo';
 
-  // Lock director cards for team
   if(role!=='director'){
-    ['card-fin','card-mp'].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el) el.classList.add('locked');
-    });
+    const el=document.getElementById('card-fin');
+    if(el) el.classList.add('locked');
   }
 })();
 
-/* ── Load stats from Supabase ───────────────── */
 async function loadStats(){
   try{
     const {data,error}=await _supabase.from('leads').select('estado,valor_estimado');
@@ -398,7 +386,6 @@ async function loadStats(){
   }
 }
 
-/* ── Navigation ─────────────────────────────── */
 function go(url){ location.href=url; }
 
 function goDir(url){
@@ -407,7 +394,6 @@ function goDir(url){
   else{ showToast('Acceso restringido · Solo directivos',true); }
 }
 
-/* ── Toast ──────────────────────────────────── */
 let _tt;
 function showToast(msg,warn){
   const t=document.getElementById('toast');

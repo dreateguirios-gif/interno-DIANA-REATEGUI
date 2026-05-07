@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing — Sistema MARGEN™</title>
+<script src="auth.js"></script>
+<script>requireAuth();</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;700&family=Montserrat:wght@500;700&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{min-height:100%;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans',sans-serif;}
+
+.hub-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:52px;background:#0A0A0A;border-bottom:1px solid #181818;display:flex;align-items:center;padding:0 24px;}
+.hub-back{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#4A4440;text-decoration:none;padding:0 16px 0 0;transition:color .2s;white-space:nowrap;}
+.hub-back:hover{color:#B87A4E;}
+.hub-sep{width:1px;height:16px;background:#1E1E1E;margin-right:16px;flex-shrink:0;}
+.hub-title{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#2A2420;}
+
+.body{padding-top:52px;}
+.inner{max-width:1100px;margin:0 auto;padding:48px 28px 80px;}
+
+.mod-hero{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid #141414;}
+.mod-eyebrow{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:4px;text-transform:uppercase;color:#3A3430;display:block;margin-bottom:14px;}
+.mod-title{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1;letter-spacing:-1px;color:#F8F4EE;margin-bottom:10px;}
+.mod-title b{font-weight:700;color:#B87A4E;}
+.mod-desc{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;color:#4A4440;line-height:1.6;max-width:560px;}
+
+.section-label{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:4px;text-transform:uppercase;color:#222;margin-bottom:16px;}
+
+.mods{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px;}
+.mod{background:#0E0E0E;border:1px solid #1A1A1A;border-radius:8px;padding:18px 20px;cursor:pointer;display:flex;align-items:flex-start;gap:16px;transition:background .18s,border-color .18s;}
+.mod:hover{background:#131313;border-color:rgba(184,122,78,0.35);}
+.mod-icon{width:44px;height:44px;border-radius:10px;background:rgba(184,122,78,0.07);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .18s;}
+.mod:hover .mod-icon{background:rgba(184,122,78,0.12);}
+.mod-info{flex:1;min-width:0;}
+.mod-name{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:#A8A0A0;margin-bottom:4px;transition:color .18s;}
+.mod:hover .mod-name{color:#D8D0C8;}
+.mod-desc-text{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;color:#2E2A28;line-height:1.5;}
+.mod.soon{opacity:0.28;cursor:default;pointer-events:none;}
+
+@media(max-width:600px){.inner{padding:32px 16px 60px;}.mod-title{font-size:36px;}.mods{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav class="hub-nav">
+  <a href="dashboard.html" class="hub-back">← Sistema</a>
+  <div class="hub-sep"></div>
+  <span class="hub-title">Marketing</span>
+</nav>
+
+<div class="body">
+<div class="inner">
+
+  <div class="mod-hero">
+    <span class="mod-eyebrow">Módulo · Contenido & Marca</span>
+    <h1 class="mod-title">Marketing<br><b>&amp; Contenido</b></h1>
+    <p class="mod-desc">Hub de estrategia de contenido, creativos, campañas y recursos audiovisuales de la marca.</p>
+  </div>
+
+  <div class="section-label">Secciones</div>
+  <div class="mods">
+
+    <!-- Brief Editor -->
+    <div class="mod" onclick="location.href='brief-editor-v2.html'">
+      <div class="mod-icon">
+        <svg width="22" height="22" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M26 4l6 6-18 18H8v-6L26 4z"/>
+          <line x1="21" y1="9" x2="27" y2="15"/>
+        </svg>
+      </div>
+      <div class="mod-info">
+        <div class="mod-name">Brief Creativo</div>
+        <div class="mod-desc-text">Editor de briefs para piezas y campañas</div>
+      </div>
+    </div>
+
+    <!-- Hooks — soon -->
+    <div class="mod soon">
+      <div class="mod-icon">
+        <svg width="22" height="22" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22,3 10,19 18,19 14,33 26,17 18,17"/>
+        </svg>
+      </div>
+      <div class="mod-info">
+        <div class="mod-name">Hooks & Ángulos</div>
+        <div class="mod-desc-text">Próximamente</div>
+      </div>
+    </div>
+
+    <!-- Guiones — soon -->
+    <div class="mod soon">
+      <div class="mod-icon">
+        <svg width="22" height="22" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round">
+          <rect x="4" y="4" width="28" height="28" rx="2"/>
+          <line x1="10" y1="12" x2="26" y2="12"/>
+          <line x1="10" y1="18" x2="26" y2="18"/>
+          <line x1="10" y1="24" x2="18" y2="24"/>
+        </svg>
+      </div>
+      <div class="mod-info">
+        <div class="mod-name">Guiones</div>
+        <div class="mod-desc-text">Próximamente</div>
+      </div>
+    </div>
+
+    <!-- Biblioteca Videos — soon -->
+    <div class="mod soon">
+      <div class="mod-icon">
+        <svg width="22" height="22" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="32" height="22" rx="2"/>
+          <polygon points="14,14 24,18 14,22"/>
+        </svg>
+      </div>
+      <div class="mod-info">
+        <div class="mod-name">Biblioteca Videos</div>
+        <div class="mod-desc-text">Próximamente</div>
+      </div>
+    </div>
+
+    <!-- Creativos — soon -->
+    <div class="mod soon">
+      <div class="mod-icon">
+        <svg width="22" height="22" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="18" r="14"/>
+          <circle cx="18" cy="18" r="5"/>
+          <line x1="18" y1="4" x2="18" y2="13"/>
+          <line x1="18" y1="23" x2="18" y2="32"/>
+          <line x1="4" y1="18" x2="13" y2="18"/>
+          <line x1="23" y1="18" x2="32" y2="18"/>
+        </svg>
+      </div>
+      <div class="mod-info">
+        <div class="mod-name">Creativos & Ads</div>
+        <div class="mod-desc-text">Próximamente</div>
+      </div>
+    </div>
+
+    <!-- Campañas — soon -->
+    <div class="mod soon">
+      <div class="mod-icon">
+        <svg width="22" height="22" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13h5l15-9v28L13 23H8z"/>
+          <line x1="8" y1="13" x2="8" y2="23"/>
+          <path d="M28 11c2.5 2.5 2.5 11 0 14"/>
+        </svg>
+      </div>
+      <div class="mod-info">
+        <div class="mod-name">Campañas</div>
+        <div class="mod-desc-text">Próximamente</div>
+      </div>
+    </div>
+
+    <!-- Calendario Contenido — soon -->
+    <div class="mod soon">
+      <div class="mod-icon">
+        <svg width="22" height="22" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="7" width="28" height="25" rx="2"/>
+          <line x1="4" y1="15" x2="32" y2="15"/>
+          <line x1="12" y1="3" x2="12" y2="11"/>
+          <line x1="24" y1="3" x2="24" y2="11"/>
+        </svg>
+      </div>
+      <div class="mod-info">
+        <div class="mod-name">Calendario de Contenido</div>
+        <div class="mod-desc-text">Próximamente</div>
+      </div>
+    </div>
+
+    <!-- Drive Marketing — soon -->
+    <div class="mod soon">
+      <div class="mod-icon">
+        <svg width="22" height="22" viewBox="0 0 36 36" fill="none" stroke="#B87A4E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 4H8a2 2 0 00-2 2v24a2 2 0 002 2h20a2 2 0 002-2V14z"/>
+          <polyline points="20,4 20,14 30,14"/>
+        </svg>
+      </div>
+      <div class="mod-info">
+        <div class="mod-name">Drive Marketing</div>
+        <div class="mod-desc-text">Próximamente</div>
+      </div>
+    </div>
+
+  </div><!-- /mods -->
+</div>
+</div>
+</body>
+</html>

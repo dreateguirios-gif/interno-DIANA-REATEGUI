@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acceso — Sistema Interno · Diana Reátegui</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  height: 100%;
+  background: #0A0A0A;
+  color: #F8F4EE;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fondo decorativo */
+body::before {
+  content: 'MARGEN';
+  position: fixed;
+  bottom: -80px; right: -40px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 280px;
+  font-weight: 700;
+  color: rgba(184,122,78,0.03);
+  letter-spacing: -8px;
+  pointer-events: none;
+  line-height: 1;
+  user-select: none;
+}
+
+.login-wrap {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  z-index: 1;
+}
+
+.login-top {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.login-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: #B87A4E;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.login-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -1px;
+  margin-bottom: 6px;
+}
+
+.login-logo span { color: #B87A4E; }
+
+.login-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #4A4440;
+  text-transform: uppercase;
+}
+
+/* Tarjeta del formulario */
+.login-card {
+  background: #111111;
+  border: 1px solid #252525;
+  border-top: 3px solid #B87A4E;
+  padding: 40px 36px;
+}
+
+.login-card-header {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: #4A4440;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #7A7470;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.field input {
+  width: 100%;
+  background: #0D0D0D;
+  border: 1px solid #252525;
+  color: #F8F4EE;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.field input:focus {
+  border-color: rgba(184,122,78,0.5);
+}
+
+.field input::placeholder {
+  color: #2A2A2A;
+}
+
+.login-error {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #A05050;
+  min-height: 20px;
+  margin-bottom: 16px;
+  padding: 0 2px;
+}
+
+.login-btn {
+  width: 100%;
+  background: #B87A4E;
+  border: none;
+  color: #0A0A0A;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 16px;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.login-btn:hover:not(:disabled) { background: #D4956A; }
+.login-btn:disabled { opacity: 0.5; cursor: default; }
+
+.login-footer {
+  text-align: center;
+  margin-top: 28px;
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: #1E1E1E;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<div class="login-wrap">
+
+  <div class="login-top">
+    <span class="login-eyebrow">Sistema Interno · Uso Privado</span>
+    <div class="login-logo">Diana<br><span>Reátegui</span></div>
+    <div class="login-sub">Sistema MARGEN™ · Equipo</div>
+  </div>
+
+  <div class="login-card">
+    <p class="login-card-header">Acceso autorizado</p>
+
+    <div class="field">
+      <label for="email">Correo</label>
+      <input type="email" id="email" placeholder="tu@correo.com" autocomplete="email" />
+    </div>
+
+    <div class="field">
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" placeholder="••••••••••••" autocomplete="current-password" />
+    </div>
+
+    <div class="login-error" id="error-msg"></div>
+
+    <button class="login-btn" id="login-btn" onclick="handleLogin()">Ingresar</button>
+  </div>
+
+  <div class="login-footer">Confidencial · Solo personal autorizado</div>
+
+</div>
+
+<script src="auth.js"></script>
+<script>
+// Si ya está logueado, redirigir directo al hub
+if (_isLoggedIn()) location.replace("index.html");
+
+function handleLogin() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const btn = document.getElementById("login-btn");
+  const err = document.getElementById("error-msg");
+
+  if (!email || !password) {
+    err.textContent = "Completa correo y contraseña.";
+    return;
+  }
+
+  authLogin(email, password, btn, err);
+}
+
+// Enter para hacer login
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") handleLogin();
+});
+</script>
+</body>
+</html>

@@ -8,6 +8,14 @@ const _USERS = {
   "juan.reategui@gruposmartec.com":   "d2c6471262eea2ce65145edd08d5962a31612240dd2373ca30f3836aeb7ead9f"
 };
 
+// director = acceso total · team = páginas operativas únicamente
+const _ROLES = {
+  "diana.reategui@gruposmartec.com": "director",
+  "juan.reategui@gruposmartec.com":  "director",
+  "comercial1@smartimport-corp.com": "team",
+  "audiovisual@gruposmartec.com":    "team"
+};
+
 const _KEY  = "dr_auth_v1";
 const _TTL  = 8 * 60 * 60 * 1000; // 8 horas en ms
 
@@ -23,6 +31,13 @@ function _isLoggedIn() {
   } catch { return false; }
 }
 
+function _getRole() {
+  try {
+    const s = JSON.parse(localStorage.getItem(_KEY) || "{}");
+    return _ROLES[s.email] || "team";
+  } catch { return "team"; }
+}
+
 // Llama esto en el <head> de cada página protegida
 function requireAuth() {
   if (!_isLoggedIn()) {
@@ -31,6 +46,33 @@ function requireAuth() {
   } else {
     document.addEventListener("DOMContentLoaded", _injectLogout);
   }
+}
+
+// Llama esto en páginas exclusivas para directivos
+function requireDirector() {
+  if (!_isLoggedIn()) {
+    localStorage.setItem("dr_return", location.href);
+    location.replace(_loginPath());
+    return;
+  }
+  if (_getRole() !== "director") {
+    document.addEventListener("DOMContentLoaded", _injectAccessDenied);
+  } else {
+    document.addEventListener("DOMContentLoaded", _injectLogout);
+  }
+}
+
+function _injectAccessDenied() {
+  document.body.innerHTML = "";
+  document.body.style.cssText = "margin:0;padding:0;background:#0A0A0A;color:#F8F4EE;font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;";
+  document.body.innerHTML = `
+    <div style="text-align:center;max-width:380px;padding:24px;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:700;color:rgba(184,122,78,0.15);line-height:1;margin-bottom:32px;">✕</div>
+      <p style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:4px;color:#B87A4E;text-transform:uppercase;margin-bottom:16px;">Acceso Restringido</p>
+      <p style="font-size:15px;font-weight:300;color:#7A7470;line-height:1.6;margin-bottom:32px;">Esta sección es solo para directivos del sistema. Si crees que esto es un error, contacta a Diana.</p>
+      <a href="index.html" style="display:inline-block;background:#B87A4E;color:#0A0A0A;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;text-decoration:none;padding:14px 28px;">← Volver al Inicio</a>
+    </div>
+  `;
 }
 
 // Calcula la ruta a login.html relativa a la página actual

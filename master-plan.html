@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="auth.js"></script><script>requireAuth();</script>
+<script src="auth.js"></script><script>requireDirector();</script>
 <title>Master Plan — Diana Reátegui</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -201,8 +201,8 @@
   <a href="index.html" class="dr-nav-brand">DIANA REÁTEGUI</a>
   <div class="dr-nav-links">
     <a href="index.html"                  data-p="index">Inicio</a>
-    <a href="plan-negocio-v2.html"        data-p="plan-negocio-v2">Plan Negocio</a>
-    <a href="master-plan.html"            data-p="master-plan">Master Plan</a>
+    <a href="plan-negocio-v2.html"        data-p="plan-negocio-v2" data-role="director">Plan Negocio</a>
+    <a href="master-plan.html"            data-p="master-plan" data-role="director">Master Plan</a>
     <a href="oferta.html"                 data-p="oferta">Oferta</a>
     <a href="ventas.html"                 data-p="ventas">Ventas</a>
     <a href="plan-accion.html"            data-p="plan-accion">Plan de Acción</a>
@@ -212,7 +212,7 @@
     <a href="brief-editor-v2.html"        data-p="brief-editor-v2">Manual Editor</a>
   </div>
 </nav>
-<script>(function(){var p=location.pathname.split('/').pop().replace('.html','')||'index';var a=document.querySelector('#dr-nav [data-p="'+p+'"]');if(a)a.classList.add('dr-active');})()</script>
+<script>(function(){var p=location.pathname.split('/').pop().replace('.html','')||'index';var a=document.querySelector('#dr-nav [data-p="'+p+'"]');if(a)a.classList.add('dr-active');if(typeof _getRole==='function'&&_getRole()!=='director'){document.querySelectorAll('#dr-nav [data-role="director"]').forEach(function(el){el.style.display='none';});};})()</script>
 
 <!-- HERO -->
 <section class="hero">

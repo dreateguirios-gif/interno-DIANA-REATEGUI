@@ -113,21 +113,34 @@
     .footer { padding: 40px 24px; flex-direction: column; gap: 16px; text-align: center; }
   }
 </style>
+<style id="dr-nav-css">
+.dr-nav{position:sticky;top:0;z-index:1000;background:rgba(10,10,10,0.96);border-bottom:1px solid #1E1E1E;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:52px;backdrop-filter:blur(8px);gap:16px;}
+.dr-nav-brand{font-family:'Bebas Neue','Montserrat',sans-serif;font-size:18px;letter-spacing:3px;color:#B87A4E;text-decoration:none;flex-shrink:0;}
+.dr-nav-links{display:flex;overflow-x:auto;scrollbar-width:none;}
+.dr-nav-links::-webkit-scrollbar{display:none;}
+.dr-nav-links a{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#4A4440;text-decoration:none;padding:0 13px;height:52px;display:flex;align-items:center;border-left:1px solid #1A1A1A;transition:color .2s,background .2s;white-space:nowrap;}
+.dr-nav-links a:hover,.dr-nav-links a.dr-active{color:#B87A4E;background:rgba(184,122,78,0.07);}
+@media(max-width:768px){.dr-nav{padding:0 16px;}.dr-nav-brand{font-size:14px;}.dr-nav-links a{padding:0 10px;font-size:7px;}}
+</style>
 </head>
 <body>
 
-<nav class="nav">
-  <a href="index.html" class="nav-brand">DIANA REÁTEGUI</a>
-  <div class="nav-links">
-    <a href="../INICIO.html">← Inicio</a>
-    <a href="index.html">Master Plan</a>
-    <a href="oferta.html">Oferta</a>
-    <a href="ventas.html">Ventas</a>
-    <a href="plan-accion.html" class="active">Plan de Acción</a>
-    <a href="sops.html">SOPs</a>
-    <a href="equipo.html">Equipo</a>
+<nav class="dr-nav" id="dr-nav">
+  <a href="index.html" class="dr-nav-brand">DIANA REÁTEGUI</a>
+  <div class="dr-nav-links">
+    <a href="index.html"                  data-p="index">Inicio</a>
+    <a href="plan-negocio-v2.html"        data-p="plan-negocio-v2">Plan Negocio</a>
+    <a href="master-plan.html"            data-p="master-plan">Master Plan</a>
+    <a href="oferta.html"                 data-p="oferta">Oferta</a>
+    <a href="ventas.html"                 data-p="ventas">Ventas</a>
+    <a href="plan-accion.html"            data-p="plan-accion">Plan de Acción</a>
+    <a href="sops.html"                   data-p="sops">SOPs</a>
+    <a href="equipo.html"                 data-p="equipo">Equipo</a>
+    <a href="asistente-comercial.html"    data-p="asistente-comercial">Asistente</a>
+    <a href="brief-editor-v2.html"        data-p="brief-editor-v2">Manual Editor</a>
   </div>
 </nav>
+<script>(function(){var p=location.pathname.split('/').pop().replace('.html','')||'index';var a=document.querySelector('#dr-nav [data-p="'+p+'"]');if(a)a.classList.add('dr-active');})()</script>
 
 <section class="hero">
   <div class="badge">Plan de Ejecución · Q2–Q3 2026 · Checklist Operativo</div>
